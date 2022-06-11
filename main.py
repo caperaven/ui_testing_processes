@@ -20,3 +20,9 @@ class Api:
 
 
 crs = Api()
+
+ctx = {}
+crs.process.set_value("$context.subobj.value", 10, ctx)
+result = crs.process.get_value("$context.subobj.value", ctx)
+print(result)
+print(ctx)
