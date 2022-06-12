@@ -2,11 +2,19 @@ from src.evaluate import clean_exp
 
 
 class ProcessRunner:
-    def run(self):
-        pass
+    async def run(self, schema, context=None):
+        main = schema["main"]
+        await self.run_process(context, main, None)
 
-    def run_step(self):
-        pass
+    async def run_process(self, context, process, item):
+        start = process["steps"]["start"]
+        await self.run_step(start, context, process, item)
+
+    async def run_step(self, step, context, process, item):
+        if "next_step" in step:
+            next_step_name = step["next_step"]
+            next_step = process["steps"][next_step_name]
+            await self.run_step(next_step, context, process, item)
 
     def get_value(self, expr, context, process=None, item=None):
         if not isinstance(expr, str): return expr

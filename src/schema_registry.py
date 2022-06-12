@@ -5,6 +5,7 @@ import sys
 
 class SchemaRegistry:
     def __init__(self):
+        self.current_index = 0
         self.login = None
         self.templates = {}
         self.schemas = []
@@ -27,8 +28,6 @@ class SchemaRegistry:
             index = sys.argv.index("--templates")
             folder = sys.argv[index + 1]
             self.load_templates(folder)
-
-        pass
 
     def add(self, schema):
         schema_id = schema["id"]
@@ -56,6 +55,14 @@ class SchemaRegistry:
                     content = from_file(file)
                     content_id = content["id"]
                     self.templates[content_id] = content
+
+    def get_next_schema(self):
+        if self.current_index >= len(self.schemas):
+            return None
+
+        schema = from_file(self.schemas[self.current_index])
+        self.current_index += 1
+        return schema
 
 
 async def copy_parameters_to_process(process, parameters):

@@ -1,7 +1,22 @@
 {
-    "test processes example 1",
+    "id": "test processes example 1",
 
-    "test1": {
+    "main": {
+        "steps": {
+            "start": {
+                "type": "action",
+                "action": "navigate",
+                "args": {
+                    "url": "www.url.com"
+                },
+                "next_step": "login"
+            },
 
+            "login": {
+                "type": "process",
+                "args": {
+                }
+            }
+        }
     }
 }

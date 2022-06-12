@@ -3,11 +3,11 @@ from src.action_systems.wait_actions import WaitActions
 from src.action_systems.perform_actions import PerformActions
 from src.schema_registry import SchemaRegistry
 from src.process_runner import ProcessRunner
-
+import asyncio
 
 class Api:
     def __init__(self):
-        self.processSchemaRegistry = SchemaRegistry()
+        self.process_schema_registry = SchemaRegistry()
         self.process = ProcessRunner()
         self.intent = {
             "assert": AssertActions,
@@ -15,14 +15,13 @@ class Api:
             "perform": PerformActions
         }
 
-    def call(self, system, fn, args, context, process, item):
+    async def call(self, system, fn, args, context, process, item):
         return self.intent[system][fn]({args: args}, context, process, item)
+
+    async def run_all(self):
+        while schema := self.process_schema_registry.get_next_schema():
+            await self.process.run(schema)
 
 
 crs = Api()
-
-ctx = {}
-crs.process.set_value("$context.subobj.value", 10, ctx)
-result = crs.process.get_value("$context.subobj.value", ctx)
-print(result)
-print(ctx)
+asyncio.run(crs.run_all())
