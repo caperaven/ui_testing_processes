@@ -1,4 +1,4 @@
 class ProcessActions:
     @staticmethod
-    def perform(step, context, process, item):
+    async def perform(step, context, process, item):
         pass

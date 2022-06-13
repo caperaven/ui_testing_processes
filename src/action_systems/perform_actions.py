@@ -1,60 +1,64 @@
+from src.actions.navigate import navigate
+
 class PerformActions:
     @staticmethod
-    def navigate(step, context, process, item):
-        print("navigate")
+    async def navigate(step, context, process, item):
+        url = context.process.get_value(step["args"]["url"], context, process, item)
+        results = {}
+        await navigate(context.driver, {
+            "url": url
+        }, results)
         pass
 
     @staticmethod
-    def close_window(step, context, process, item):
+    async def close_window(step, context, process, item):
         pass
 
     @staticmethod
-    def refresh(step, context, process, item):
+    async def refresh(step, context, process, item):
         pass
 
     @staticmethod
-    def click(step, context, process, item):
+    async def click(step, context, process, item):
         print("click")
         pass
 
     @staticmethod
-    def dbl_click(step, context, process, item):
+    async def dbl_click(step, context, process, item):
         pass
 
     @staticmethod
-    def context_click(step, context, process, item):
+    async def context_click(step, context, process, item):
         pass
 
     @staticmethod
-    def click_sequence(step, context, process, item):
+    async def click_sequence(step, context, process, item):
         pass
 
     @staticmethod
-    def press_key(step, context, process, item):
+    async def press_key(step, context, process, item):
         pass
 
     @staticmethod
-    def print_screen(step, context, process, item):
+    async def print_screen(step, context, process, item):
         pass
 
     @staticmethod
-    def select_option(step, context, process, item):
+    async def select_option(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_frame(step, context, process, item):
+    async def switch_to_frame(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_default(step, context, process, item):
+    async def switch_to_default(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_tab(step, context, process, item):
+    async def switch_to_tab(step, context, process, item):
         pass
 
     @staticmethod
-    def type_text(step, context, process, item):
+    async def type_text(step, context, process, item):
         pass
-
-
