@@ -1,58 +1,60 @@
 class PerformActions:
     @staticmethod
-    def navigate(driver, args, results):
+    def navigate(step, context, process, item):
+        print("navigate")
         pass
 
     @staticmethod
-    def close_window(driver, args, results):
+    def close_window(step, context, process, item):
         pass
 
     @staticmethod
-    def refresh(driver, args, results):
+    def refresh(step, context, process, item):
         pass
 
     @staticmethod
-    def click(driver, args, results):
+    def click(step, context, process, item):
+        print("click")
         pass
 
     @staticmethod
-    def dbl_click(driver, args, results):
+    def dbl_click(step, context, process, item):
         pass
 
     @staticmethod
-    def context_click(driver, args, results):
+    def context_click(step, context, process, item):
         pass
 
     @staticmethod
-    def click_sequence(driver, args, results):
+    def click_sequence(step, context, process, item):
         pass
 
     @staticmethod
-    def press_key(driver, args, results):
+    def press_key(step, context, process, item):
         pass
 
     @staticmethod
-    def print_screen(driver, args, results):
+    def print_screen(step, context, process, item):
         pass
 
     @staticmethod
-    def select_option(driver, args, results):
+    def select_option(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_frame(driver, args, results):
+    def switch_to_frame(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_default(driver, args, results):
+    def switch_to_default(step, context, process, item):
         pass
 
     @staticmethod
-    def switch_to_tab(driver, args, results):
+    def switch_to_tab(step, context, process, item):
         pass
 
     @staticmethod
-    def type_text(driver, args, results):
+    def type_text(step, context, process, item):
         pass
 
 

@@ -1,45 +1,54 @@
 class WaitActions:
     @staticmethod
-    def is_ready(driver, args, results):
+    def is_ready(step, context, process, item):
         pass
 
     @staticmethod
-    def element(driver, args, results):
+    def element(step, context, process, item):
         pass
 
     @staticmethod
-    def attributes(driver, args, results):
+    def attributes(step, context, process, item):
         pass
 
     @staticmethod
-    def style_properties(driver, args, results):
+    def style_properties(step, context, process, item):
         pass
 
     @staticmethod
-    def element_properties(driver, args, results):
+    def element_properties(step, context, process, item):
         pass
 
     @staticmethod
-    def text_content(driver, args, results):
+    def text_content(step, context, process, item):
         pass
 
     @staticmethod
-    def text_value(driver, args, results):
+    def text_value(step, context, process, item):
         pass
 
     @staticmethod
-    def child_count(driver, args, results):
+    def child_count(step, context, process, item):
         pass
 
     @staticmethod
-    def element_count(driver, args, results):
+    def element_count(step, context, process, item):
         pass
 
     @staticmethod
-    def window_count(driver, args, results):
+    def window_count(step, context, process, item):
         pass
 
     @staticmethod
-    def idle(driver, args, results):
+    def idle(step, context, process, item):
         pass
+
+    @staticmethod
+    def has_attribute(step, context, process, item):
+        pass
+
+    @staticmethod
+    def has_not_attribute(step, context, process, item):
+        pass
+
 

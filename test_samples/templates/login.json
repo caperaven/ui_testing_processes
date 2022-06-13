@@ -1,0 +1,59 @@
+{
+    "id": "login",
+
+    "main": {
+        "parameters_def": {
+            "firstName": {"type": "string", "required": true},
+            "lastName": {"type": "string", "required": true}
+        },
+
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "id": "btnLogin"
+                },
+                "next_step": "wait_for_dialog"
+            },
+
+            "wait_for_dialog": {
+                "type": "wait",
+                "action": "has_attribute",
+                "args": {
+                    "id": "dlgLogin",
+                    "attribute": "open"
+                },
+                "next_step": "fill_in_first_name"
+            },
+
+            "fill_in_first_name": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "id": "edtFirstName",
+                    "value": "$parameters.firstName"
+                },
+                "next_step": "fill_in_last_name"
+            },
+
+            "fill_in_last_name": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "id": "edtLastName",
+                    "value": "$parameters.lastName"
+                },
+                "next_step": "close_dialog"
+            },
+
+            "close_dialog": {
+                "type": "wait",
+                "action": "has_not_attribute",
+                "args": {
+                    "id": "dlgLogin",
+                    "attribute": "open"
+                }
+            }}
+    }
+}

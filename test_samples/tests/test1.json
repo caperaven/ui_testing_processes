@@ -4,17 +4,23 @@
     "main": {
         "steps": {
             "start": {
-                "type": "action",
+                "type": "perform",
                 "action": "navigate",
                 "args": {
-                    "url": "www.url.com"
+                    "url": "//http://127.0.0.1:8000/"
                 },
                 "next_step": "login"
             },
 
             "login": {
                 "type": "process",
+                "action": "main",
                 "args": {
+                    "schema": "login",
+                    "parameters": {
+                        "firstName": "John",
+                        "lastName": "Doe"
+                    }
                 }
             }
         }

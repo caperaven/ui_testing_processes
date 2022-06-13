@@ -64,9 +64,8 @@ class SchemaRegistry:
         self.current_index += 1
         return schema
 
-
-async def copy_parameters_to_process(process, parameters):
-    pass
+    def get_template(self, schema):
+        return self.templates[schema]
 
 
 def get_file_path(file):

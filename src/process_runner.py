@@ -1,20 +1,30 @@
-from src.evaluate import clean_exp
-
-
 class ProcessRunner:
-    async def run(self, schema, context=None):
+    async def run(self, schema, api, context=None):
         main = schema["main"]
-        await self.run_process(context, main, None)
+        await self.run_process(api, context, main, None, None)
 
-    async def run_process(self, context, process, item):
+    async def run_process(self, api, context, process, item, parameters):
+        if "parameters_def" in process:
+            success = copy_parameters(process, parameters)
+            if success is not True:
+                api.log_error(success)
+
         start = process["steps"]["start"]
-        await self.run_step(start, context, process, item)
+        api.current["step"] = "start"
+        await self.run_step(api, start, context, process, item)
 
-    async def run_step(self, step, context, process, item):
+    async def run_step(self, api, step, context, process, item):
+        step_type = step["type"]
+        step_action = step["action"]
+        step_args = step["args"]
+
+        await api.call(step_type, step_action, step_args, context, process, item)
+
         if "next_step" in step:
             next_step_name = step["next_step"]
             next_step = process["steps"][next_step_name]
-            await self.run_step(next_step, context, process, item)
+            api.current["step"] = next_step_name
+            await self.run_step(api, next_step, context, process, item)
 
     def get_value(self, expr, context, process=None, item=None):
         if not isinstance(expr, str): return expr
@@ -43,6 +53,24 @@ class ProcessRunner:
         prop = parts[0]
         obj[prop] = value
         pass
+
+
+def copy_parameters(process, parameters):
+    if parameters is None:
+        return "error: parameters required"
+
+    process["parameters"] = parameters.copy()
+
+    definitions = process["parameters_def"]
+    keys = process["parameters_def"].keys()
+
+    for key in keys:
+        definition = definitions[key]
+        if "required" in definition and definition["required"] == True:
+            if not key in parameters:
+                return 'parameter "{}" required'.format(key)
+
+    return True
 
 
 def get_value_on_path(obj, parts):

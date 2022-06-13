@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       html, body {
+           width: 100%;
+           height: 100%;
+           margin: 0;
+           padding: 0;
+       }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 3rem 1fr 2rem;
+        }
+
+        [role="toolbar"] {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-content: center;
+        }
+
+        [role="toolbar"] button {
+            margin: 0.5rem;
+        }
+
+        #dlgLogin[open] {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <dialog id="dlgLogin">
+        <label for="edtFirstName">First Name</label>
+        <input id="edtFirstName" type="text" value.bind="user.firstName" />
+        <label for="edtLastName">Last Name</label>
+        <input id="edtLastName" type="text" value.bind="user.lastName" />
+
+        <div role="toolbar">
+            <button id="btnDialogClose" click.call="closeDialog">Close</button>
+        </div>
+    </dialog>
+
+    <header>
+        <div role="toolbar" tabindex="-1">
+            <button id="btnLogin" click.call="login">Login</button>
+        </div>
+    </header>
+    <main>
+
+    </main>
+    <footer></footer>
+
+    <script type="module">
+        import "./node_modules/crs-binding/crs-binding.js";
+        import IndexViewModel from "./index.js";
+
+        async function load() {
+            document.viewModel = new IndexViewModel(document.body);
+
+            window.addEventListener("load", (event) => {
+                document.viewModel.connectedCallback();
+            });
+        }
+        load();
+    </script>
+</body>
+</html>

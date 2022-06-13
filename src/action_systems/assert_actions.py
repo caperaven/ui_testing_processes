@@ -1,34 +1,34 @@
 class AssertActions:
     @staticmethod
-    def attributes(driver, args, results):
+    def attributes(step, context, process, item):
         pass
 
     @staticmethod
-    def child_count(driver, args, results):
+    def child_count(step, context, process, item):
         pass
 
     @staticmethod
-    def style_properties(driver, args, results):
+    def style_properties(step, context, process, item):
         pass
 
     @staticmethod
-    def element_properties(driver, args, results):
+    def element_properties(step, context, process, item):
         pass
 
     @staticmethod
-    def tag_name(driver, args, results):
+    def tag_name(step, context, process, item):
         pass
 
     @staticmethod
-    def text_content(driver, args, results):
+    def text_content(step, context, process, item):
         pass
 
     @staticmethod
-    def text_value(driver, args, results):
+    def text_value(step, context, process, item):
         pass
 
     @staticmethod
-    def element_value(driver, args, results):
+    def element_value(step, context, process, item):
         pass
 
 
