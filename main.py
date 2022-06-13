@@ -9,6 +9,10 @@ import sys
 
 
 class Api:
+    @property
+    def current_step(self):
+        return self.current["step"]
+
     def __init__(self):
         self.process_schema_registry = SchemaRegistry()
         self.process = ProcessRunner()
