@@ -78,6 +78,10 @@ class Api:
         self.driver.close()
 
 
-crs = Api()
-asyncio.run(crs.run_all())
-crs.close()
+try:
+    crs = Api()
+    asyncio.run(crs.run_all())
+except Exception as e:
+    print(e)
+finally:
+    crs.close()

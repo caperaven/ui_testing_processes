@@ -51,7 +51,7 @@
                 "type": "wait",
                 "action": "time",
                 "args": {
-                    "timeout": 5
+                    "timeout": 1
                 },
                 "next_step": "close_dialog"
             },

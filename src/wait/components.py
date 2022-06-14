@@ -67,7 +67,7 @@ async def wait_until_attribute(driver, args, results):
         WebDriverWait(driver, timeout).until(_has_attribute_condition(args, results))
         results[args["step"]] = "success"
     except Exception as e:
-        print("wait_for_attribute failed, {}".format(e.__class__.__name__))
+        print("wait_until_attribute failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be there on '{}', {}".format(args["attr"], name, e.__class__.__name__))
         pass
@@ -80,7 +80,7 @@ async def wait_until_attribute_gone(driver, args, results):
         WebDriverWait(driver, timeout).until(_has_attribute_condition(args, results))
         results[args["step"]] = "success"
     except Exception as e:
-        print("wait_for_attribute failed, {}".format(e.__class__.__name__))
+        print("wait_until_attribute_gone failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to not be there on '{}', {}".format(args["attr"], name, e.__class__.__name__))
         pass
@@ -99,7 +99,7 @@ async def wait_for_attributes(driver, args, results):
 
         results[args["step"]] = "success"
     except Exception as e:
-        print("wait_for_attribute failed, {}".format(e.__class__.__name__))
+        print("wait_for_attributes failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute on '{}', {}".format(name, e.__class__.__name__))
         pass

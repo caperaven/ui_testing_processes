@@ -67,8 +67,8 @@ def _has_attribute_condition(args, results):
         element = get_element(driver, args, results)
         result = False
         try:
-            element.get_attribute(args["attr"])
-            result = True
+            attr_value = element.get_attribute(args["attr"])
+            result = True if attr_value is not None else False
         except Exception:
             pass
 
