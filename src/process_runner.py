@@ -34,6 +34,8 @@ class ProcessRunner:
         if expr == "$item": return item
         if not expr.__contains__("$"): return expr
 
+        expr = expr.replace("$parameters", "$process.parameters")
+
         obj = context
         if expr.__contains__("$process"): obj = process
         if expr.__contains__("$item"): obj = item

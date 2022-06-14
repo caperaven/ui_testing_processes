@@ -3,6 +3,9 @@ from src.actions.refresh import refresh
 from src.actions.click import click, dbl_click, context_click, click_sequence
 from src.actions.press_key import press_key
 from src.actions.type import type_text
+from src.actions.print_screen import print_screen
+from src.actions.select_option import select_option
+from src.actions.switch_to import switch_to_default, switch_to_frame, switch_to_tab
 
 
 class PerformActions:
@@ -64,27 +67,45 @@ class PerformActions:
 
     @staticmethod
     async def print_screen(step, context, process, item):
-        pass
+        args = step["args"]
+        args["step"] = context.current_step
+        results = {}
+        await print_screen(context.driver, args, results)
 
     @staticmethod
     async def select_option(step, context, process, item):
-        pass
+        args = step["args"]
+        args["step"] = context.current_step
+        results = {}
+        await select_option(context.driver, args, results)
 
     @staticmethod
     async def switch_to_frame(step, context, process, item):
-        pass
+        args = step["args"]
+        args["step"] = context.current_step
+        results = {}
+        await switch_to_frame(context.driver, args, results)
 
     @staticmethod
     async def switch_to_default(step, context, process, item):
-        pass
+        args = step["args"]
+        args["step"] = context.current_step
+        results = {}
+        await switch_to_default(context.driver, args, results)
 
     @staticmethod
     async def switch_to_tab(step, context, process, item):
-        pass
+        args = step["args"]
+        args["step"] = context.current_step
+        results = {}
+        await switch_to_tab(context.driver, args, results)
 
     @staticmethod
     async def type_text(step, context, process, item):
         args = step["args"]
         args["step"] = context.current_step
+        value = args["value"]
+        value = context.process.get_value(value, context, process, item)
+        args["value"] = value
         results = {}
         await type_text(context.driver, args, results)

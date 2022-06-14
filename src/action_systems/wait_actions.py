@@ -1,6 +1,7 @@
 from src.wait.components import wait_is_ready, wait_for_element, wait_for_attributes, wait_for_attribute, \
     wait_for_css_property, wait_for_property, wait_for_css_class, wait_for_children, wait_for_count, wait_for_time, \
-    wait_for_selected, wait_for_windows, wait_until_idle, wait_for_text, wait_for_value
+    wait_for_selected, wait_for_windows, wait_until_idle, wait_for_text, wait_for_value, wait_until_attribute, \
+    wait_until_attribute_gone
 
 
 class WaitActions:
@@ -122,7 +123,7 @@ class WaitActions:
         args["step"] = context.current_step
 
         results = {}
-        await wait_for_css_property(context.driver, args, results)
+        await wait_until_attribute(context.driver, args, results)
         pass
 
     @staticmethod
@@ -131,5 +132,5 @@ class WaitActions:
         args["step"] = context.current_step
 
         results = {}
-        await wait_for_css_property(context.driver, args, results)
+        await wait_until_attribute_gone(context.driver, args, results)
         pass

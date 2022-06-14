@@ -22,7 +22,7 @@
                 "action": "has_attribute",
                 "args": {
                     "id": "dlgLogin",
-                    "attribute": "open"
+                    "attr": "open"
                 },
                 "next_step": "fill_in_first_name"
             },
@@ -52,7 +52,7 @@
                 "action": "has_not_attribute",
                 "args": {
                     "id": "dlgLogin",
-                    "attribute": "open"
+                    "attr": "open"
                 }
             }}
     }

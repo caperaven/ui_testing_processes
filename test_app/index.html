@@ -70,6 +70,7 @@
 
             window.addEventListener("load", (event) => {
                 document.viewModel.connectedCallback();
+                document.body.setAttribute("idle", "true");
             });
         }
         load();
