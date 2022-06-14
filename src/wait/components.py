@@ -7,7 +7,7 @@ from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
-    _window_count_condition, _idle_condition
+    _window_count_condition, _idle_condition, _has_attribute_condition
 
 
 async def wait_is_ready(driver, args, results):
@@ -49,12 +49,27 @@ async def wait_for_element(driver, args, results):
 async def wait_for_attribute(driver, args, results):
     try:
         timeout = args["timeout"] if "timeout" in args else 5
+        args["has"] = True
+        WebDriverWait(driver, timeout).until(_has_attribute_condition(args, results))
         WebDriverWait(driver, timeout).until(_attribute_condition(args, results))
         results[args["step"]] = "success"
     except Exception as e:
         print("wait_for_attribute failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be '{}' on '{}', {}".format(args["attr"], args["value"], name, e.__class__.__name__))
+        pass
+
+
+async def wait_until_attribute_gone(driver, args, results):
+    try:
+        timeout = args["timeout"] if "timeout" in args else 5
+        args["has"] = False
+        WebDriverWait(driver, timeout).until(_has_attribute_condition(args, results))
+        results[args["step"]] = "success"
+    except Exception as e:
+        print("wait_for_attribute failed, {}".format(e.__class__.__name__))
+        name = get_name(args)
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to not be there on '{}', {}".format(args["attr"], name, e.__class__.__name__))
         pass
 
 

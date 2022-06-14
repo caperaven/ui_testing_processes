@@ -62,6 +62,21 @@ def _attribute_condition(args, results):
     return _predicate
 
 
+def _has_attribute_condition(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        result = False
+        try:
+            element.get_attribute(args["attr"])
+            result = True
+        except Exception:
+            pass
+
+        return result == args["has"]
+
+    return _predicate
+
+
 def _css_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
