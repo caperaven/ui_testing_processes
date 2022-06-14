@@ -39,7 +39,7 @@ async def assert_attr_eq(driver, args, results):
         await set_error(driver, results, args["step"], "error: attribute '{}' on '{}' should have been '{}' but was '{}'".format(args["attr"], name, exp_value, value))
 
 
-async def assert_attr_nq(driver, args, results):
+async def assert_attr_neq(driver, args, results):
     element = get_element(driver, args, results)
 
     if element is None:
