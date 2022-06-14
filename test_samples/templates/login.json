@@ -44,10 +44,28 @@
                     "id": "edtLastName",
                     "value": "$parameters.lastName"
                 },
+                "next_step": "wait_for_5seconds"
+            },
+
+            "wait_for_5seconds": {
+                "type": "wait",
+                "action": "time",
+                "args": {
+                    "timeout": 5
+                },
                 "next_step": "close_dialog"
             },
 
             "close_dialog": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "id": "btnDialogClose"
+                },
+                "next_step": "wait_until_closed"
+            },
+
+            "wait_until_closed": {
                 "type": "wait",
                 "action": "has_not_attribute",
                 "args": {
