@@ -21,11 +21,17 @@ class Api:
             "wait": WaitActions,
             "perform": PerformActions
         }
+
         self.current = {
             "schema": None,
             "process": None,
             "step": None
         }
+
+        self.results = {
+        }
+
+        self.current_result = None
 
         if sys.platform == "darwin":
             self.driver = webdriver.Safari()
@@ -56,6 +62,16 @@ class Api:
 
     async def run_all(self):
         while schema := self.process_schema_registry.get_next_schema():
+            id = schema["id"]
+
+            self.results[id] = {
+                "summary": {
+                    "success": True,
+                    "error_count": 0
+                }
+            }
+
+            self.current_result = self.results[id]
             await self.process.run(schema, self)
 
     def close(self):
