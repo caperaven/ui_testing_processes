@@ -3,8 +3,8 @@
 
     "main": {
         "parameters_def": {
-            "firstName": {"type": "string", "required": true},
-            "lastName": {"type": "string", "required": true}
+            "firstName": { "type": "string", "required": true },
+            "lastName": { "type": "string", "required": true }
         },
 
         "steps": {
@@ -51,7 +51,7 @@
                 "type": "wait",
                 "action": "time",
                 "args": {
-                    "timeout": 1
+                    "timeout": 2
                 },
                 "next_step": "close_dialog"
             },

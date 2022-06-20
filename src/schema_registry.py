@@ -62,7 +62,7 @@ class SchemaRegistry:
 
         schema = from_file(self.schemas[self.current_index])
         self.current_index += 1
-        return schema
+        return schema.copy()
 
     def get_template(self, schema):
         return self.templates[schema]

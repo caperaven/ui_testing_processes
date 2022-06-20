@@ -4,9 +4,14 @@ from src.action_systems.wait_actions import WaitActions
 from src.action_systems.perform_actions import PerformActions
 from src.schema_registry import SchemaRegistry
 from src.process_runner import ProcessRunner
+from src.data import state
+from src.results_writer import save_results, set_results_folder
 import asyncio
 import sys
+import tempfile
 
+folder = tempfile.gettempdir()
+set_results_folder(folder)
 
 class Api:
     @property
@@ -54,6 +59,19 @@ class Api:
             self.current["process"] = fn
             process = schema[fn]
             parameters = None if "parameters" not in args else args["parameters"]
+
+            id = schema["id"]
+            key = "{} -> {} process".format(self.current["step"], id)
+
+            self.results[key] = {
+                "summary": {
+                    "success": True,
+                    "error_count": 0
+                }
+            }
+
+            self.current_result = self.results[key]
+
             await self.process.run_process(self, None, process,  item, parameters)
         else:
             system = self.intent[system]
@@ -63,7 +81,6 @@ class Api:
     async def run_all(self):
         while schema := self.process_schema_registry.get_next_schema():
             id = schema["id"]
-
             self.results[id] = {
                 "summary": {
                     "success": True,
@@ -75,6 +92,7 @@ class Api:
             await self.process.run(schema, self)
 
     def close(self):
+        save_results(self.results)
         self.driver.close()
 
 

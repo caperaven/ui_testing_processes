@@ -21,6 +21,19 @@
                         "firstName": "John",
                         "lastName": "Doe"
                     }
+                },
+                "next_step": "login_again"
+            },
+
+            "login_again": {
+                "type": "process",
+                "action": "main",
+                "args": {
+                    "schema": "login",
+                    "parameters": {
+                        "firstName": "Ashton",
+                        "lastName": "Angel"
+                    }
                 }
             }
         }
