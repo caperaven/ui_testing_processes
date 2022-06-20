@@ -37,6 +37,7 @@ class Api:
         }
 
         self.current_result = None
+        self.previous_result = None
 
         if sys.platform == "darwin":
             self.driver = webdriver.Safari()
@@ -61,18 +62,21 @@ class Api:
             parameters = None if "parameters" not in args else args["parameters"]
 
             id = schema["id"]
-            key = "{} -> {} process".format(self.current["step"], id)
+            key = "{} -> {} template".format(self.current["step"], id)
 
-            self.results[key] = {
+            self.current_result[key]= {
                 "summary": {
                     "success": True,
                     "error_count": 0
                 }
             }
 
-            self.current_result = self.results[key]
+            self.previous_result = self.current_result
+            self.current_result = self.current_result[key]
 
             await self.process.run_process(self, None, process,  item, parameters)
+            self.current_result = self.previous_result
+            self.previous_result = None
         else:
             system = self.intent[system]
             fn = getattr(system, fn)
