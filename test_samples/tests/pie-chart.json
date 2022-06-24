@@ -36,7 +36,7 @@
         "type": "perform",
         "action": "click",
         "args": {
-          "query": ".legend:nth-child(2)"
+          "query": ".legend[data-value='PT1H12M32S']"
         },
         "next_step": "wait_for_selected_opacity_to_be_1"
       },
@@ -45,7 +45,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": ".legend:nth-child(2)",
+          "query": ".legend[data-value='PT1H12M32S']",
           "property": "opacity",
           "value": "1"
         },
@@ -56,7 +56,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": ".legend:nth-child(3)",
+          "query": ".legend[data-value='PT17H12M7S']",
           "property": "opacity",
           "value": "1",
           "eval": "ne"
@@ -68,7 +68,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": "#chart > g > g:nth-child(1) > path",
+          "query": "#chart path[data-value='PT1H12M32S']",
           "property": "opacity",
           "value": "1"
         },
@@ -79,7 +79,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": "#chart > g > g:nth-child(2) > path",
+          "query": "#chart path[data-value='PT17H12M7S']",
           "property": "opacity",
           "value": "1",
           "eval": "ne"
