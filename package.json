@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "build": "pyinstaller ui_testing.py --onefile"
+  }
+}
