@@ -1,0 +1,25 @@
+{
+  "id": "grid-layout-tests",
+
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "navigate",
+        "args": {
+          "url": "http://127.0.0.1:8000/#css-grid-layout"
+        },
+        "next_step": "wait_for_children"
+      },
+
+      "wait_for_children": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": "my-component",
+          "count": 6
+        }
+      }
+    }
+  }
+}

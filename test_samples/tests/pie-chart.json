@@ -1,0 +1,90 @@
+{
+  "id": "pie chart",
+
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "navigate",
+        "args": {
+          "url": "http://127.0.0.1:8000/#schema"
+        },
+        "next_step": "wait_pie_drawn"
+      },
+
+      "wait_pie_drawn": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": "#chart path",
+          "count": 5
+        },
+        "next_step": "wait_legend_drawn"
+      },
+
+      "wait_legend_drawn": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": ".legend",
+          "count": 5
+        },
+        "next_step": "click_first_legend"
+      },
+
+      "click_first_legend": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": ".legend:nth-child(2)"
+        },
+        "next_step": "wait_for_selected_opacity_to_be_1"
+      },
+
+      "wait_for_selected_opacity_to_be_1": {
+        "type": "wait",
+        "action": "style_property",
+        "args": {
+          "query": ".legend:nth-child(2)",
+          "property": "opacity",
+          "value": "1"
+        },
+        "next_step": "wait_for_legend_2_opacity_not_to_be_1"
+      },
+
+      "wait_for_legend_2_opacity_not_to_be_1": {
+        "type": "wait",
+        "action": "style_property",
+        "args": {
+          "query": ".legend:nth-child(3)",
+          "property": "opacity",
+          "value": "1",
+          "eval": "ne"
+        },
+        "next_step": "for_first_pie_slice_opacity_to_be_1"
+      },
+
+      "for_first_pie_slice_opacity_to_be_1": {
+        "type": "wait",
+        "action": "style_property",
+        "args": {
+          "query": "#chart > g > g:nth-child(1) > path",
+          "property": "opacity",
+          "value": "1"
+        },
+        "next_step": "wait_for_second_pie_slice_opacity_not_to_be_1"
+      },
+
+      "wait_for_second_pie_slice_opacity_not_to_be_1": {
+        "type": "wait",
+        "action": "style_property",
+        "args": {
+          "query": "#chart > g > g:nth-child(2) > path",
+          "property": "opacity",
+          "value": "1",
+          "eval": "ne"
+        }
+      }
+    }
+  }
+}

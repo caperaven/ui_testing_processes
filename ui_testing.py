@@ -9,6 +9,7 @@ from src.results_writer import save_results, set_results_folder
 import asyncio
 import sys
 import tempfile
+import subprocess
 
 folder = tempfile.gettempdir()
 set_results_folder(folder)
@@ -107,3 +108,8 @@ except Exception as e:
     print(e)
 finally:
     crs.close()
+
+    if "--auto-open" in sys.argv:
+        path = state["folder"]
+        subprocess.Popen(r'explorer /open,"{}"'.format(path))
+        pass
