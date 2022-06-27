@@ -2,6 +2,10 @@
   "id": "pie chart",
 
   "main": {
+    "data": {
+
+    },
+
     "steps": {
       "start": {
         "type": "perform",
@@ -27,16 +31,25 @@
         "action": "element_count",
         "args": {
           "query": ".legend",
-          "count": 5
+          "count": "${process.data.count:number}"
         },
         "next_step": "click_first_legend"
+      },
+
+      "copy_to_variables": {
+        "type": "system",
+        "action": "attributes_to_variable",
+        "args": {
+          ".legend::firstChild": "$process.data.first_legend",
+          ".legend::nthChild(2)": "$process.data.second_legend"
+        }
       },
 
       "click_first_legend": {
         "type": "perform",
         "action": "click",
         "args": {
-          "query": ".legend[data-value='PT1H12M32S']"
+          "query": ".legend[data-value='${$process.data.first_legend}']"
         },
         "next_step": "wait_for_selected_opacity_to_be_1"
       },

@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+from src.data import state
 
 
 class SchemaRegistry:
@@ -28,6 +29,11 @@ class SchemaRegistry:
             index = sys.argv.index("--templates")
             folder = sys.argv[index + 1]
             self.load_templates(folder)
+
+        if "--server" in sys.argv:
+            index = sys.argv.index("--server")
+            state["server"] = sys.argv[index + 1]
+
 
     def add(self, schema):
         schema_id = schema["id"]

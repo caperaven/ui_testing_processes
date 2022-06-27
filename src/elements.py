@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from src.errors import set_error
-import asyncio
+from src.errors import set_error_sync
 
 
 def _get_query(args):
@@ -46,6 +45,6 @@ def get_element(driver, args, results):
         return _get_element(driver, query)
     except Exception as e:
         print(e)
-        asyncio.run(set_error(driver, results, args["step"], "error: element '{}' not found".format(query)))
+        set_error_sync(driver, results, args["step"], "error: element '{}' not found".format(query))
         return None
         pass

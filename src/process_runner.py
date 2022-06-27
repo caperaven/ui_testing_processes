@@ -1,34 +1,54 @@
-class ProcessRunner:
-    async def run(self, schema, api, context=None):
-        main = schema["main"]
-        await self.run_process(api, context, main, None, None)
+from src.data import state
+from src.errors import set_error
+import traceback
 
-    async def run_process(self, api, context, process, item, parameters):
+class ProcessRunner:
+    async def run(self, schema, context=None):
+        main = schema["main"]
+        await self.run_process(context, main, None, None)
+
+    async def run_process(self, context, process, item, parameters):
         if "parameters_def" in process:
             success = copy_parameters(process, parameters)
             if success is not True:
-                api.log_error(success)
+                context.log_error(success)
 
         start = process["steps"]["start"]
-        api.current["step"] = "start"
-        await self.run_step(api, start, context, process, item)
+        context.current["step"] = "start"
 
-    async def run_step(self, api, step, context, process, item):
+        if "data" not in process:
+            process["data"] = {}
+
+        try:
+            await self.run_step(start, context, process, item)
+        except Exception as e:
+            print(traceback.format_exc())
+            message = "internal error: {}".format(e)
+            await set_error(context.driver, context.current_result, "start", message)
+            pass
+
+    async def run_step(self, step, context, process, item):
         step_type = step["type"]
         step_action = step["action"]
         step_args = step["args"]
 
-        await api.call(step_type, step_action, step_args, context, process, item)
+        parse_id(step_args, context, process, item)
+        parse_args(step_args, context, process, item)
+
+        await context.call(step_type, step_action, step_args, context, process, item)
 
         if "next_step" in step:
             next_step_name = step["next_step"]
             next_step = process["steps"][next_step_name]
-            api.current["step"] = next_step_name
-            await self.run_step(api, next_step, context, process, item)
+            context.current["step"] = next_step_name
+            await self.run_step(next_step, context, process, item)
 
     def get_value(self, expr, context, process=None, item=None):
         if not isinstance(expr, str): return expr
-        if expr.__contains__("${"): return expr
+
+        if expr.__contains__("${"):
+            return get_formatted_text(expr, context, process, item)
+
         if expr == "$context": return context
         if expr == "$process": return process
         if expr == "$item": return item
@@ -39,6 +59,7 @@ class ProcessRunner:
         obj = context
         if expr.__contains__("$process"): obj = process
         if expr.__contains__("$item"): obj = item
+        if expr.__contains__("$state"): obj = state
 
         parts = expr.split(".")
         del parts[0]
@@ -56,6 +77,38 @@ class ProcessRunner:
         obj[prop] = value
         pass
 
+def get_formatted_text(expr, context, process, item):
+    parts = expr.split("${")
+
+    buffer = []
+    for part in parts:
+        if "}" in part:
+            index = part.index("}")
+            path = "${}".format(part[0:index])
+
+            convert_type = None
+            if ":number" in path:
+                convert_type = "number"
+                path.replace(":number", "")
+
+            if ":boolean" in path:
+                convert_type = "boolean"
+                path.replace(":boolean", "")
+
+            value = context.get_value(path, context, process, item)
+
+            if convert_type == "number":
+                return int(value)
+
+            if convert_type == "boolean":
+                return bool(value)
+
+            buffer.append("{}{}".format(value, part[index + 1:]))
+            pass
+        else:
+            buffer.append(part)
+
+    return ''.join(buffer)
 
 def copy_parameters(process, parameters):
     if parameters is None:
@@ -97,3 +150,19 @@ def ensure_path(obj, parts):
         obj[prop] = {}
         del parts[0]
         return ensure_path(obj[prop], parts)
+
+def parse_id(args, context, process, item):
+    if "query" in args:
+        args["query"] = context.get_value(args["query"], context, process, item)
+    elif "id" in args:
+        args["id"] = context.get_value(args["id"], context, process, item)
+
+def parse_args(args, context, process, item):
+    keys = args.keys()
+
+    for key in keys:
+        if key == "id" or key == "query":
+            continue
+
+        value = context.get_value(args[key], context, process, item)
+        args[key] = value

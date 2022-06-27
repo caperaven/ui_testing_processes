@@ -19,6 +19,14 @@ class Api:
     def current_step(self):
         return self.current["step"]
 
+    @property
+    def get_value(self):
+        return self.process.get_value
+
+    @property
+    def set_value(self):
+        return self.process.set_value
+
     def __init__(self):
         self.process_schema_registry = SchemaRegistry()
         self.process = ProcessRunner()
