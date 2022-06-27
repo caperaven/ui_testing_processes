@@ -3,7 +3,7 @@
 
   "main": {
     "data": {
-
+      "legend_count": 5
     },
 
     "steps": {
@@ -11,7 +11,7 @@
         "type": "perform",
         "action": "navigate",
         "args": {
-          "url": "http://127.0.0.1:8000/#schema"
+          "url": "${state.server}/#schema"
         },
         "next_step": "wait_pie_drawn"
       },
@@ -21,7 +21,7 @@
         "action": "element_count",
         "args": {
           "query": "#chart path",
-          "count": 5
+          "count": "$data.legend_count"
         },
         "next_step": "wait_legend_drawn"
       },
@@ -31,25 +31,30 @@
         "action": "element_count",
         "args": {
           "query": ".legend",
-          "count": "${process.data.count:number}"
+          "count": "${data.legend_count:number}"
         },
-        "next_step": "click_first_legend"
+        "next_step": "copy_to_variables"
       },
 
       "copy_to_variables": {
         "type": "system",
-        "action": "attributes_to_variable",
+        "action": "attributes_to_variables",
         "args": {
-          ".legend::firstChild": "$process.data.first_legend",
-          ".legend::nthChild(2)": "$process.data.second_legend"
-        }
+          ".legend:first-child": {
+            "data-value": "$data.first_legend"
+          },
+          ".legend:nth-child(2)": {
+            "data-value": "$data.second_legend"
+          }
+        },
+        "next_step": "click_first_legend"
       },
 
       "click_first_legend": {
         "type": "perform",
         "action": "click",
         "args": {
-          "query": ".legend[data-value='${$process.data.first_legend}']"
+          "query": ".legend[data-value='${data.first_legend}']"
         },
         "next_step": "wait_for_selected_opacity_to_be_1"
       },
@@ -58,7 +63,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": ".legend[data-value='PT1H12M32S']",
+          "query": ".legend[data-value='${data.first_legend}']",
           "property": "opacity",
           "value": "1"
         },
@@ -69,7 +74,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": ".legend[data-value='PT17H12M7S']",
+          "query": ".legend[data-value='${data.second_legend}']",
           "property": "opacity",
           "value": "1",
           "eval": "ne"
@@ -81,7 +86,7 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": "#chart path[data-value='PT1H12M32S']",
+          "query": "#chart path[data-value='${data.first_legend}']",
           "property": "opacity",
           "value": "1"
         },
@@ -92,10 +97,18 @@
         "type": "wait",
         "action": "style_property",
         "args": {
-          "query": "#chart path[data-value='PT17H12M7S']",
+          "query": "#chart path[data-value='${data.second_legend}']",
           "property": "opacity",
           "value": "1",
           "eval": "ne"
+        },
+        "next_step": "sleep"
+      },
+      "sleep": {
+        "type": "wait",
+        "action": "time",
+        "args": {
+          "timeout": 30
         }
       }
     }

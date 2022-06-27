@@ -35,6 +35,7 @@ class ProcessRunner:
         parse_id(step_args, context, process, item)
         parse_args(step_args, context, process, item)
 
+        step_args["step"] = context.current_step
         await context.call(step_type, step_action, step_args, context, process, item)
 
         if "next_step" in step:
@@ -60,6 +61,7 @@ class ProcessRunner:
         if expr.__contains__("$process"): obj = process
         if expr.__contains__("$item"): obj = item
         if expr.__contains__("$state"): obj = state
+        if expr.__contains__("$data"): obj = process["data"]
 
         parts = expr.split(".")
         del parts[0]
@@ -69,6 +71,8 @@ class ProcessRunner:
         obj = context
         if expr.__contains__("$process"): obj = process
         if expr.__contains__("$item"): obj = item
+        if expr.__contains__("$state"): obj = state
+        if expr.__contains__("$data"): obj = process["data"]
 
         parts = expr.split(".")
         del parts[0]
@@ -89,11 +93,11 @@ def get_formatted_text(expr, context, process, item):
             convert_type = None
             if ":number" in path:
                 convert_type = "number"
-                path.replace(":number", "")
+                path = path.replace(":number", "")
 
             if ":boolean" in path:
                 convert_type = "boolean"
-                path.replace(":boolean", "")
+                path = path.replace(":boolean", "")
 
             value = context.get_value(path, context, process, item)
 
