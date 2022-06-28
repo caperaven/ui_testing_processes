@@ -23,4 +23,18 @@ class SystemActions:
 
     @staticmethod
     async def properties_to_variables(step, context, process, item):
-        pass
+        args = step["args"].copy()
+
+        queries = args.keys()
+
+        for query in queries:
+            if query == "step": continue
+            element = get_element(context.driver, {"query": query, "step": args["step"]}, context.current_result)
+            if element is not None:
+                element_def = args[query]
+                properties = element_def.keys()
+
+                for prop in properties:
+                    attr = element.get_property(prop)
+                    prop = element_def[prop]
+                    context.set_value(prop, attr, context, process, item)

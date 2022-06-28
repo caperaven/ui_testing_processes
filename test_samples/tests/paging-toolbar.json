@@ -1,0 +1,230 @@
+{
+  "id": "paging_toolbar_tests",
+
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "navigate",
+        "args": {
+          "url": "${state.server}/#bar-chart"
+        },
+        "next_step": "wait_for_size_to_have_text"
+      },
+
+      "wait_for_size_to_have_text": {
+        "type": "wait",
+        "action": "text_value",
+        "args": {
+          "id": "edtSize",
+          "value": "5"
+        },
+        "next_step": "wait_graph1_is_drawn"
+      },
+
+      "wait_graph1_is_drawn": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": "#graph1 #bars > rect",
+          "count": 5
+        },
+        "next_step": "set_page_size_to_1"
+      },
+
+      "set_page_size_to_1": {
+        "type": "perform",
+        "action": "type_text",
+        "args": {
+          "id": "edtSize",
+          "value": "1"
+        },
+        "next_step": "wait_graph1_shows_1_bar"
+      },
+
+      "wait_graph1_shows_1_bar": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": "#graph1 #bars > rect",
+          "count": 1
+        },
+        "next_step": "wait_page_count_to_show_100"
+      },
+
+      "wait_page_count_to_show_100": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "id": "lblPageCount",
+          "value": "of 100"
+        },
+        "next_step": "action_set_page_size_to_10"
+      },
+
+      "action_set_page_size_to_10": {
+        "type": "perform",
+        "action": "type_text",
+        "args": {
+          "id": "edtSize",
+          "value": "10"
+        },
+        "next_step": "wait_graph1_shows_10_bars"
+      },
+
+      "wait_graph1_shows_10_bars": {
+        "type": "wait",
+        "action": "element_count",
+        "args": {
+          "query": "#graph1 #bars > rect",
+          "count": 10
+        },
+        "next_step": "wait_page_count_to_show_10"
+      },
+
+      "wait_page_count_to_show_10": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "id": "lblPageCount",
+          "value": "of 10"
+        },
+        "next_step": "wait_for_edtPage_to_show_1"
+      },
+
+      "wait_for_edtPage_to_show_1": {
+        "type": "wait",
+        "action": "text_value",
+        "args": {
+          "id": "edtPage",
+          "value": "1"
+        },
+        "next_step": "check_that_the_first_item_is_for_code_0"
+      },
+
+      "check_that_the_first_item_is_for_code_0": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "query": "#graph1 > svg > g > g:nth-child(1) > g:nth-child(2) > text",
+          "value": "code 0"
+        },
+        "next_step": "click_on_next_button"
+      },
+
+      "click_on_next_button": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "button[data-action='next']"
+        },
+        "next_value": "wait_for_edtPage_to_show_2"
+      },
+
+      "wait_for_edtPage_to_show_2": {
+        "type": "wait",
+        "action": "text_value",
+        "args": {
+          "id": "edtPage",
+          "value": "2"
+        }
+      },
+
+      "check_that_the_first_item_is_for_code_10": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "query": "#graph1 > svg > g > g:nth-child(1) > g:nth-child(2) > text",
+          "value": "code 10"
+        },
+        "next_step": "click_on_last_button"
+      },
+
+      "click_on_last_button": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "button[data-action='last']"
+        },
+        "next_step": "wait_for_edtPage_to_show_10"
+      },
+
+      "wait_for_edtPage_to_show_10": {
+        "type": "wait",
+        "action": "text_value",
+        "args": {
+          "id": "edtPage",
+          "value": "10"
+        },
+        "next_step": "check_that_the_first_item_is_for_code_90"
+      },
+
+      "check_that_the_first_item_is_for_code_90": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "query": "#graph1 > svg > g > g:nth-child(1) > g:nth-child(2) > text",
+          "value": "code 90"
+        },
+        "next_step": "click_on_previous_button"
+      },
+
+      "click_on_previous_button": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "button[data-action='previous']"
+        },
+        "next_step": "wait_for_edtPage_to_show_9"
+      },
+
+      "wait_for_edtPage_to_show_9": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "id": "edtPage",
+          "value": "9"
+        },
+        "next_step": "check_that_the_first_item_is_for_code_80"
+      },
+
+      "check_that_the_first_item_is_for_code_80": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "query": "#graph1 > svg > g > g:nth-child(1) > g:nth-child(2) > text",
+          "value": "code 80"
+        },
+        "next_step": "click_on_first_button"
+      },
+
+      "click_on_first_button": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "button[data-action='first']"
+        },
+        "next_step": "wait_for_edtPage_to_show_1_again"
+      },
+
+      "wait_for_edtPage_to_show_1_again": {
+        "type": "wait",
+        "action": "text_value",
+        "args": {
+          "id": "edtPage",
+          "value": "1"
+        },
+        "next_step": "check_that_the_first_item_is_for_code_0_again"
+      },
+
+      "check_that_the_first_item_is_for_code_0_again": {
+        "type": "wait",
+        "action": "text_content",
+        "args": {
+          "query": "#graph1 > svg > g > g:nth-child(1) > g:nth-child(2) > text",
+          "value": "code 0"
+        }
+      }
+    }
+  }
+}
