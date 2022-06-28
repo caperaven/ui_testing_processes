@@ -38,3 +38,9 @@ class SystemActions:
                     attr = element.get_property(prop)
                     prop = element_def[prop]
                     context.set_value(prop, attr, context, process, item)
+
+    @staticmethod
+    async def audit(step, context, process, item):
+        args = step["args"].copy()
+        await context.scraper.run(context.driver, args, context.current_result)
+        pass

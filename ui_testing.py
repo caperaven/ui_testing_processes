@@ -12,6 +12,8 @@ import sys
 import tempfile
 import subprocess
 
+from src.test_scraper import TestScraper
+
 folder = tempfile.gettempdir()
 set_results_folder(folder)
 
@@ -31,6 +33,8 @@ class Api:
     def __init__(self):
         self.process_schema_registry = SchemaRegistry()
         self.process = ProcessRunner()
+        self.scraper = TestScraper()
+
         self.intent = {
             "assert": AssertActions,
             "wait": WaitActions,
