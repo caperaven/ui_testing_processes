@@ -13,22 +13,19 @@ class SchemaRegistry:
 
         if "--login" in sys.argv:
             index = sys.argv.index("--login")
-            self.login = get_file_path(sys.argv[index + 1])
+            self.schemas.append(get_file_path(sys.argv[index + 1]))
 
         if "--file" in sys.argv:
             index = sys.argv.index("--file")
-            self.login = sys.argv[index + 1]
-            self.files.append(get_file_path(self.login))
+            self.schemas.append(get_file_path(sys.argv[index + 1]))
 
         if "--folder" in sys.argv:
             index = sys.argv.index("--folder")
-            folder = sys.argv[index + 1]
-            self.load_folder(folder)
+            self.load_folder(sys.argv[index + 1])
 
         if "--templates" in sys.argv:
             index = sys.argv.index("--templates")
-            folder = sys.argv[index + 1]
-            self.load_templates(folder)
+            self.load_templates(sys.argv[index + 1])
 
         if "--server" in sys.argv:
             index = sys.argv.index("--server")
@@ -46,6 +43,7 @@ class SchemaRegistry:
 
     def load_folder(self, folder):
         for root, dirnames, filenames in os.walk(folder):
+            if root.__contains__("template"): continue
             folder = os.path.realpath(root)
             for filename in filenames:
                 file = os.path.join(folder, filename)

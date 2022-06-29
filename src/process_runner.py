@@ -30,7 +30,7 @@ class ProcessRunner:
     async def run_step(self, step, context, process, item):
         step_type = step["type"]
         step_action = step["action"]
-        step_args = step["args"]
+        step_args = step["args"].copy() if "args" in step else {}
 
         parse_id(step_args, context, process, item)
         parse_args(step_args, context, process, item)

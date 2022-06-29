@@ -11,72 +11,60 @@ from src.actions.switch_to import switch_to_default, switch_to_frame, switch_to_
 class PerformActions:
     @staticmethod
     async def navigate(step, context, process, item):
-        args = step["args"].copy()
-        await navigate(context.driver, args, context.current_result)
+        await navigate(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def close_window(step, context, process, item):
-        args = step["args"].copy()
-        await close_window(context.driver, args, context.current_result)
+        await close_window(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def refresh(step, context, process, item):
-        await refresh(context.dirver, {"step": context.current_step}, context.current_result)
+        await refresh(context.dirver, step["args"], context.current_result)
 
     @staticmethod
     async def click(step, context, process, item):
-        args = step["args"].copy()
-        await click(context.driver, args, context.current_result)
+        await click(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def dbl_click(step, context, process, item):
-        args = step["args"].copy()
-        await dbl_click(context.driver, args, context.current_result)
+        await dbl_click(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def context_click(step, context, process, item):
-        args = step["args"].copy()
-        await context_click(context.driver, args, context.current_result)
+        await context_click(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def click_sequence(step, context, process, item):
-        args = step["args"].copy()
-        await click_sequence(context.driver, args, context.current_result)
+        await click_sequence(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def press_key(step, context, process, item):
-        args = step["args"].copy()
-        await press_key(context.driver, args, context.current_result)
+        await press_key(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def print_screen(step, context, process, item):
-        args = step["args"].copy()
-        await print_screen(context.driver, args, context.current_result)
+        await print_screen(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def select_option(step, context, process, item):
-        args = step["args"].copy()
-        await select_option(context.driver, args, context.current_result)
+        await select_option(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def switch_to_frame(step, context, process, item):
-        args = step["args"].copy()
-        await switch_to_frame(context.driver, args, context.current_result)
+        await switch_to_frame(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def switch_to_default(step, context, process, item):
-        args = step["args"].copy()
-        await switch_to_default(context.driver, args, context.current_result)
+        await switch_to_default(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def switch_to_tab(step, context, process, item):
-        args = step["args"].copy()
-        await switch_to_tab(context.driver, args, context.current_result)
+        await switch_to_tab(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def type_text(step, context, process, item):
-        args = step["args"].copy()
+        args = step["args"]
         value = args["value"]
         value = context.process.get_value(value, context, process, item)
         args["value"] = value
-        await type_text(context.driver, args, context.current_result)
+        await type_text(context.driver, step["args"], context.current_result)
