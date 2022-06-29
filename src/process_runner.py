@@ -24,7 +24,7 @@ class ProcessRunner:
         except Exception as e:
             print(traceback.format_exc())
             message = "internal error: {}".format(e)
-            await set_error(context.driver, context.current_result, "start", message)
+            await set_error(context.driver, context.current_result, context.current_step, message)
             pass
 
     async def run_step(self, step, context, process, item):
