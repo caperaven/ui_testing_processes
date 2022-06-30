@@ -1,0 +1,264 @@
+{
+  "id": "ui_testing_definition",
+
+  "templates": {
+      "args": {
+        "id": "tpl:id",
+        "query": "tpl:query"
+      },
+      "query": {
+        "description": "css selector for element to check",
+        "required": false,
+        "alt": ["id"]
+      },
+      "id": {
+        "description": "id of element to check",
+        "required": false,
+        "alt": ["query"]
+      },
+      "attr": {
+        "description": "attribute name",
+        "required": true
+      },
+      "value": {
+        "description": "expected value",
+        "required": true
+      },
+      "count": {
+        "description": "the quantity of items to check",
+        "required": true
+      },
+      "property": {
+        "description": "the property name to check the value on",
+        "required": true
+      }
+  },
+
+  "types": {
+    "assert": {
+      "description": "Check if a value, attribute or property equals expected values",
+      "actions": {
+        "attributes": {
+          "description": "validate multiple attributes checking that their values are as expected",
+          "tpl:args": {
+            "attributes": {
+              "description": "dictionary where the key is the attribute name and the value, the expected attribute value",
+              "required": true
+            }
+          }
+        },
+        "attribute_eq": {
+          "description": "Check that an attribute value and expected value match",
+          "tpl:args": {
+            "attr": "tpl:attr",
+            "value": "tpl:value"
+          }
+        },
+        "attribute_neq": {
+          "description": "Check that an attribute value and expected value do NOT match",
+          "tpl:args": {
+            "attr": "tpl:attr",
+            "value": "tpl:value"
+          }
+        },
+        "child_count_eq": {
+          "description": "check that the number of child elements match the expected count",
+          "tpl:args": {
+            "count": "tpl:count"
+          }
+        },
+        "child_count_neq": {
+          "description": "check that the number of child elements are NOT equal to specified count",
+          "tpl:args": {
+            "count": "tpl:count"
+          }
+        },
+        "style_property_eq": {
+          "description": "check that a element's style property has a expected value",
+          "tpl:args": {
+            "property": "tpl:property",
+            "value": "tpl:value"
+          }
+        },
+        "style_property_neq": {
+          "description": "check that a element's style property is different to the defined value",
+          "tpl:args": {
+            "property": "tpl:property",
+            "value": "tpl:value"
+          }
+        },
+        "element_property_eq": {
+          "description": "check that a element's property has a expected value",
+          "tpl:args": {
+            "property": "tpl:property",
+            "value": "tpl:value"
+          }
+        },
+        "element_property_neq": {
+          "description": "check that a element's property is different to the defined value",
+          "tpl:args": {
+            "property": "tpl:property",
+            "value": "tpl:value"
+          }
+        },
+        "tag_name_eq": {
+          "description": "check that a element tag name is what was expected",
+          "tpl:args": {
+            "value": "expected tag_name"
+          }
+        },
+        "tag_name_neq": {
+          "description": "check that a elements tag name is different to what is defined",
+          "tpl:args": {
+            "value": "tag_name that it should not be"
+          }
+        },
+        "text_content_eq": {
+          "description": "check that the text content of a element matches the defined value",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        },
+        "text_content_neq": {
+          "description": "check that the text content of a element is NOT the defined value",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        },
+        "value_eq": {
+          "description": "check that the value property of a input matches the defined value",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        },
+        "value_neq": {
+          "description": "check that the value property of the input does NOT match the defined value",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        }
+      }
+    },
+    "perform": {
+      "description": "Perform a action",
+      "actions": {
+        "navigate": {
+          "description": "using the browser url, navigate to a page",
+          "args": {
+            "url": {
+              "description": "the url to navigate too",
+              "required": true
+            }
+          }
+        },
+        "close_window": {
+          "description": "for a given index, close that window or tab",
+          "args": {
+            "index": {
+              "description": "the index of the tab to close",
+              "required": true,
+              "allowed_values": ["type:number", "last"]
+            }
+          }
+        },
+        "refresh": {
+          "description": "ask the browser to refresh the page",
+          "args": "none"
+        },
+        "click": {
+          "description": "click on a defined element",
+          "tpl:args": {
+            "ctrl": {
+              "description": "hold ctrl down during the click operation",
+              "required": false,
+              "type": "boolean",
+              "default": false
+            },
+            "alt": {
+              "description": "hold the alt key down during the click operation",
+              "required": false,
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "dbl_click": {
+          "description": "dbl click on a defined element",
+          "tpl:args": {}
+        },
+        "context_click": {
+          "description": "right click on a defined element",
+          "tpl:args": {}
+        },
+        "click_sequence": {
+          "description": "perform a sequence of click events over multiple elements",
+          "args": {
+            "sequence": {
+              "description": "array of queries defining items to click on",
+              "required": true
+            }
+          }
+        },
+        "press_key": {
+          "description": "perform a key press on a defined element",
+          "tpl:args": {
+            "key": {
+              "description": "key value to press",
+              "required": true
+            }
+          }
+        },
+        "print_screen": {
+          "description": "capture the screen as png and save to the rest results folder",
+          "args": {
+            "file": {
+              "description": "file path to save screenshot too",
+              "required": true
+            }
+          }
+        },
+        "select_option": {
+          "description": "select an option from a select element",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        },
+        "switch_to_frame": {
+          "description": "set the focus on a defined frame element so that it becomes the queryable context",
+          "tpl:args": {}
+        },
+        "switch_to_default": {
+          "description": "switch back to the default window, normally used to exit a frame",
+          "args": "none"
+        },
+        "switch_to_tab": {
+          "description": "for the given index, switch to that tab",
+          "args": {
+            "index": {
+              "description": "index number of the tab to switch too",
+              "required": true
+            }
+          }
+        },
+        "type_text": {
+          "description": "type text into a defined input element",
+          "tpl:args": {
+            "value": "tpl:value"
+          }
+        }
+      }
+    },
+    "system": {
+      "description": "System utility functions",
+      "actions": {
+
+      }
+    },
+    "wait": {
+      "description": "Wait for a expected element, attribute, property or value. Fail if value does not appear before timeout",
+      "actions": {
+
+      }
+    }
+  }
+}
