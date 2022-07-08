@@ -4,8 +4,27 @@ import traceback
 
 class ProcessRunner:
     async def run(self, schema, context=None):
-        main = schema["main"]
-        await self.run_process(context, main, None, None)
+        current_result = context.current_result
+
+        if "sequences" in schema:
+            sequences = schema["sequences"]
+            for sequence in sequences:
+                process = sequence["process"]
+
+                current_result[process] = {
+                    "summary": {
+                        "success": True,
+                        "error_count": 0
+                    }
+                }
+
+                context.current_result = current_result[process]
+
+                process = schema[sequence["process"]]
+                await self.run_process(context, process, None, None)
+        else:
+            main = schema["main"]
+            await self.run_process(context, main, None, None)
 
     async def run_process(self, context, process, item, parameters):
         if "parameters_def" in process:

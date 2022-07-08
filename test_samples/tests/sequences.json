@@ -1,0 +1,54 @@
+{
+    "id": "sequences",
+
+    "sequences": [
+        {
+            "caption": "main",
+            "process": "main"
+        },
+        {
+            "caption": "process1",
+            "process": "process1"
+        },
+        {
+            "caption": "process2",
+            "process": "process2"
+        }
+    ],
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/#dom"
+                }
+            }
+        }
+    },
+
+    "process1": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/#input"
+                }
+            }
+        }
+    },
+
+    "process2": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/#before_after_step"
+                }
+            }
+        }
+    }
+}
