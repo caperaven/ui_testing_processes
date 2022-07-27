@@ -1,0 +1,53 @@
+{
+    "id": "test element value validation",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/elements.html"
+                },
+                "next_step": "properties_to_variables"
+            },
+            "properties_to_variables": {
+                "type": "system",
+                "action": "properties_to_variables",
+                "args": {
+                     "#value-element": {
+                         "textContent": "$data.myVar"
+                     }
+                },
+                "next_step": "validate_input"
+            },
+            "validate_input": {
+                "type": "assert",
+                "action": "element_property_eq",
+                "args": {
+                    "id": "my-input",
+                    "property": "value",
+                    "value": "$data.myVar"
+                },
+                "next_step": "type_in_value"
+            },
+            "type_in_value": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "id": "my-input",
+                    "value": "Hello World"
+                },
+                "next_step": "validate_input_after_type_text"
+            },
+            "validate_input_after_type_text": {
+                "type": "assert",
+                "action": "element_property_eq",
+                "args": {
+                    "id": "my-input",
+                    "property": "value",
+                    "value": "Hello World"
+                }
+            }
+        }
+    }
+}

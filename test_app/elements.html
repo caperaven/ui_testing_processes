@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elements Test</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+<span id="value-element">${myValue}</span>
+<label>
+    My Input
+    <input id="my-input" value.bind="myValue"/>
+</label>
+<script type="module">
+    import "./node_modules/crs-binding/crs-binding.js";
+    import ElementsViewModel from "./elements.js";
+
+    async function load() {
+        document.viewModel = new ElementsViewModel(document.body);
+
+        window.addEventListener("load", (event) => {
+            document.viewModel.connectedCallback();
+            document.body.setAttribute("idle", "true");
+        });
+    }
+
+    load();
+</script>
+</body>
+</html>

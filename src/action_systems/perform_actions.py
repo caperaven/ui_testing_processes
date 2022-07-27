@@ -6,6 +6,7 @@ from src.actions.type import type_text
 from src.actions.print_screen import print_screen
 from src.actions.select_option import select_option
 from src.actions.switch_to import switch_to_default, switch_to_frame, switch_to_tab
+from src.utils import update_args_value
 
 
 class PerformActions:
@@ -63,8 +64,5 @@ class PerformActions:
 
     @staticmethod
     async def type_text(step, context, process, item):
-        args = step["args"]
-        value = args["value"]
-        value = context.process.get_value(value, context, process, item)
-        args["value"] = value
+        update_args_value(step, context, process, item, "value")
         await type_text(context.driver, step["args"], context.current_result)
