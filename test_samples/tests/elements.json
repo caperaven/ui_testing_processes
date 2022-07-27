@@ -27,6 +27,25 @@
                     "id": "my-input",
                     "property": "value",
                     "value": "$data.myVar"
+                },
+                "next_step": "type_in_value"
+            },
+            "type_in_value": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "id": "my-input",
+                    "value": "Hello World"
+                },
+                "next_step": "validate_input_after_type_text"
+            },
+            "validate_input_after_type_text": {
+                "type": "assert",
+                "action": "element_property_eq",
+                "args": {
+                    "id": "my-input",
+                    "property": "value",
+                    "value": "Hello World"
                 }
             }
         }
