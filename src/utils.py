@@ -23,3 +23,11 @@ def has_shadow_root(element):
         result = False
 
     return result
+
+
+def update_args_value(step, context, process, item, key):
+    args = step["args"]
+    value = args[key]
+    value = context.process.get_value(value, context, process, item)
+    args[key] = value
+    step["args"] = args

@@ -5,6 +5,7 @@ from src.assertions.assert_property import assert_property_eq, assert_property_n
 from src.assertions.assert_tag_name import assert_tag_name_eq, assert_tag_name_neq
 from src.assertions.assert_text import assert_text_eq, assert_text_neq
 from src.assertions.assert_value import assert_value_eq, assert_value_neq
+from src.utils import update_args_value
 
 
 class AssertActions:
@@ -38,6 +39,7 @@ class AssertActions:
 
     @staticmethod
     async def element_property_eq(step, context, process, item):
+        update_args_value(step, context, process, item, "value")
         await assert_property_eq(context.driver, step["args"], context.current_result)
 
     @staticmethod
