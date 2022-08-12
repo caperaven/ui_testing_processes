@@ -40,6 +40,28 @@ class SystemActions:
                     context.set_value(prop, attr, context, process, item)
 
     @staticmethod
+    async def dimensions_to_variables(step, context, process, item):
+        args = step["args"].copy()
+
+        queries = args.keys()
+
+        for query in queries:
+            if query == "step": continue
+            element = get_element(context.driver, {"query": query, "step": args["step"]}, context.current_result)
+            if element is not None:
+                location = element.location
+                size = element.size
+                prop = args[query]["variable"]
+                obj = {
+                    "x": location["x"],
+                    "y": location["y"],
+                    "width": size["width"],
+                    "height": size["height"]
+                }
+                context.set_value(prop, obj, context, process, item)
+
+
+    @staticmethod
     async def audit(step, context, process, item):
         args = step["args"].copy()
         await context.scraper.run(context.driver, args, context.current_result)

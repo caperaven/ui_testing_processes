@@ -155,7 +155,13 @@ def get_value_on_path(obj, parts):
     if obj is None: return None
 
     property = parts[0]
-    value = obj[property]
+
+    value = None
+    if property in obj:
+        value = obj[property]
+    else:
+        return value
+
     del parts[0]
 
     if len(parts) == 0:

@@ -1,0 +1,34 @@
+{
+    "id": "move tests",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/#resize"
+                },
+                "next_step": "get_dimensions"
+            },
+            "get_dimensions": {
+                "type": "system",
+                "action": "dimensions_to_variables",
+                "args": {
+                    ".parent .resize": {
+                        "variable": "$data.dim"
+                    }
+                },
+                "next_step": "drag_and_drop"
+            },
+            "drag_and_drop": {
+                "type": "perform",
+                "action": "drag_drop",
+                "args": {
+                    "query": ".parent .resize",
+                    "from": "$data.dim",
+                    "to":
+                }
+            }
+        }
+    }
+}

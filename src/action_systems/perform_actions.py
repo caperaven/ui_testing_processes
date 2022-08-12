@@ -6,8 +6,8 @@ from src.actions.type import type_text
 from src.actions.print_screen import print_screen
 from src.actions.select_option import select_option
 from src.actions.switch_to import switch_to_default, switch_to_frame, switch_to_tab
+from src.actions.mouse_functions import drag_drop
 from src.utils import update_args_value
-
 
 class PerformActions:
     @staticmethod
@@ -66,3 +66,7 @@ class PerformActions:
     async def type_text(step, context, process, item):
         update_args_value(step, context, process, item, "value")
         await type_text(context.driver, step["args"], context.current_result)
+
+    @staticmethod
+    async def drag_drop(step, context, process, item):
+        drag_drop(context.driver, step["args"], context.current_result)
