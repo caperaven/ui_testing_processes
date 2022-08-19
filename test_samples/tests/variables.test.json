@@ -1,0 +1,22 @@
+{
+    "id": "test element value validation",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "system",
+                "action": "set_variables",
+                "args": {
+                    "$data.var1": 10
+                },
+                "next_step": "assert"
+            },
+            "assert": {
+                "type": "assert",
+                "action": "variables",
+                "args": {
+                    "$data.var1": 20
+                }
+            }
+        }
+    }
+}

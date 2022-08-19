@@ -60,6 +60,16 @@ class SystemActions:
                 }
                 context.set_value(prop, obj, context, process, item)
 
+    @staticmethod
+    async def set_variables(step, context, process, item):
+        args = step["args"].copy()
+        variables = args.keys()
+
+        for variable in variables:
+            if variable == "step": continue
+            value = args[variable]
+            context.set_value(variable, value, context, process, item)
+
 
     @staticmethod
     async def audit(step, context, process, item):

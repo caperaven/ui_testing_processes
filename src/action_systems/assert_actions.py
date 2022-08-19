@@ -6,7 +6,7 @@ from src.assertions.assert_tag_name import assert_tag_name_eq, assert_tag_name_n
 from src.assertions.assert_text import assert_text_eq, assert_text_neq
 from src.assertions.assert_value import assert_value_eq, assert_value_neq
 from src.utils import update_args_value
-
+from src.errors import set_error
 
 class AssertActions:
     @staticmethod
@@ -69,3 +69,23 @@ class AssertActions:
     @staticmethod
     async def value_neq(step, context, process, item):
         await assert_value_eq(context.driver, step["args"], context.current_result)
+
+    @staticmethod
+    async def variables(step, context, process, item):
+        args = step["args"].copy()
+        variables = args.keys()
+
+        errors = []
+
+        for variable in variables:
+            if variable == "step": continue
+
+            expected = args[variable]
+            value = context.get_value(variable, context, process, item)
+
+            if value != expected:
+                errors.append("error: value '{}' was ({}) should be ({})".format(variable, value, expected))
+
+        if len(errors) > 0:
+            await set_error(context.driver, context.current_result, args["step"], errors)
+        pass
