@@ -14,7 +14,7 @@
                 "type": "system",
                 "action": "dimensions_to_variables",
                 "args": {
-                    ".parent .resize": {
+                    ".parent": {
                         "variable": "$data.dim"
                     }
                 },
@@ -25,7 +25,7 @@
                 "action": "drag_by",
                 "args": {
                     "query": ".parent .resize",
-                    "x": 10,
+                    "x": 100,
                     "y": 10
                 },
                 "next_step": "get_moved_dimensions"
@@ -34,7 +34,7 @@
                 "type": "system",
                 "action": "dimensions_to_variables",
                 "args": {
-                    ".parent .resize": {
+                    ".parent": {
                         "variable": "$data.moved_dim"
                     }
                 },
@@ -44,8 +44,7 @@
                 "type": "assert",
                 "action": "variables_neq",
                 "args": {
-                    "$data.dim.x": "$data.moved_dim.x",
-                    "$data.dim.y": "$data.moved_dim.y"
+                    "$data.dim": "$data.moved_dim"
                 }
             }
         }
