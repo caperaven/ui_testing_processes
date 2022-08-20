@@ -6,10 +6,7 @@
                 "type": "system",
                 "action": "set_variables",
                 "args": {
-                    "$data.var1": {
-                        "x": 10,
-                        "y": 10
-                    }
+                    "$data.var1": 10
                 },
                 "next_step": "add"
             },
@@ -17,7 +14,7 @@
                 "type": "system",
                 "action": "add_too_variable",
                 "args": {
-                    "$data.var1.x": 10
+                    "$data.var1": 10
                 },
                 "next_step": "assert"
             },
@@ -25,8 +22,7 @@
                 "type": "assert",
                 "action": "variables",
                 "args": {
-                    "$data.var1.x": 20,
-                    "$data.var1.y": 10
+                    "$data.var1": 20
                 }
             }
         }

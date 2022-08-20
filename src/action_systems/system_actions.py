@@ -76,3 +76,16 @@ class SystemActions:
         args = step["args"].copy()
         await context.scraper.run(context.driver, args, context.current_result)
         pass
+
+    @staticmethod
+    async def add_too_variable(step, context, process, item):
+        args = step["args"].copy()
+        variables = args.keys()
+
+        for variable in variables:
+            if variable == "step": continue
+            value = context.get_value(variable, context, process, item)
+            add_value = args[variable]
+            result = value + add_value
+            context.set_value(variable, result, context, process, item)
+        pass

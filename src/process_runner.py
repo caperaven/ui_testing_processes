@@ -175,10 +175,11 @@ def ensure_path(obj, parts):
         return obj
 
     prop = parts[0]
-    if hasattr(obj, prop) is False or obj[prop] is None:
+    if prop in obj is False or obj[prop] is None:
         obj[prop] = {}
-        del parts[0]
-        return ensure_path(obj[prop], parts)
+
+    del parts[0]
+    return ensure_path(obj[prop], parts)
 
 def parse_id(args, context, process, item):
     if "query" in args:
