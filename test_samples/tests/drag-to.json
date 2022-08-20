@@ -1,0 +1,53 @@
+{
+    "id": "move tests",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000/#resize"
+                },
+                "next_step": "get_dimensions"
+            },
+            "get_dimensions": {
+                "type": "system",
+                "action": "dimensions_to_variables",
+                "args": {
+                    ".parent .resize": {
+                        "variable": "$data.dim"
+                    }
+                },
+                "next_step": "drag_and_drop"
+            },
+            "drag_and_drop": {
+                "type": "perform",
+                "action": "drag_by",
+                "args": {
+                    "query": ".parent .resize",
+                    "x": 10,
+                    "y": 10
+                },
+                "next_step": "get_moved_dimensions"
+            },
+            "get_moved_dimensions": {
+                "type": "system",
+                "action": "dimensions_to_variables",
+                "args": {
+                    ".parent .resize": {
+                        "variable": "$data.moved_dim"
+                    }
+                },
+                "next_step": "assert_difference"
+            },
+            "assert_difference": {
+                "type": "assert",
+                "action": "variables_neq",
+                "args": {
+                    "$data.dim.x": "$data.moved_dim.x",
+                    "$data.dim.y": "$data.moved_dim.y"
+                }
+            }
+        }
+    }
+}

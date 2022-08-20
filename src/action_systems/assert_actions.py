@@ -80,11 +80,31 @@ class AssertActions:
         for variable in variables:
             if variable == "step": continue
 
-            expected = args[variable]
+            expected = context.get_value(args[variable], context, process, item)
             value = context.get_value(variable, context, process, item)
 
             if value != expected:
                 errors.append("error: value '{}' was ({}) should be ({})".format(variable, value, expected))
+
+        if len(errors) > 0:
+            await set_error(context.driver, context.current_result, args["step"], errors)
+        pass
+
+    @staticmethod
+    async def variables_neq(step, context, process, item):
+        args = step["args"].copy()
+        variables = args.keys()
+
+        errors = []
+
+        for variable in variables:
+            if variable == "step": continue
+
+            expected = context.get_value(args[variable], context, process, item)
+            value = context.get_value(variable, context, process, item)
+
+            if value == expected:
+                errors.append("error: value '{}' was ({}) should not be ({})".format(variable, value, expected))
 
         if len(errors) > 0:
             await set_error(context.driver, context.current_result, args["step"], errors)

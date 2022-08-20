@@ -1,5 +1,6 @@
 from typing import Any
 from src.elements import get_element
+import time
 
 
 class SystemActions:
@@ -89,3 +90,9 @@ class SystemActions:
             result = value + add_value
             context.set_value(variable, result, context, process, item)
         pass
+
+    @staticmethod
+    async def sleep(step, context, process, item):
+        args = step["args"].copy()
+        duration = args["duration"]
+        time.sleep(duration)
