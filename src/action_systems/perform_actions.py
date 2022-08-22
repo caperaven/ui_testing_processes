@@ -6,7 +6,7 @@ from src.actions.type import type_text
 from src.actions.print_screen import print_screen
 from src.actions.select_option import select_option
 from src.actions.switch_to import switch_to_default, switch_to_frame, switch_to_tab
-from src.actions.mouse_functions import drag_by, hover_over_element
+from src.actions.mouse_functions import drag_by, hover_over_element, mouse_drag
 from src.utils import update_args_value
 
 class PerformActions:
@@ -74,3 +74,7 @@ class PerformActions:
     @staticmethod
     async def hover_over_element(step, context, process, item):
         await hover_over_element(context.driver, step["args"], context.current_result)
+
+    @staticmethod
+    async def mouse_drag(step, context, process, item):
+        await mouse_drag(context.driver, step["args"], context.current_result)

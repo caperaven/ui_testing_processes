@@ -1,0 +1,48 @@
+{
+    "id": "drag canvas tests",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "https://crs-binding-examples.web.app/#canvas"
+                },
+                "next_step": "wait"
+            },
+            "wait": {
+                "type": "wait",
+                "action": "element",
+                "args": {
+                    "query": "crs-router canvas"
+                },
+                "next_step": "sleep1"
+            },
+            "sleep1": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+                    "duration": 0.2
+                },
+                "next_step": "drag"
+            },
+            "drag": {
+                "type": "perform",
+                "action": "mouse_drag",
+                "args": {
+                    "query": "crs-router canvas",
+                    "start_at": {"x": 100, "y": 100},
+                    "move_to": {"x": 200, "y": 200}
+                },
+                "next_step": "sleep2"
+            },
+            "sleep2": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+                    "duration": 2
+                }
+            }
+        }
+    }
+}
