@@ -1,0 +1,29 @@
+{
+    "id": "move tests",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8000"
+                },
+                "next_step": "hover"
+            },
+            "hover": {
+                "type": "perform",
+                "action": "hover_over_element",
+                "args": {
+                    "query": "#btnLogin"
+                }
+            },
+            "sleep": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+                    "duration": 1000
+                }
+            }
+        }
+    }
+}

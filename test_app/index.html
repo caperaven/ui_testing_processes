@@ -37,6 +37,10 @@
             display: flex;
             flex-direction: column;
         }
+
+        #btnLogin:hover {
+            background: hotpink;
+        }
     </style>
 </head>
 <body>
@@ -60,20 +64,5 @@
 
     </main>
     <footer></footer>
-
-    <script type="module">
-        import "./node_modules/crs-binding/crs-binding.js";
-        import IndexViewModel from "./index.js";
-
-        async function load() {
-            document.viewModel = new IndexViewModel(document.body);
-
-            window.addEventListener("load", (event) => {
-                document.viewModel.connectedCallback();
-                document.body.setAttribute("idle", "true");
-            });
-        }
-        load();
-    </script>
 </body>
 </html>
