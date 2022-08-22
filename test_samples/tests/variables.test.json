@@ -15,7 +15,7 @@
             },
             "add": {
                 "type": "system",
-                "action": "add_too_variable",
+                "action": "add_too_variables",
                 "args": {
                     "$data.var1.x": 10
                 },

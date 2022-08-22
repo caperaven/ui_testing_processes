@@ -79,7 +79,7 @@ class SystemActions:
         pass
 
     @staticmethod
-    async def add_too_variable(step, context, process, item):
+    async def add_too_variables(step, context, process, item):
         args = step["args"].copy()
         variables = args.keys()
 

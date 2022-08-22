@@ -12,3 +12,6 @@ async def drag_by(driver, args, results):
 
     action.move_to_element(element).drag_and_drop_by_offset(element, x, y).perform()
     pass
+
+async def hover_over_element(driver, args, results):
+    pass

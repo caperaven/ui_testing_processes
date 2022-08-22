@@ -71,7 +71,7 @@ class AssertActions:
         await assert_value_eq(context.driver, step["args"], context.current_result)
 
     @staticmethod
-    async def variables(step, context, process, item):
+    async def variables_eq(step, context, process, item):
         args = step["args"].copy()
         variables = args.keys()
 
