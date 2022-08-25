@@ -4,3 +4,4 @@ dist
 ui_testing.spec
 __pycache__/
 test_app/package-lock.json
+pragma-ui-testing
