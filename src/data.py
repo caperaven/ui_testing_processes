@@ -8,4 +8,5 @@ data = {
 }
 
 state = {
+    "errors": []
 }

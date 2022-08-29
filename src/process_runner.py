@@ -1,5 +1,6 @@
 from src.data import state
 from src.errors import set_error
+from src.logger import Logger
 import traceback
 
 class ProcessRunner:
@@ -21,10 +22,14 @@ class ProcessRunner:
                 context.current_result = current_result[process]
 
                 process = schema[sequence["process"]]
+                Logger.test_started(process["caption"])
                 await self.run_process(context, process, None, None)
+                Logger.test_finished(process["caption"])
         else:
             main = schema["main"]
+            Logger.test_started(schema["id"])
             await self.run_process(context, main, None, None)
+            Logger.test_finished(schema["id"])
 
     async def run_process(self, context, process, item, parameters):
         if "parameters_def" in process:
@@ -44,7 +49,6 @@ class ProcessRunner:
             print(traceback.format_exc())
             message = "internal error: {}".format(e)
             await set_error(context.driver, context.current_result, context.current_step, message)
-            pass
 
     async def run_step(self, step, context, process, item):
         step_type = step["type"]

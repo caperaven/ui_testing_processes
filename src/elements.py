@@ -47,4 +47,3 @@ def get_element(driver, args, results):
         print(e)
         set_error_sync(driver, results, args["step"], "error: element '{}' not found".format(query))
         return None
-        pass
