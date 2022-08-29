@@ -3,6 +3,7 @@ from src.errors import set_error
 from src.logger import Logger
 import traceback
 
+
 class ProcessRunner:
     async def run(self, schema, context=None):
         current_result = context.current_result
@@ -22,14 +23,14 @@ class ProcessRunner:
                 context.current_result = current_result[process]
 
                 process = schema[sequence["process"]]
-                Logger.test_started(process["caption"])
+                Logger.test_started("{} {}".format(schema["name"], sequence["process"]))
                 await self.run_process(context, process, None, None)
-                Logger.test_finished(process["caption"])
+                Logger.test_finished("{} {}".format(schema["name"], sequence["process"]))
         else:
             main = schema["main"]
-            Logger.test_started(schema["id"])
+            Logger.test_started(schema["name"])
             await self.run_process(context, main, None, None)
-            Logger.test_finished(schema["id"])
+            Logger.test_finished(schema["name"])
 
     async def run_process(self, context, process, item, parameters):
         if "parameters_def" in process:

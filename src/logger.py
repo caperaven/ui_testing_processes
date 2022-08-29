@@ -12,7 +12,7 @@ class Logger:
     def test_finished(name):
         if len(state["errors"]) > 0:
             name = Logger.sanitize(name)
-            error_text = Logger.sanitize(state["errors"][0])
+            error_text = Logger.sanitize(" ".join(state["errors"]))
             print("##teamcity[testFailed name='{}' message='{}']".format(name, error_text))
 
         print("##teamcity[testFinished name='{}']".format(Logger.sanitize(name)))

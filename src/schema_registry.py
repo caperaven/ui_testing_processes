@@ -65,6 +65,7 @@ class SchemaRegistry:
             return None
 
         schema = from_file(self.schemas[self.current_index])
+        schema["name"] = os.path.basename(self.schemas[self.current_index])
         self.current_index += 1
         return schema.copy()
 
