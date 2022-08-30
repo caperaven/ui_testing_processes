@@ -10,9 +10,10 @@
         "steps": {
             "start": {
                 "type": "perform",
-                "action": "click",
+                "action": "select_option",
                 "args": {
-                    "query": ""
+                    "query": "",
+                    "value": "test"
                 }
             },
             "test": {

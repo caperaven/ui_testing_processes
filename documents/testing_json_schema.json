@@ -1,4 +1,5 @@
 {
+    "gen": "https://coveooss.github.io/json-schema-for-humans/#/",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "crs testing schema",
     "title": "crs testing schema",
@@ -37,6 +38,38 @@
     "required": ["id", "main"],
 
     "$defs": {
+        "query": {
+            "description": "query selector of element",
+            "type": "string"
+        },
+
+        "value": {
+            "description": "value to enter or select",
+        },
+
+        "queried": {
+            "properties": {
+                "args": {
+                    "properties": {
+                        "query": { "$ref": "#/$defs/query" }
+                    },
+                    "required": ["query"]
+                }
+            }
+        },
+
+        "queried-value": {
+            "properties": {
+                "args": {
+                    "properties": {
+                        "query": { "$ref": "#/$defs/query" },
+                        "value": { "$ref": "#/$defs/value" }
+                    },
+                    "required": ["query", "value"]
+                }
+            }
+        },
+
         "schema": {
             "properties": {
                 "steps": {
@@ -85,6 +118,7 @@
                     "then": {
                         "properties": {
                             "action": {
+                                "type": "string",
                                 "enum": [
                                     "time",
                                     "is_ready",
@@ -111,6 +145,7 @@
                     "then": {
                         "properties": {
                             "action": {
+                                "type": "string",
                                 "enum": [
                                     "navigate",
                                     "close_window",
@@ -143,6 +178,7 @@
                     "then": {
                         "properties": {
                             "action": {
+                                "type": "string",
                                 "enum": [
                                     "attributes_to_variables",
                                     "properties_to_variables",
@@ -165,6 +201,7 @@
                     "then": {
                         "properties": {
                             "action": {
+                                "type": "string",
                                 "enum": [
                                     "attributes",
                                     "attribute_eq",
@@ -192,22 +229,142 @@
                     "if": {
                         "properties": {
                             "type": { "const":  "perform" },
-                            "action": { "const":  "click" }
+                            "action": { "const":  "navigate" }
                         }
                     },
                     "then": {
                         "properties": {
                             "args": {
                                 "properties": {
-                                    "query": {
-                                        "description": "query selector of item",
-                                        "type": "string"
-                                    }
+                                    "url": { "type": "string" }
                                 },
-                                "required": ["query"]
+                                "required": ["url"]
                             }
                         }
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "close_window" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "index": { }
+                                },
+                                "required": ["index"]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "click" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "dbl_click" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "context_click" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "click_sequence" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "type": "object",
+                                "properties": {
+                                    "sequence": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": ["sequence"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "press_key" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["key"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "print_screen" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["file"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "select_option" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value"}
                 }
             ]
         }
