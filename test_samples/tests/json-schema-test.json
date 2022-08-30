@@ -1,0 +1,27 @@
+{
+    "id": "My Test Schema",
+    "sequences": [
+        {
+            "caption": "Test",
+            "process": "Test"
+        }
+    ],
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": ""
+                }
+            },
+            "test": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,215 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "crs testing schema",
+    "title": "crs testing schema",
+    "description": "this schema defines validation for crs testing json files",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for a test file",
+            "type": "string"
+        },
+
+        "sequences": {
+            "description": "from a set of processes in this file, run them in this sequence",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "caption": {
+                        "description": "descriptive display name for process",
+                        "type": "string"
+                    },
+                    "process": {
+                        "description": "name of the process to run",
+                        "type": "string"
+                    }
+                },
+                "required": ["caption", "process"]
+            }
+        }
+    },
+
+    "additionalProperties": {
+        "$ref": "#/$defs/schema"
+    },
+
+    "required": ["id", "main"],
+
+    "$defs": {
+        "schema": {
+            "properties": {
+                "steps": {
+                    "description": "object that defines the process steps",
+                    "type": "object",
+                    "properties": {
+                        "start": {
+                            "description": "object that defines the first process step",
+                            "$ref": "#/$defs/step"
+                        }
+                    },
+                    "required": ["start"],
+                    "additionalProperties": {
+                        "$ref": "#/$defs/step"
+                    }
+                }
+            },
+            "required": ["steps"]
+        },
+
+        "step": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["perform", "wait", "assert", "system"]
+                },
+                "action": {
+                    "type": "string"
+                },
+                "args": {
+                    "type": "object"
+                },
+                "next_step": {
+                    "type": "string"
+                }
+            },
+            "required": ["type", "action", "args"],
+
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const": "wait" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "action": {
+                                "enum": [
+                                    "time",
+                                    "is_ready",
+                                    "element",
+                                    "attribute",
+                                    "attributes",
+                                    "style_property",
+                                    "element_properties",
+                                    "text_content",
+                                    "text_value",
+                                    "selected",
+                                    "child_count"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const": "perform" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "action": {
+                                "enum": [
+                                    "navigate",
+                                    "close_window",
+                                    "refresh",
+                                    "click",
+                                    "dbl_click",
+                                    "context_click",
+                                    "click_sequence",
+                                    "press_key",
+                                    "print_screen",
+                                    "select_option",
+                                    "switch_to_frame",
+                                    "switch_to_default",
+                                    "switch_to_tab",
+                                    "type_text",
+                                    "drag_by",
+                                    "hover_over_element",
+                                    "mouse_drag"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "action": {
+                                "enum": [
+                                    "attributes_to_variables",
+                                    "properties_to_variables",
+                                    "dimensions_to_variables",
+                                    "set_variables",
+                                    "audit",
+                                    "add_to_variables",
+                                    "sleep"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "action": {
+                                "enum": [
+                                    "attributes",
+                                    "attribute_eq",
+                                    "attribute_neq",
+                                    "child_count_eq",
+                                    "child_count_neq",
+                                    "style_property_eq",
+                                    "style_property_neq",
+                                    "element_property_eq",
+                                    "element_property_neq",
+                                    "tag_name_eq",
+                                    "tag_name_neq",
+                                    "text_content_eq",
+                                    "text_content_neq",
+                                    "value_eq",
+                                    "value_neq",
+                                    "variables_eq",
+                                    "variables_neq"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "perform" },
+                            "action": { "const":  "click" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": {
+                                        "description": "query selector of item",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["query"]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

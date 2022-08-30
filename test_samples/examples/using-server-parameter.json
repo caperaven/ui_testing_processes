@@ -1,0 +1,14 @@
+{
+    "id": "inflation-static",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#resize"
+                }
+            }
+        }
+    }
+}
