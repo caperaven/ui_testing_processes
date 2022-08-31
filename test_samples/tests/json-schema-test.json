@@ -3,11 +3,10 @@
     "main": {
         "steps": {
             "start": {
-                "type": "wait",
-                "action": "selected",
+                "type": "assert",
+                "action": "variables_neq",
                 "args": {
-                    "value": false,
-                    "query": ""
+                    "query": "",
                 }
             },
             "end": {

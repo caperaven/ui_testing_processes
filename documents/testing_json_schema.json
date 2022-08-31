@@ -782,6 +782,263 @@
                         },
                         "required": ["args"]
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "attributes" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "attributes": { "type": "object" }
+                                },
+                                "required": ["attributes"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "attribute_eq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "attr", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "attribute_neq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "attr", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "child_count_eq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "count": { "type": "integer" }
+                                },
+                                "required": ["query", "count"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "child_count_neq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "count": { "type": "integer" }
+                                },
+                                "required": ["query", "count"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "style_property_eq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "property": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "property", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "style_property_neq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "property": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "property", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "element_property_eq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "property": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "property", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "element_property_neq" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "property": { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "property", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "tag_name_eq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "tag_name_neq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "text_content_eq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "text_content_neq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "assert_value_eq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "assert_value_eq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "variables_eq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "variables_neq" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried" }
                 }
             ]
         }
