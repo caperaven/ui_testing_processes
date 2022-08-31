@@ -3,10 +3,11 @@
     "main": {
         "steps": {
             "start": {
-                "type": "system",
-                "action": "sleep",
+                "type": "wait",
+                "action": "selected",
                 "args": {
-                    "duration": 1
+                    "value": false,
+                    "query": ""
                 }
             },
             "end": {

@@ -36,7 +36,7 @@ class WaitActions:
         await wait_for_css_property(context.driver, args, context.current_result)
 
     @staticmethod
-    async def element_properties(step, context, process, item):
+    async def element_property(step, context, process, item):
         args = step["args"].copy()
         await wait_for_property(context.driver, args, context.current_result)
 

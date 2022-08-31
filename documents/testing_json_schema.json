@@ -84,6 +84,15 @@
             }
         },
 
+        "query-property-value": {
+            "properties": {
+                "query": { "$ref":  "#/$defs/query" },
+                "property":  {"type":  "string"},
+                "value": {"type":  "string"}
+            },
+            "required": ["query", "property", "value"]
+        },
+
         "schema": {
             "properties": {
                 "steps": {
@@ -140,7 +149,7 @@
                                     "attribute",
                                     "attributes",
                                     "style_property",
-                                    "element_properties",
+                                    "element_property",
                                     "text_content",
                                     "text_value",
                                     "selected",
@@ -520,6 +529,255 @@
                                     }
                                 },
                                 "required": ["duration"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "time" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "timeout": {
+                                        "type": "integer",
+                                        "default": 1
+                                    }
+                                },
+                                "required": ["timeout"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "is_ready" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "element" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "attribute" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref":  "#/$defs/query" },
+                                    "attr":  { "type": "string" },
+                                    "value": { "type": "string" }
+                                },
+                                "required": ["query", "attr", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "attributes" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref":  "#/$defs/query" },
+                                    "attributes":  { "type": "object" }
+                                },
+                                "required": ["query", "attributes"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "style_property" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": { "$ref": "#/$defs/query-property-value" }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "element_property" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": { "$ref": "#/$defs/query-property-value" }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "text_content" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried-value" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "text_value" }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queried-value"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "selected" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "value": { "type": "boolean" }
+                                },
+                                "required": ["query", "value"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "child_count" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "count": { "type": "integer" }
+                                },
+                                "required": ["query", "count"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "element_count" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "count": { "type": "integer" }
+                                },
+                                "required": ["query", "count"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "window_count" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "count": { "type": "integer" }
+                                },
+                                "required": ["count"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "has_attribute" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" }
+                                },
+                                "required": ["query", "attr"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "wait" },
+                            "action": { "const":  "has_not_attribute" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" }
+                                },
+                                "required": ["query", "attr"]
                             }
                         },
                         "required": ["args"]
