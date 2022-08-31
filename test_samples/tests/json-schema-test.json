@@ -1,26 +1,28 @@
 {
-    "id": "My Test Schema",
-    "sequences": [
-        {
-            "caption": "Test",
-            "process": "Test"
-        }
-    ],
+    "id": "my new cool tests",
     "main": {
         "steps": {
             "start": {
                 "type": "perform",
-                "action": "select_option",
+                "action": "mouse_drag",
                 "args": {
                     "query": "",
-                    "value": "test"
-                }
+                    "start_at": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "move_to": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "next_step": "assert_something"
             },
-            "test": {
-                "type": "system",
-                "action": "sleep",
+            "assert_something": {
+                "type": "perform",
+                "action": "click",
                 "args": {
-
+                    "query": "10"
                 }
             }
         }
