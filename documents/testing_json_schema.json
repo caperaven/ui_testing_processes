@@ -466,6 +466,64 @@
                             }
                         }
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "attributes_to_variables" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "properties_to_variables" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "dimensions_to_variables" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "audit" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/queried"}
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "sleep" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "duration": {
+                                        "type": "integer",
+                                        "default": 1
+                                    }
+                                },
+                                "required": ["duration"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
                 }
             ]
         }

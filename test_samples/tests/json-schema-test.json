@@ -3,22 +3,13 @@
     "main": {
         "steps": {
             "start": {
-                "type": "perform",
-                "action": "mouse_drag",
+                "type": "system",
+                "action": "sleep",
                 "args": {
-                    "query": "",
-                    "start_at": {
-                        "x": 0,
-                        "y": 0
-                    },
-                    "move_to": {
-                        "x": 0,
-                        "y": 0
-                    }
-                },
-                "next_step": "assert_something"
+                    "duration": 1
+                }
             },
-            "assert_something": {
+            "end": {
                 "type": "perform",
                 "action": "click",
                 "args": {
