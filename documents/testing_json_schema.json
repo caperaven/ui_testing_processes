@@ -143,17 +143,22 @@
                             "action": {
                                 "type": "string",
                                 "enum": [
-                                    "time",
-                                    "is_ready",
-                                    "element",
-                                    "attribute",
-                                    "attributes",
-                                    "style_property",
-                                    "element_property",
-                                    "text_content",
-                                    "text_value",
-                                    "selected",
-                                    "child_count"
+									"time",
+									"is_ready",
+									"element",
+									"attribute",
+									"attributes",
+									"style_property",
+									"element_property",
+									"text_content",
+									"text_value",
+									"selected",
+									"child_count",
+									"element_count",
+									"window_count",
+									"idle",
+									"has_attribute",
+									"has_not_attribute"
                                 ]
                             }
                         }
@@ -483,7 +488,12 @@
                             "action": { "const":  "attributes_to_variables" }
                         }
                     },
-                    "then": { "$ref": "#/$defs/queried"}
+                    "then": {
+                        "properties": {
+                            "args": {"type": "object"}
+                        },
+                        "required": ["args"]
+                    }
                 },
                 {
                     "if": {
