@@ -84,6 +84,36 @@
                     "query": "#style2",
                     "attr": "style",
                     "value": "color: blue;"
+                },
+                "next_step": "case1"
+            },
+            "case1": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#case1",
+                    "attr": "style",
+                    "value": "color: green;"
+                },
+                "next_step": "case2"
+            },
+            "case2": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#case2",
+                    "attr": "class",
+                    "value": "green"
+                },
+                "next_step": "case3"
+            },
+            "case3": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#case3",
+                    "attr": "data-value",
+                    "value": "green"
                 }
             }
         }
