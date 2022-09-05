@@ -99,6 +99,7 @@ class Api:
 
     async def run_all(self):
         while schema := self.process_schema_registry.get_next_schema():
+            self.current["schema"] = schema
             id = schema["id"]
             self.results[id] = {
                 "summary": {
@@ -110,10 +111,37 @@ class Api:
             self.current_result = self.results[id]
             await self.process.run(schema, self)
 
+    async def run_process(self, args):
+        process = args["process"]
+        key = self.current_step
+
+        self.results[key] = {
+            "summary": {
+                "success": True,
+                "error_count": 0,
+                "process": process
+            }
+        }
+
+        self.results[key][process] = {
+            "summary": {
+                "success": True,
+                "error_count": 0,
+                "process": process
+            }
+        }
+
+        self.current_result = self.results[key][process]
+        process = self.current["schema"][process]
+
+        parameters = args["parameters"] if "parameters" in args else None
+
+        await self.process.run_process(self, process, None, parameters)
+        pass
+
     def close(self):
         save_results(self.results)
         self.driver.close()
-
 
 try:
     crs = Api()

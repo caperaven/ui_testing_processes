@@ -96,3 +96,9 @@ class SystemActions:
         args = step["args"].copy()
         duration = args["duration"]
         time.sleep(duration)
+
+    @staticmethod
+    async def process(step, context, process, item):
+        args = step["args"].copy()
+        await context.run_process(args)
+        pass

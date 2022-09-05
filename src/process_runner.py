@@ -36,7 +36,7 @@ class ProcessRunner:
         if "parameters_def" in process:
             success = copy_parameters(process, parameters)
             if success is not True:
-                context.log_error(success)
+                await set_error(context.driver, context.current_result, context.current_step, success)
 
         start = process["steps"]["start"]
         context.current["step"] = "start"
@@ -199,5 +199,8 @@ def parse_args(args, context, process, item):
         if key == "id" or key == "query":
             continue
 
-        value = context.get_value(args[key], context, process, item)
-        args[key] = value
+        if key == "parameters":
+            parse_args(args["parameters"], context, process, item)
+        else:
+            value = context.get_value(args[key], context, process, item)
+            args[key] = value

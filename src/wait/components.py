@@ -54,9 +54,11 @@ async def wait_for_attribute(driver, args, results):
         WebDriverWait(driver, timeout).until(_attribute_condition(args, results))
         results[args["step"]] = "success"
     except Exception as e:
+        element = get_element(driver, args, results)
+        value = element.get_attribute(args["attr"])
         print("wait_for_attribute failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be '{}' on '{}', {}".format(args["attr"], args["value"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be '{}' on '{}', {} - value was '{}'".format(args["attr"], args["value"], name, e.__class__.__name__, value))
         pass
 
 

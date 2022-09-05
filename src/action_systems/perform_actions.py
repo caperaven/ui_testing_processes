@@ -64,7 +64,6 @@ class PerformActions:
 
     @staticmethod
     async def type_text(step, context, process, item):
-        update_args_value(step, context, process, item, "value")
         await type_text(context.driver, step["args"], context.current_result)
 
     @staticmethod

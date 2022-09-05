@@ -226,7 +226,8 @@
                                     "set_variables",
                                     "audit",
                                     "add_to_variables",
-                                    "sleep"
+                                    "sleep",
+                                    "process"
                                 ]
                             }
                         }
@@ -560,7 +561,30 @@
                         "required": ["args"]
                     }
                 },
-
+                                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "system" },
+                            "action": { "const":  "process" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "process": {
+                                        "type": "string"
+                                    },
+                                    "parameters": {
+                                        "type": "object"
+                                    }
+                                },
+                                "required": ["process"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
                 {
                     "if": {
                         "properties": {

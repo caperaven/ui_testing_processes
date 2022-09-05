@@ -1,17 +1,6 @@
 {
     "id": "conditions_tests",
 
-    "sequences": [
-        {
-            "caption": "main",
-            "process": "main"
-        },
-        {
-            "caption": "validate_start_values",
-            "process": "validate_start_values"
-        }
-    ],
-
     "main": {
         "steps": {
             "start": {
@@ -19,12 +8,58 @@
                 "action": "navigate",
                 "args": {
                     "url": "${state.server}/#conditions"
+                },
+                "next_step": "validate_start_values"
+            },
+            "validate_start_values": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "validate_start_values"
+                },
+                "next_step": "update_10"
+            },
+            "update_10": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "update_value",
+                    "parameters": {
+                        "value": 10,
+                        "attributes1": "true",
+                        "attributes2": "true",
+                        "case3": "red"
+                    }
+                },
+                "next_step": "update_20"
+            },
+            "update_20": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "update_value",
+                    "parameters": {
+                        "value": 20,
+                        "attributes1": "true",
+                        "attributes2": "true",
+                        "case3": "blue"
+                    }
+                },
+                "next_step": "update_60"
+            },
+            "update_60": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "update_value",
+                    "parameters": {
+                        "value": 60,
+                        "attributes1": "None",
+                        "attributes2": "false",
+                        "case3": "green"
+                    }
                 }
             }
-        },
-
-        "assert_has_attribute": {
-
         }
     },
 
@@ -120,8 +155,11 @@
     },
     
     "update_value": {
-        "parameters": {
-
+        "parameters_def": {
+            "value": { "required": true },
+            "attributes1": { "required": true },
+            "attributes2": { "required": true },
+            "case3": { "required": true }
         },
         "steps": {
             "start": {
@@ -129,16 +167,63 @@
                 "action": "type_text",
                 "args": {
                     "query": "#edtValue",
-                    "value": "$parameter.value"
+                    "value": "$parameters.value"
+                },
+                "next_step": "assert_attributes"
+            },
+            "assert_attributes": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "assert_attributes",
+                    "parameters": {
+                        "attributes1": "$parameters.attributes1",
+                        "attributes2": "$parameters.attributes2",
+                        "case3": "$parameters.case3"
+                    }
                 }
             }
         }
     },
     
     "assert_attributes": {
+        "parameters_def": {
+            "attributes1": { "required": true },
+            "attributes2": { "required": true },
+            "case3": { "required": true }
+        },
         "steps": {
             "start": {
-                
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#attributes1",
+                    "attr": "disabled",
+                    "value": "$parameters.attributes1",
+                    "timeout": 2
+                },
+                "next_step": "attributes2"
+            },
+            "attributes2": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#attributes2",
+                    "attr": "data-valid",
+                    "value": "$parameters.attributes2",
+                    "timeout": 2
+                },
+                "next_step": "case3"
+            },
+            "case3": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#case3",
+                    "attr": "data-value",
+                    "value": "$parameters.case3",
+                    "timeout": 2
+                }
             }
         }
     },
