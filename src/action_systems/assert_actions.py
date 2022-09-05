@@ -1,4 +1,4 @@
-from src.assertions.assert_attribute import assert_attributes, assert_attr_eq, assert_attr_neq
+from src.assertions.assert_attribute import assert_attributes, assert_attr_eq, assert_attr_neq, assert_has_attr, assert_has_not_attr, assert_has_class, assert_has_not_class
 from src.assertions.assert_child_count import assert_child_count_eq, assert_child_count_neq
 from src.assertions.assert_css import assert_style_eq, assert_style_neq
 from src.assertions.assert_property import assert_property_eq, assert_property_neq
@@ -7,6 +7,7 @@ from src.assertions.assert_text import assert_text_eq, assert_text_neq
 from src.assertions.assert_value import assert_value_eq, assert_value_neq
 from src.utils import update_args_value
 from src.errors import set_error
+from src.elements import get_element
 
 class AssertActions:
     @staticmethod
@@ -20,6 +21,14 @@ class AssertActions:
     @staticmethod
     async def attribute_neq(step, context, process, item):
         await assert_attr_neq(context.driver, step["args"], context.current_result)
+
+    @staticmethod
+    async def has_attribute(step, context, process, item):
+        await has_attr(context.driver, step["args"], context.current_result)
+
+    @staticmethod
+    async def has_not_attribute(step, context, process, item):
+        await assert_has_not_attr(context.driver, step["args"], context.current_result)
 
     @staticmethod
     async def child_count_eq(step, context, process, item):
@@ -88,6 +97,8 @@ class AssertActions:
 
         if len(errors) > 0:
             await set_error(context.driver, context.current_result, args["step"], errors)
+        else:
+            context.current_result[args["step"]] = "success"
         pass
 
     @staticmethod
@@ -108,4 +119,30 @@ class AssertActions:
 
         if len(errors) > 0:
             await set_error(context.driver, context.current_result, args["step"], errors)
+        else:
+            context.current_result[args["step"]] = "success"
         pass
+
+    @staticmethod
+    async def has_class(step, context, process, item):
+        args = step["args"].copy()
+        element = get_element(context.driver, args, context.current_result)
+        cls = element.get_attribute("class")
+        sub = args["class"]
+        if sub in cls:
+            context.current_result[args["step"]] = "success"
+        else:
+            await set_error(context.driver, context.current_result, args["step"], "class '{}' expected on '{}".format(sub, args["query"]));
+        pass;
+
+    @staticmethod
+    async def has_not_class(step, context, process, item):
+        args = step["args"].copy()
+        element = get_element(context.driver, args, context.current_result)
+        cls = element.get_attribute("class")
+        sub = args["class"]
+        if sub not in cls:
+            context.current_result[args["step"]] = "success"
+        else:
+            await set_error(context.driver, context.current_result, args["step"], "class '{}' should not be on '{}".format(sub, args["query"]));
+        pass;

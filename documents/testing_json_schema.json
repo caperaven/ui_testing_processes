@@ -58,6 +58,18 @@
             }
         },
 
+        "attribute": {
+            "properties": {
+                "args": {
+                    "properties": {
+                        "query": { "$ref": "#/$defs/query" },
+                        "attr": { "type": "string" }
+                    },
+                    "required": ["query", "att"]
+                }
+            }
+        },
+
         "point": {
             "properties": {
                 "x": {
@@ -247,7 +259,11 @@
                                     "value_eq",
                                     "value_neq",
                                     "variables_eq",
-                                    "variables_neq"
+                                    "variables_neq",
+                                    "has_attribute",
+                                    "has_not_attribute",
+                                    "has_not_class",
+                                    "has_class"
                                 ]
                             }
                         }
@@ -1049,6 +1065,64 @@
                         }
                     },
                     "then": { "$ref": "#/$defs/queried" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "has_attr" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/attribute" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "has_not_attr" }
+                        }
+                    },
+                    "then": { "$ref": "#/$defs/attribute" }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "has_not_attribute" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" }
+                                },
+                                "required": ["query", "attr"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": { "const":  "assert" },
+                            "action": { "const":  "has_attribute" }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "args": {
+                                "properties": {
+                                    "query": { "$ref": "#/$defs/query" },
+                                    "attr": { "type": "string" }
+                                },
+                                "required": ["query", "attr"]
+                            }
+                        },
+                        "required": ["args"]
+                    }
                 }
             ]
         }

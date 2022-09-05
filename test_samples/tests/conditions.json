@@ -1,0 +1,112 @@
+{
+    "id": "conditions_tests",
+
+    "sequences": [
+        {
+            "caption": "main",
+            "process": "main"
+        },
+        {
+            "caption": "validate_start_values",
+            "process": "validate_start_values"
+        }
+    ],
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#conditions"
+                }
+            }
+        },
+
+        "assert_has_attribute": {
+
+        }
+    },
+
+    "validate_start_values": {
+        "steps": {
+            "start": {
+                "type": "assert",
+                "action": "has_not_attribute",
+                "args": {
+                    "query": "#attributes1",
+                    "attr": "disabled"
+                },
+                "next_step": "attributes2"
+            },
+            "attributes2": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#attributes2",
+                    "attr": "data-valid",
+                    "value": "true"
+                },
+                "next_step": "classlist1"
+            },
+            "classlist1": {
+                "type": "assert",
+                "action": "has_not_class",
+                "args": {
+                    "query": "#classlist1",
+                    "class": "red"
+                },
+                "next_step": "classlist2"
+            },
+            "classlist2": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#classlist2",
+                    "attr": "class",
+                    "value": "blue"
+                }
+            }
+        }
+    },
+    
+    "update_value": {
+        "parameters": {
+
+        },
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "#edtValue",
+                    "value": "$parameter.value"
+                }
+            }
+        }
+    },
+    
+    "assert_attributes": {
+        "steps": {
+            "start": {
+                
+            }
+        }
+    },
+    
+    "assert_styles": {
+        "steps": {
+            "start": {
+                
+            }
+        }
+    },
+    
+    "assert_classes": {
+        "steps": {
+            "start": {
+                
+            }
+        }
+    }
+}

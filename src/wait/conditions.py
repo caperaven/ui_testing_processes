@@ -108,6 +108,14 @@ def _class_condition(args, results):
 
     return _predicate
 
+def _not_class_condition(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        cls = element.get_attribute("class")
+        sub = args["class"]
+        return sub not in cls
+
+    return _predicate
 
 def _count_condition(args, results):
     def _predicate(driver):

@@ -53,3 +53,59 @@ async def assert_attr_neq(driver, args, results):
         await set_error(driver, results, args["step"], "error: attribute '{}' on '{}' should NOT have been '{}'".format(args["attr"], name, exp_value))
     else:
         results[args["step"]] = "success"
+
+async def assert_has_attr(driver, args, results):
+    element = get_element(driver, args, results)
+
+    if element is None:
+        return
+
+    value = element.get_attribute(args["attr"])
+
+    if value is None:
+        await set_error(driver, results, args["step"], "error: has_attribute '{}' should exist but does not".format(args["attr"]))
+    else:
+        results[args["step"]] = "success"
+
+async def assert_has_not_attr(driver, args, results):
+    element = get_element(driver, args, results)
+
+    if element is None:
+        return
+
+    value = element.get_attribute(args["attr"])
+
+    if value is not None:
+        await set_error(driver, results, args["step"], "error: has_attribute '{}' should not exist but does does".format(args["attr"]))
+    else:
+        results[args["step"]] = "success"
+
+async def assert_has_class(driver, args, results):
+    element = get_element(driver, args, results)
+
+    if element is None:
+        return
+
+    exp_value = exp_value = args["value"]
+    value = element.get_attribute(args["attr"])
+
+    if value is not None and value.__contains__(exp_value):
+        results[args["step"]] = "success"
+    else:
+        await set_error(driver, results, args["step"], "error: expected class '{}' to exist on '{}'".format(exp_value, query))
+
+
+async def assert_has_not_class(driver, args, results):
+    element = get_element(driver, args, results)
+
+    if element is None:
+        return
+
+    exp_value = exp_value = args["value"]
+    value = element.get_attribute(args["attr"])
+
+    if value is not None and value.__contains__(exp_value):
+        await set_error(driver, results, args["step"], "error: expected class '{}' to NOT exist on '{}'".format(exp_value, query))
+    else:
+        results[args["step"]] = "success"
+

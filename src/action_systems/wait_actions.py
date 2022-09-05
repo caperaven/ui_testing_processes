@@ -86,3 +86,15 @@ class WaitActions:
         args = step["args"].copy()
         await wait_until_attribute_gone(context.driver, args, context.current_result)
         pass
+
+    @staticmethod
+    async def has_class(step, context, process, item):
+        args = step["args"].copy()
+        await wait_for_css_class(context.driver, args, context.current_result)
+        pass
+
+    @staticmethod
+    async def has_not_class(step, context, process, item):
+        args = step["args"].copy()
+        await _not_class_condition(context.driver, args, context.current_result)
+        pass
