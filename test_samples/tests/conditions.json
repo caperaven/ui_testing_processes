@@ -17,7 +17,7 @@
                 "args": {
                     "process": "validate_start_values"
                 },
-                "next_step": "update_10"
+                "next_step": "update_20"
             },
             "update_10": {
                 "type": "system",
@@ -30,8 +30,7 @@
                         "attributes2": "true",
                         "case3": "red"
                     }
-                },
-                "next_step": "update_20"
+                }
             },
             "update_20": {
                 "type": "system",
@@ -44,8 +43,7 @@
                         "attributes2": "true",
                         "case3": "blue"
                     }
-                },
-                "next_step": "update_60"
+                }
             },
             "update_60": {
                 "type": "system",
@@ -54,7 +52,7 @@
                     "process": "update_value",
                     "parameters": {
                         "value": 60,
-                        "attributes1": "None",
+                        "attributes1": null,
                         "attributes2": "false",
                         "case3": "green"
                     }

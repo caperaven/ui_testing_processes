@@ -115,7 +115,7 @@ class Api:
         process = args["process"]
         key = self.current_step
 
-        self.results[key] = {
+        self.current_result[key] = {
             "summary": {
                 "success": True,
                 "error_count": 0,
@@ -123,19 +123,9 @@ class Api:
             }
         }
 
-        self.results[key][process] = {
-            "summary": {
-                "success": True,
-                "error_count": 0,
-                "process": process
-            }
-        }
-
-        self.current_result = self.results[key][process]
+        self.current_result = self.current_result[key]
         process = self.current["schema"][process]
-
         parameters = args["parameters"] if "parameters" in args else None
-
         await self.process.run_process(self, process, None, parameters)
         pass
 

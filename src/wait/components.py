@@ -50,7 +50,6 @@ async def wait_for_attribute(driver, args, results):
     try:
         timeout = args["timeout"] if "timeout" in args else 30
         args["has"] = True
-        WebDriverWait(driver, timeout).until(_has_attribute_condition(args, results))
         WebDriverWait(driver, timeout).until(_attribute_condition(args, results))
         results[args["step"]] = "success"
     except Exception as e:
