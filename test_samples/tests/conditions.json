@@ -65,6 +65,25 @@
                     "query": "#classlist2",
                     "attr": "class",
                     "value": "blue"
+                },
+                "next_step": "style1"
+            },
+            "style1": {
+                "type": "assert",
+                "action": "has_not_attribute",
+                "args": {
+                    "query": "#style1",
+                    "attr": "style"
+                },
+                "next_step": "style2"
+            },
+            "style2": {
+                "type": "assert",
+                "action": "attribute_eq",
+                "args": {
+                    "query": "#style2",
+                    "attr": "style",
+                    "value": "color: blue;"
                 }
             }
         }

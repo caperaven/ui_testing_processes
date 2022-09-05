@@ -75,8 +75,11 @@ async def assert_has_not_attr(driver, args, results):
 
     value = element.get_attribute(args["attr"])
 
-    if value is not None:
-        await set_error(driver, results, args["step"], "error: has_attribute '{}' should not exist but does does".format(args["attr"]))
+    if value is None:
+        value = ""
+
+    if len(value) > 0:
+        await set_error(driver, results, args["step"], "error: has_attribute '{}' should not exist but does on '{}'".format(args["attr"], args["query"]))
     else:
         results[args["step"]] = "success"
 
