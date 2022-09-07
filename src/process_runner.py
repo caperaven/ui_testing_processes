@@ -37,7 +37,7 @@ class ProcessRunner:
         if "parameters_def" in process:
             success = copy_parameters(process, parameters)
             if success is not True:
-                await set_error(context.driver, process["_results"], process["current_step"], success)
+                await set_error(context.driver, process["_results"], "parameters_required", success)
 
         start = process["steps"]["start"]
 

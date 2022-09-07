@@ -35,7 +35,7 @@
 				"action": "text_content",
 				"args": {
 					"query": "#edtFirstName div",
-					"value": "First Name_",
+					"value": "First Name",
 					"timeout": 1
 				},
 				"next_step": "check_last_name"

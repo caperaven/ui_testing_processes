@@ -8,8 +8,8 @@
                 "action": "navigate",
                 "args": {
                     "url": "${state.server}/#conditions"
-                }
-
+                },
+                "next_step": "validate_start_values"
             },
             "validate_start_values": {
                 "type": "system",
@@ -44,7 +44,8 @@
                         "attributes2": "true",
                         "case3": "blue"
                     }
-                }
+                },
+                "next_step": "update_60"
             },
             "update_60": {
                 "type": "system",

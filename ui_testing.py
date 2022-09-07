@@ -107,9 +107,16 @@ class Api:
 
             calculate_success(self.results[id])
 
-    async def run_process(self, args):
-        process = args["process"].copy()
-        pass
+    async def run_process(self, args, context, parent_process, item):
+        process_name = args["process"]
+        process = self.current["schema"][process_name].copy()
+        process["_results"] = {}
+
+        process["current_step"] = "start"
+        parameters = args["parameters"] if "parameters" in args else None
+        await self.process.run_process(context, process, None, parameters)
+
+        return process
 
     def close(self):
         save_results(self.results)

@@ -99,6 +99,14 @@ class SystemActions:
 
     @staticmethod
     async def process(step, context, process, item):
+        current_step = process["current_step"]
         args = step["args"].copy()
-        await context.run_process(args)
+        results = process["_results"][current_step] = {}
+
+        child_process = await context.run_process(args, context, process, item)
+
+        keys = child_process["_results"].keys()
+        for key in keys:
+            results[key] = child_process["_results"][key]
+
         pass
