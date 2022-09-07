@@ -22,6 +22,8 @@ class SystemActions:
                     property = element_def[attribute]
                     context.set_value(property, attr, context, process, item)
 
+        process["_results"][args["step"]] = "success"
+
     @staticmethod
     async def properties_to_variables(step, context, process, item):
         args = step["args"].copy()
@@ -39,6 +41,8 @@ class SystemActions:
                     attr = element.get_property(prop)
                     prop = element_def[prop]
                     context.set_value(prop, attr, context, process, item)
+
+        process["_results"][args["step"]] = "success"
 
     @staticmethod
     async def dimensions_to_variables(step, context, process, item):
@@ -61,6 +65,8 @@ class SystemActions:
                 }
                 context.set_value(prop, obj, context, process, item)
 
+        process["_results"][args["step"]] = "success"
+
     @staticmethod
     async def set_variables(step, context, process, item):
         args = step["args"].copy()
@@ -70,6 +76,8 @@ class SystemActions:
             if variable == "step": continue
             value = args[variable]
             context.set_value(variable, value, context, process, item)
+
+        process["_results"][args["step"]] = "success"
 
 
     @staticmethod
@@ -89,6 +97,8 @@ class SystemActions:
             add_value = args[variable]
             result = value + add_value
             context.set_value(variable, result, context, process, item)
+
+        process["_results"][args["step"]] = "success"
         pass
 
     @staticmethod
@@ -96,6 +106,7 @@ class SystemActions:
         args = step["args"].copy()
         duration = args["duration"]
         time.sleep(duration)
+        process["_results"][args["step"]] = "success"
 
     @staticmethod
     async def process(step, context, process, item):
