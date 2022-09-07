@@ -12,7 +12,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, context.current_result)
+            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 element_def = args[query]
                 attributes = element_def.keys()
@@ -30,7 +30,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, context.current_result)
+            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 element_def = args[query]
                 properties = element_def.keys()
@@ -48,7 +48,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, context.current_result)
+            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 location = element.location
                 size = element.size
@@ -75,7 +75,7 @@ class SystemActions:
     @staticmethod
     async def audit(step, context, process, item):
         args = step["args"].copy()
-        await context.scraper.run(context.driver, args, context.current_result)
+        await context.scraper.run(context.driver, args, process["_results"])
         pass
 
     @staticmethod

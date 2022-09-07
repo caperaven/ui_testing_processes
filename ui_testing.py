@@ -19,10 +19,6 @@ set_results_folder(folder)
 
 class Api:
     @property
-    def current_step(self):
-        return self.current["step"]
-
-    @property
     def get_value(self):
         return self.process.get_value
 
@@ -51,7 +47,6 @@ class Api:
         self.results = {
         }
 
-        self.current_result = None
         self.previous_result = None
 
         if sys.platform == "darwin":
@@ -59,6 +54,7 @@ class Api:
         else:
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
+            options.add_argument("ignore-certificate-errors")
 
             if sys.argv.__contains__("--debug"):
                 options.add_argument("-disable-extensions")
@@ -79,19 +75,14 @@ class Api:
             id = schema["id"]
             key = "{} -> {} template".format(self.current["step"], id)
 
-            self.current_result[key]= {
+            process["_results"] = {
                 "summary": {
                     "success": True,
                     "error_count": 0
                 }
             }
 
-            self.previous_result = self.current_result
-            self.current_result = self.current_result[key]
-
             await self.process.run_process(self, None, process,  item, parameters)
-            self.current_result = self.previous_result
-            self.previous_result = None
         else:
             system = self.intent[system]
             fn = getattr(system, fn)
@@ -108,30 +99,45 @@ class Api:
                 }
             }
 
-            self.current_result = self.results[id]
-            await self.process.run(schema, self)
+            result = await self.process.run(schema, self)
+            keys = result.keys()
+
+            for key in keys:
+                self.results[id][key] = result[key]
+
+            calculate_success(self.results[id])
 
     async def run_process(self, args):
-        process = args["process"]
-        key = self.current_step
-
-        self.current_result[key] = {
-            "summary": {
-                "success": True,
-                "error_count": 0,
-                "process": process
-            }
-        }
-
-        self.current_result = self.current_result[key]
-        process = self.current["schema"][process]
-        parameters = args["parameters"] if "parameters" in args else None
-        await self.process.run_process(self, process, None, parameters)
+        process = args["process"].copy()
         pass
 
     def close(self):
         save_results(self.results)
         self.driver.close()
+
+def calculate_success(results):
+    error_count = count_errors(0, results)
+    results["summary"]["error_count"] = error_count
+
+    if error_count > 0:
+        results["summary"]["success"] = False
+    pass
+
+def count_errors(count, obj):
+    keys = obj.keys()
+
+    result = 0
+    for key in keys:
+        value = obj[key]
+
+        if type(value) is str and "error:" in value:
+            result += 1
+
+        if type(value) is dict:
+            result += count_errors(count, value)
+
+    return result
+    pass
 
 try:
     crs = Api()

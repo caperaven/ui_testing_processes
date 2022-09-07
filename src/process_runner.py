@@ -6,50 +6,51 @@ import traceback
 
 class ProcessRunner:
     async def run(self, schema, context=None):
-        current_result = context.current_result
-
         if "sequences" in schema:
+            result = {}
             sequences = schema["sequences"]
             for sequence in sequences:
-                process = sequence["process"]
+                process_name = sequence["process"]
+                process = schema[process_name].copy()
 
-                current_result[process] = {
-                    "summary": {
-                        "success": True,
-                        "error_count": 0
-                    }
-                }
+                process["_results"] =  {}
 
-                context.current_result = current_result[process]
-
-                process = schema[sequence["process"]]
                 Logger.test_started("{} {}".format(schema["name"], sequence["process"]))
                 await self.run_process(context, process, None, None)
                 Logger.test_finished("{} {}".format(schema["name"], sequence["process"]))
+
+                result[process_name] = process["_results"]
+
+            return result
         else:
-            main = schema["main"]
+            main = schema["main"].copy()
+
+            main["_results"] = {}
+
             Logger.test_started(schema["name"])
             await self.run_process(context, main, None, None)
             Logger.test_finished(schema["name"])
+
+            return {"main": main["_results"]}
 
     async def run_process(self, context, process, item, parameters):
         if "parameters_def" in process:
             success = copy_parameters(process, parameters)
             if success is not True:
-                await set_error(context.driver, context.current_result, context.current_step, success)
+                await set_error(context.driver, process["_results"], process["current_step"], success)
 
         start = process["steps"]["start"]
-        context.current["step"] = "start"
 
         if "data" not in process:
             process["data"] = {}
 
         try:
+            process["current_step"] = "start"
             await self.run_step(start, context, process, item)
         except Exception as e:
             print(traceback.format_exc())
             message = "internal error: {}".format(e)
-            await set_error(context.driver, context.current_result, context.current_step, message)
+            await set_error(context.driver, process["_results"], process["current_step"], message)
 
     async def run_step(self, step, context, process, item):
         step_type = step["type"]
@@ -59,13 +60,13 @@ class ProcessRunner:
         parse_id(step_args, context, process, item)
         parse_args(step_args, context, process, item)
 
-        step_args["step"] = context.current_step
+        step_args["step"] = process["current_step"]
         await context.call(step_type, step_action, step_args, context, process, item)
 
         if "next_step" in step:
             next_step_name = step["next_step"]
+            process["current_step"] = next_step_name
             next_step = process["steps"][next_step_name]
-            context.current["step"] = next_step_name
             await self.run_step(next_step, context, process, item)
 
     def get_value(self, expr, context, process=None, item=None):
