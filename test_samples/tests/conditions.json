@@ -28,6 +28,12 @@
                         "value": 10,
                         "attributes1": "true",
                         "attributes2": "true",
+                        "classlist1": "red",
+                        "classlist2": "red",
+                        "style1": "color: red;",
+                        "style2": "color: red;",
+                        "case1": "color: red;",
+                        "case2": "",
                         "case3": "red"
                     }
                 },
@@ -42,6 +48,12 @@
                         "value": 20,
                         "attributes1": "true",
                         "attributes2": "true",
+                        "classlist1": "red",
+                        "classlist2": "red",
+                        "style1": "color: red;",
+                        "style2": "color: red;",
+                        "case1": "color: blue;",
+                        "case2": "",
                         "case3": "blue"
                     }
                 },
@@ -56,6 +68,12 @@
                         "value": 60,
                         "attributes1": null,
                         "attributes2": "false",
+                        "classlist1": "",
+                        "classlist2": "blue",
+                        "style1": "",
+                        "style2": "color: blue;",
+                        "case1": "color: green;",
+                        "case2": "",
                         "case3": "green"
                     }
                 }
@@ -159,6 +177,12 @@
             "value": { "required": true },
             "attributes1": { "required": true },
             "attributes2": { "required": true },
+            "classlist1": { "required": true },
+            "classlist2": { "required": true },
+            "style1": { "required": true },
+            "style2": { "required": true },
+            "case1": { "required": true },
+            "case2": { "required": true },
             "case3": { "required": true }
         },
         "steps": {
@@ -179,6 +203,12 @@
                     "parameters": {
                         "attributes1": "$parameters.attributes1",
                         "attributes2": "$parameters.attributes2",
+                        "classlist1": "$parameters.classlist1",
+                        "classlist2": "$parameters.classlist2",
+                        "style1": "$parameters.style1",
+                        "style2": "$parameters.style2",
+                        "case1": "$parameters.case1",
+                        "case2": "$parameters.case2",
                         "case3": "$parameters.case3"
                     }
                 }
@@ -190,6 +220,12 @@
         "parameters_def": {
             "attributes1": { "required": true },
             "attributes2": { "required": true },
+            "classlist1": { "required": true },
+            "classlist2": { "required": true },
+            "style1": { "required": true },
+            "style2": { "required": true },
+            "case1": { "required": true },
+            "case2": { "required": true },
             "case3": { "required": true }
         },
         "steps": {
@@ -213,8 +249,80 @@
                     "value": "$parameters.attributes2",
                     "timeout": 2
                 },
+                "next_step": "classlist1"
+            },
+
+            "classlist1": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#classlist1",
+                    "attr": "class",
+                    "value": "$parameters.classlist1",
+                    "timeout": 2
+                },
+                "next_step": "classlist2"
+            },
+
+            "classlist2": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#classlist2",
+                    "attr": "class",
+                    "value": "$parameters.classlist2",
+                    "timeout": 2
+                },
+                "next_step": "style1"
+            },
+
+            "style1": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#style1",
+                    "attr": "style",
+                    "value": "$parameters.style1",
+                    "timeout": 2
+                },
+                 "next_step": "style2"
+            },
+
+            "style2": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#style2",
+                    "attr": "style",
+                    "value": "$parameters.style2",
+                    "timeout": 2
+                },
+                "next_step": "case1"
+            },
+
+            "case1": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#case1",
+                    "attr": "style",
+                    "value": "$parameters.case1",
+                    "timeout": 2
+                },
+                "next_step": "case2"
+            },
+            "case2": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "#case2",
+                    "attr": "style",
+                    "value": "$parameters.case2",
+                    "timeout": 2
+                },
                 "next_step": "case3"
             },
+
             "case3": {
                 "type": "wait",
                 "action": "attribute",
@@ -224,22 +332,6 @@
                     "value": "$parameters.case3",
                     "timeout": 2
                 }
-            }
-        }
-    },
-    
-    "assert_styles": {
-        "steps": {
-            "start": {
-                
-            }
-        }
-    },
-    
-    "assert_classes": {
-        "steps": {
-            "start": {
-                
             }
         }
     }
