@@ -109,4 +109,27 @@ class SystemActions:
         for key in keys:
             results[key] = child_process["_results"][key]
 
+    @staticmethod
+    async def template(step, context, process, item):
+        current_step = process["current_step"]
+        args = step["args"].copy()
+        results = process["_results"][current_step] = {}
+
+        schema_name = args["schema"]
+        process_name = args["process"]
+
+        template_schema = context.process_schema_registry.get_template(schema_name)
+        template_process = template_schema[process_name].copy()
+
+        current_schema = context.current["schema"]
+        context.current["schema"] = template_schema
+
+        child_process = await context.run_process(args, context, process, item)
+
+        context.current["schema"] = current_schema
+
+        keys = child_process["_results"].keys()
+        for key in keys:
+            results[key] = child_process["_results"][key]
+
         pass

@@ -3,10 +3,11 @@
     "main": {
         "steps": {
             "start": {
-                "type": "process",
-                "action": "navigate",
+                "type": "system",
+                "action": "template",
                 "args": {
                     "schema": "navigate",
+                    "process": "navigate",
                     "parameters": {
                         "url": "http://127.0.0.1:8000/#form"
                     }
@@ -24,10 +25,11 @@
             },
 
             "conditions": {
-                "type": "process",
-                "action": "navigate",
+                "type": "system",
+                "action": "template",
                 "args": {
                     "schema": "navigate",
+                    "process": "navigate",
                     "parameters": {
                         "url": "http://127.0.0.1:8000/#conditions"
                     }
@@ -40,8 +42,7 @@
                 "action": "process",
                 "args": {
                     "process": "sleep"
-                },
-                "next_step": "conditions"
+                }
             }
         }
     },

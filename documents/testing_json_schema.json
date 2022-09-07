@@ -129,7 +129,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["perform", "wait", "assert", "system", "process"]
+                    "enum": ["perform", "wait", "assert", "system"]
                 },
                 "action": {
                     "type": "string"
@@ -227,7 +227,8 @@
                                     "audit",
                                     "add_to_variables",
                                     "sleep",
-                                    "process"
+                                    "process",
+                                    "template"
                                 ]
                             }
                         }
