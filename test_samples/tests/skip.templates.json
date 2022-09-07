@@ -1,0 +1,60 @@
+{
+    "id": "templates",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "process",
+                "action": "navigate",
+                "args": {
+                    "schema": "navigate",
+                    "parameters": {
+                        "url": "http://127.0.0.1:8000/#form"
+                    }
+                },
+                "next_step": "form_sleep"
+            },
+
+            "form_sleep": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "sleep"
+                },
+                "next_step": "conditions"
+            },
+
+            "conditions": {
+                "type": "process",
+                "action": "navigate",
+                "args": {
+                    "schema": "navigate",
+                    "parameters": {
+                        "url": "http://127.0.0.1:8000/#conditions"
+                    }
+                },
+                "next_step": "conditions_sleep"
+            },
+
+            "conditions_sleep": {
+                "type": "system",
+                "action": "process",
+                "args": {
+                    "process": "sleep"
+                },
+                "next_step": "conditions"
+            }
+        }
+    },
+
+    "sleep": {
+        "steps": {
+            "start": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+                    "duration": 2
+                }
+            }
+        }
+    }
+}

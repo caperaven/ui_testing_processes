@@ -1,0 +1,20 @@
+{
+    "id": "navigate",
+
+    "navigate": {
+        "parameters_def": {
+            "url": {
+                "required": true
+            }
+        },
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "$parameters.url"
+                }
+            }
+        }
+    }
+}

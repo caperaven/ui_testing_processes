@@ -24,7 +24,6 @@ class ProcessRunner:
             return result
         else:
             main = schema["main"].copy()
-
             main["_results"] = {}
 
             Logger.test_started(schema["name"])
