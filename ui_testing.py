@@ -111,9 +111,18 @@ class Api:
         process_name = args["process"]
         process = self.current["schema"][process_name].copy()
         process["_results"] = {}
-
+        process["parent_step"] = parent_process["current_step"]
         process["current_step"] = "start"
-        parameters = args["parameters"] if "parameters" in args else None
+
+        parameters = args["parameters"].copy() if "parameters" in args else None
+
+        if parameters is not None:
+            keys = parameters.keys()
+            for key in keys:
+                value = parameters[key]
+                new_value = context.get_value(value, context, parent_process, item)
+                parameters[key] = new_value
+
         await self.process.run_process(context, process, None, parameters)
 
         return process

@@ -200,8 +200,5 @@ def parse_args(args, context, process, item):
         if key == "id" or key == "query":
             continue
 
-        if key == "parameters":
-            parse_args(args["parameters"], context, process, item)
-        else:
-            value = context.get_value(args[key], context, process, item)
-            args[key] = value
+        value = context.get_value(args[key], context, process, item)
+        args[key] = value
