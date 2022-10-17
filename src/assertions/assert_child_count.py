@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from src.errors import set_error
 from src.utils import get_name
 
@@ -6,7 +8,7 @@ async def assert_child_count_eq(driver, args, results):
     query = "{} *".format(args["query"])
     count = args["count"]
 
-    all_children_by_css = driver.find_elements_by_css_selector(query)
+    all_children_by_css = driver.find_elements(By.CSS_SELECTOR, query)
     act_count = len(all_children_by_css)
 
     if act_count == count:
@@ -20,7 +22,7 @@ async def assert_child_count_neq(driver, args, results):
     query = "{} *".format(args["query"])
     count = args["count"]
 
-    all_children_by_css = driver.find_elements_by_css_selector(query)
+    all_children_by_css = driver.find_elements(By.CSS_SELECTOR, query)
     act_count = len(all_children_by_css)
 
     if act_count != count:

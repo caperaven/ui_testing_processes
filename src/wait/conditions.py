@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from src.elements import get_element
 from src.utils import get_eval
 
@@ -121,7 +123,7 @@ def _count_condition(args, results):
     def _predicate(driver):
         query = args["query"]
         count = args["count"]
-        all_children_by_css = driver.find_elements_by_css_selector(query)
+        all_children_by_css = driver.find_elements(By.CSS_SELECTOR, query)
 
         count_value = len(all_children_by_css)
         return _eval(count_value, count, args)
