@@ -30,7 +30,7 @@ async def mouse_drag(driver, args, results):
     start_x = start["x"] + location["x"]
     start_y = start["y"] + location["y"]
 
-    to = args["move_to"]
+    to = args["move_too"]
     to_x = to["x"] + location["x"]
     to_y = to["y"] + location["y"]
 

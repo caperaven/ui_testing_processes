@@ -116,3 +116,35 @@ Perform a action
 	- default: 30  
 - value - expected value  
 	- required: true  
+
+**14. drag_by** - drag and element by x and y number of pixels.
+- id - id of element to check  
+	- required: false  
+	- require alternative: query  
+- query - css selector for element to check  
+	- required: false  
+	- require alternative: id  
+- x - how many pixels to move on x
+  - required: false
+- y - how many pixels to move on y
+  - required: false
+
+**15. hover_over_element** - move the cursor over an element
+- id - id of element to check  
+	- required: false  
+	- require alternative: query  
+- query - css selector for element to check  
+	- required: false  
+	- require alternative: id  
+
+**16. mouse drag** - perform a click an drag operation on a element from a start location to a target location - like a box select
+- id - id of element to check  
+	- required: false  
+	- require alternative: query  
+- query - css selector for element to check  
+	- required: false  
+	- require alternative: id  
+- start_at - dictionary with a x and y property to start the drag
+  - required: true
+- move_too - dictionary with a x and y property on where to drag too
+  - required: true
