@@ -8,6 +8,8 @@ from src.assertions.assert_value import assert_value_eq, assert_value_neq
 from src.utils import update_args_value
 from src.errors import set_error
 from src.elements import get_element
+from selenium.webdriver.common.by import By
+from src.elements import _get_query
 
 class AssertActions:
     @staticmethod
@@ -146,3 +148,31 @@ class AssertActions:
         else:
             await set_error(context.driver, process["_results"], args["step"], "class '{}' should not be on '{}".format(sub, args["query"]));
         pass;
+
+    @staticmethod
+    async def element_exists(step, context, process, item):
+        args = step["args"].copy()
+        query = _get_query(args)
+        element = context.driver.find_element(By.CSS_SELECTOR, query)
+        if element is not None:
+            process["_results"][args["step"]] = "success"
+        else:
+            await set_error(context.driver, process["_results"], args["step"], "element '{}' should exist".format(args["query"]));
+        pass
+
+    @staticmethod
+    async def element_not_exists(step, context, process, item):
+        args = step["args"].copy()
+        query = _get_query(args)
+
+        success = False
+        try:
+            element = context.driver.find_element(By.CSS_SELECTOR, query)
+        except Exception as e:
+            success = True
+
+        if success:
+            process["_results"][args["step"]] = "success"
+        else:
+            await set_error(context.driver, process["_results"], args["step"], "element '{}' should NOT exist".format(args["query"]));
+        pass

@@ -146,6 +146,26 @@
           "tpl:args": {
             "value": "tpl:value"
           }
+        },
+        "has_class": {
+          "description": "assert the element has a class in the classlist",
+          "tpl:args": {
+            "class": "expected class name"
+          }
+        },
+        "has_not_class": {
+          "description": "assert the element does not have a class in the classlist",
+          "tpl:args": {
+            "class": "class name to check"
+          }
+        },
+        "element_exists": {
+          "description": "check if a element is in the dom",
+          "tpl:args": {}
+        },
+        "element_not_exists": {
+          "description": "check that a element is not in the dom",
+          "tpl:args": {}
         }
       }
     },

@@ -1,0 +1,32 @@
+{
+    "id": "assert-elements",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#conditions"
+                },
+                "next_step": "assert_has_button"
+            },
+
+            "assert_has_button": {
+                "type": "assert",
+                "action": "element_exists",
+                "args": {
+                    "query": "button"
+                },
+                "next_step": "element_not_exists"
+            },
+
+            "element_not_exists": {
+                "type": "assert",
+                "action": "element_not_exists",
+                "args": {
+                    "query": "#something_odd"
+                }
+            }
+        }
+    }
+}

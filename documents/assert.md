@@ -208,3 +208,19 @@ Check if a value, attribute or property equals expected values
 	- default: 30  
 - value - expected value  
 	- required: true  
+
+**15. element_exists** - assert that an element is in the dom
+- id - id of element to check  
+	- required: false  
+	- require alternative: query  
+- query - css selector for element to check  
+	- required: false  
+	- require alternative: id  
+
+**16. element_not_exists** - assert that an element is NOT in the dom
+- id - id of element to check  
+	- required: false  
+	- require alternative: query  
+- query - css selector for element to check  
+	- required: false  
+	- require alternative: id  
