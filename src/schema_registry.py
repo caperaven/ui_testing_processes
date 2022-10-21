@@ -85,4 +85,5 @@ def from_file(file_path):
     file = open(file_path)
     data = json.load(file)
     file.close()
+    data["file_path"] = file_path
     return data

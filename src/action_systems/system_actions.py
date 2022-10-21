@@ -1,6 +1,6 @@
-from typing import Any
 from src.elements import get_element
 import time
+import os
 
 
 class SystemActions:
@@ -143,4 +143,18 @@ class SystemActions:
         for key in keys:
             results[key] = child_process["_results"][key]
 
-        pass
+    @staticmethod
+    async def run_script(step, context, process, item):
+        args = step["args"].copy()
+        script_file = args["script"]
+        path_parts = os.path.split(context.current["schema"]["file_path"])
+        script_path = os.path.join(path_parts[0], script_file);
+
+        file = open(script_path)
+        content = file.read()
+        context.driver.execute_script(content)
+
+
+
+
+
