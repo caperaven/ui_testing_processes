@@ -43,9 +43,12 @@ class SchemaRegistry:
 
     def load_folder(self, folder):
         for root, dirnames, filenames in os.walk(folder):
-            if root.__contains__("template"): continue
+            if root.__contains__("template"):
+                continue
             folder = os.path.realpath(root)
             for filename in filenames:
+                if not filename.endswith(".json"):
+                    continue
                 file = os.path.join(folder, filename)
                 if not file.__contains__("skip.") and file != self.login:
                     self.schemas.append(file)
