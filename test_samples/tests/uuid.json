@@ -1,0 +1,14 @@
+{
+    "id": "assert-elements",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "system",
+                "action": "set_uuid_variables",
+                "args": {
+                    "variables": ["$data.asset_code"]
+                }
+            }
+        }
+    }
+}

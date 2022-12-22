@@ -1,7 +1,7 @@
 from src.elements import get_element
 import time
 import os
-
+import uuid
 
 class SystemActions:
     @staticmethod
@@ -79,6 +79,16 @@ class SystemActions:
 
         process["_results"][args["step"]] = "success"
 
+    @staticmethod
+    async def set_uuid_variables(step, context, process, item):
+        args = step["args"].copy()
+        variables = args["variables"]
+
+        for variable in variables:
+            value = uuid.uuid4()
+            context.set_value(variable, value, context, process, item)
+
+        process["_results"][args["step"]] = "success"
 
     @staticmethod
     async def audit(step, context, process, item):
