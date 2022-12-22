@@ -3,10 +3,48 @@
     "main": {
         "steps": {
             "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}"
+                },
+                "next_step": "set_uuid_variables"
+            },
+
+            "set_uuid_variables": {
                 "type": "system",
                 "action": "set_uuid_variables",
                 "args": {
-                    "variables": ["$data.asset_code"]
+                    "variables": ["$data.asset_code", "$data.component_code"]
+                },
+                "next_step": "type_value"
+            },
+
+            "type_value": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "#edtFirstName",
+                    "value": "$data.asset_code"
+                },
+                "next_step": "assert_value"
+            },
+
+            "assert_value": {
+                "type": "assert",
+                "action": "value_eq",
+                "args": {
+                    "query": "#edtFirstName",
+                    "value": "$data.asset_code"
+                },
+                "next_step": "sleep"
+            },
+
+            "sleep": {
+                "type": "system",
+                "action": "sleep",
+                "args": {
+                    "duration": 1
                 }
             }
         }

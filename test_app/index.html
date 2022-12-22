@@ -13,56 +13,16 @@
            margin: 0;
            padding: 0;
        }
-
-        body {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 3rem 1fr 2rem;
-        }
-
-        [role="toolbar"] {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-content: center;
-        }
-
-        [role="toolbar"] button {
-            margin: 0.5rem;
-        }
-
-        #dlgLogin[open] {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #btnLogin:hover {
-            background: hotpink;
-        }
     </style>
 </head>
 <body>
-    <dialog id="dlgLogin">
-        <label for="edtFirstName">First Name</label>
-        <input id="edtFirstName" type="text" value.bind="user.firstName" />
-        <label for="edtLastName">Last Name</label>
-        <input id="edtLastName" type="text" value.bind="user.lastName" />
+    <label for="edtFirstName">First Name</label>
+    <input id="edtFirstName" type="text" value.bind="user.firstName" /> </br>
+    <label for="edtLastName">Last Name</label>
+    <input id="edtLastName" type="text" value.bind="user.lastName" /> </br>
 
-        <div role="toolbar">
-            <button id="btnDialogClose" click.call="closeDialog">Close</button>
-        </div>
-    </dialog>
-
-    <header>
-        <div role="toolbar" tabindex="-1">
-            <button id="btnLogin" click.call="login">Login</button>
-        </div>
-    </header>
-    <main>
-
-    </main>
-    <footer></footer>
+    <div role="toolbar">
+        <button id="btnDialogClose" click.call="closeDialog">Close</button>
+    </div>
 </body>
 </html>

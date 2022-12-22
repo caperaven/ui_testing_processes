@@ -86,7 +86,7 @@ class SystemActions:
 
         for variable in variables:
             value = uuid.uuid4()
-            context.set_value(variable, value, context, process, item)
+            context.set_value(variable, str(value), context, process, item)
 
         process["_results"][args["step"]] = "success"
 
