@@ -15,7 +15,7 @@
                 "type": "system",
                 "action": "set_uuid_variables",
                 "args": {
-                    "variables": ["$data.asset_code", "$data.component_code"]
+                    "variables": ["$data.firstName", "$data.lastName"]
                 },
                 "next_step": "type_value"
             },
@@ -25,7 +25,7 @@
                 "action": "type_text",
                 "args": {
                     "query": "#edtFirstName",
-                    "value": "$data.asset_code"
+                    "value": "$data.firstName"
                 },
                 "next_step": "assert_value"
             },
@@ -35,7 +35,7 @@
                 "action": "value_eq",
                 "args": {
                     "query": "#edtFirstName",
-                    "value": "$data.asset_code"
+                    "value": "$data.firstName"
                 },
                 "next_step": "sleep"
             },
@@ -44,7 +44,7 @@
                 "type": "system",
                 "action": "sleep",
                 "args": {
-                    "duration": 1
+                    "duration": 5
                 }
             }
         }
