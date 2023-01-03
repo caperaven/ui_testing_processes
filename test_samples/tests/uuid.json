@@ -44,7 +44,16 @@
                 "type": "system",
                 "action": "sleep",
                 "args": {
-                    "duration": 5
+                    "duration": 1
+                },
+                "next_step": "click_multiple"
+            },
+
+            "click_multiple": {
+                "type": "perform",
+                "action": "click_sequence",
+                "args": {
+                    "sequence": ["#edtFirstName", "#edtLastName"]
                 }
             }
         }

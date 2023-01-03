@@ -92,6 +92,6 @@ async def context_click(driver, args, results):
 
 
 async def click_sequence(driver, args, results):
-    sequence = args.sequence
+    sequence = args["sequence"]
     for query in sequence:
-        await click(driver, {"query": query}, results)
+        await click(driver, {"query": query, "step": args["step"]}, results)
