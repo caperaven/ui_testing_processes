@@ -7,7 +7,7 @@ from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
-    _window_count_condition, _idle_condition, _has_attribute_condition, _css_conditions, _element_conditions,\
+    _window_count_condition, _idle_condition, _has_attribute_condition, _css_conditions, \
     _property_conditions
 
 
@@ -118,6 +118,7 @@ async def wait_for_css_property(driver, args, results):
         await set_error(driver, results, args["step"], "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
         pass
 
+
 async def wait_for_css_properties(driver, args, results):
     try:
         timeout = args["timeout"] if "timeout" in args else 30
@@ -126,8 +127,12 @@ async def wait_for_css_properties(driver, args, results):
     except Exception as e:
         print("wait_for_css_properties failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
+        css_properties = ""
+        for key, value in args["styles"].items():
+            css_properties += f" {key} : {value}, "
+        await set_error(driver, results, args["step"], f"error: timeout() - waiting for css properties : {css_properties} on '{name}', {e.__class__.__name__}")
         pass
+
 
 async def wait_for_text(driver, args, results):
     try:

@@ -22,6 +22,7 @@ def _element_condition(args, results):
 
     return _predicate
 
+
 def _is_ready_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
@@ -88,18 +89,18 @@ def _css_condition(args, results):
 
     return _predicate
 
+
 def _css_conditions(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
         styles = args["styles"]
-        for style in styles:
-            value = element.value_of_css_property(style)
-            exp_value = exp_values[style]
-            if not _eval(value, exp_value, args):
+        for key, value in styles.items():
+            actual_value = element.value_of_css_property(key)
+            if not _eval(actual_value, value, args):
                 return False
         return True
-
     return _predicate
+
 
 def _property_condition(args, results):
     def _predicate(driver):
@@ -135,6 +136,7 @@ def _class_condition(args, results):
 
     return _predicate
 
+
 def _not_class_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
@@ -143,6 +145,7 @@ def _not_class_condition(args, results):
         return sub not in cls
 
     return _predicate
+
 
 def _count_condition(args, results):
     def _predicate(driver):
@@ -193,4 +196,3 @@ def _idle_condition(args, results):
         value = element.get_attribute("idle")
         return value == "true"
     return _predicate
-

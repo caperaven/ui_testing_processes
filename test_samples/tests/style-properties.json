@@ -14,10 +14,10 @@
         "type": "wait",
         "action": "style_properties",
         "args": {
-          "query": "",
-          "properties": {
+          "query": "#edtFirstName",
+          "styles": {
             "color": "black",
-            "font-style": "normal"
+            "font-style": "italic"
           }
         },
         "next_step": "wait_for_elem_properties"
@@ -26,10 +26,10 @@
         "type": "wait",
         "action": "element_properties",
         "args": {
-          "query": "",
+          "query": "#edtFirstName",
           "properties": {
             "type": "text",
-            "display": "true"
+            "name": "first-name"
           }
         }
       }

@@ -13,11 +13,17 @@
            margin: 0;
            padding: 0;
        }
+
+       #edtFirstName {
+           color: black;
+           background: aqua;
+           font-style: italic;
+       }
     </style>
 </head>
 <body>
-    <label for="edtFirstName">First Name</label>
-    <input id="edtFirstName" type="text" value.bind="user.firstName" /> </br>
+    <label for="edtFirstName" >First Name</label>
+    <input id="edtFirstName" type="text" value.bind="user.firstName" name="first-name" /> </br>
     <label for="edtLastName">Last Name</label>
     <input id="edtLastName" type="text" value.bind="user.lastName" /> </br>
 
