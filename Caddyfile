@@ -1,0 +1,14 @@
+{
+    http_port 8080
+    admin off
+}
+
+localhost {
+    header {
+        Cache-Control "no-cache, no-store, must-revalidate"
+    }
+    uri strip_prefix /contoso/test
+    uri strip_prefix /system/admin
+    file_server browse
+    encode gzip
+}

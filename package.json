@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "build": "pyinstaller ui_testing.py --onefile"
+    "build": "pyinstaller ui_testing.py --onefile",
+    "run-caddy": "caddy run"
   }
 }

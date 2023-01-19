@@ -6,7 +6,7 @@
                 "type": "perform",
                 "action": "navigate",
                 "args": {
-                    "url": "http://127.0.0.1:8000/elements.html"
+                    "url": "https://localhost/test_app/elements.html"
                 },
                 "next_step": "properties_to_variables"
             },
