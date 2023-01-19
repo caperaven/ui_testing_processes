@@ -1,0 +1,38 @@
+{
+  "id": "Properties Test",
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "navigate",
+        "args": {
+          "url": "${state.server}"
+        },
+        "next_step": "wait_for_styles"
+      },
+      "wait_for_styles": {
+        "type": "wait",
+        "action": "style_properties",
+        "args": {
+          "query": "",
+          "properties": {
+            "color": "black",
+            "font-style": "normal"
+          }
+        },
+        "next_step": "wait_for_elem_properties"
+      },
+      "wait_for_elem_properties": {
+        "type": "wait",
+        "action": "element_properties",
+        "args": {
+          "query": "",
+          "properties": {
+            "type": "text",
+            "display": "true"
+          }
+        }
+      }
+    }
+  }
+}

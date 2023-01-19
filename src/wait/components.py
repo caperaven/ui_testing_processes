@@ -7,7 +7,8 @@ from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
-    _window_count_condition, _idle_condition, _has_attribute_condition
+    _window_count_condition, _idle_condition, _has_attribute_condition, _css_conditions, _element_conditions,\
+    _property_conditions
 
 
 async def wait_is_ready(driver, args, results):
@@ -117,6 +118,16 @@ async def wait_for_css_property(driver, args, results):
         await set_error(driver, results, args["step"], "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
         pass
 
+async def wait_for_css_properties(driver, args, results):
+    try:
+        timeout = args["timeout"] if "timeout" in args else 30
+        WebDriverWait(driver, timeout).until(_css_conditions(args, results))
+        results[args["step"]] = "success"
+    except Exception as e:
+        print("wait_for_css_properties failed, {}".format(e.__class__.__name__))
+        name = get_name(args)
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
+        pass
 
 async def wait_for_text(driver, args, results):
     try:
@@ -152,6 +163,19 @@ async def wait_for_property(driver, args, results):
         print("wait_for_property failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for element property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
+        pass
+
+async def wait_for_properties(driver,args,results):
+    try:
+        timeout = args["timeout"] if "timeout" in args else 30
+        WebDriverWait(driver, timeout).until(_property_conditions(args, results))
+        results[args["step"]] = "success"
+        return True
+    except Exception as e:
+        print("wait_for_properties failed, {}".format(e.__class__.__name__))
+        name = get_name(args)
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for element properties {}".format(name, e.__class__.__name__))
+        return False
         pass
 
 

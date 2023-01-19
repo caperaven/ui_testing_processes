@@ -22,7 +22,6 @@ def _element_condition(args, results):
 
     return _predicate
 
-
 def _is_ready_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
@@ -89,6 +88,18 @@ def _css_condition(args, results):
 
     return _predicate
 
+def _css_conditions(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        styles = args["styles"]
+        for style in styles:
+            value = element.value_of_css_property(style)
+            exp_value = exp_values[style]
+            if not _eval(value, exp_value, args):
+                return False
+        return True
+
+    return _predicate
 
 def _property_condition(args, results):
     def _predicate(driver):
@@ -97,6 +108,20 @@ def _property_condition(args, results):
         value = element.get_property(prop)
         exp_value = args["value"]
         return _eval(value, exp_value, args)
+
+    return _predicate
+
+
+def _property_conditions(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        properties = args["properties"]
+        for prop in properties:
+            value = element.get_property(prop)
+            exp_value = properties[prop]
+            if not _eval(value, exp_value, args):
+                return False
+        return True
 
     return _predicate
 

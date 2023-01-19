@@ -1,7 +1,7 @@
 from src.wait.components import wait_is_ready, wait_for_element, wait_for_attributes, wait_for_attribute, \
     wait_for_css_property, wait_for_property, wait_for_css_class, wait_for_children, wait_for_count, wait_for_time, \
     wait_for_selected, wait_for_windows, wait_until_idle, wait_for_text, wait_for_value, wait_until_attribute, \
-    wait_until_attribute_gone
+    wait_until_attribute_gone, wait_for_css_properties, wait_for_properties
 
 
 class WaitActions:
@@ -36,9 +36,19 @@ class WaitActions:
         await wait_for_css_property(context.driver, args, process["_results"])
 
     @staticmethod
+    async def style_properties(step, context, process, item):
+        args = step["args"].copy()
+        await wait_for_css_properties(context.driver, args, process["_results"])
+
+    @staticmethod
     async def element_property(step, context, process, item):
         args = step["args"].copy()
         await wait_for_property(context.driver, args, process["_results"])
+
+    @staticmethod
+    async def element_properties(step, context, process, item):
+        args = step["args"].copy()
+        await wait_for_properties(context.driver, args, process["_results"])
 
     @staticmethod
     async def text_content(step, context, process, item):
