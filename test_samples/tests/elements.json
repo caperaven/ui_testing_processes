@@ -8,6 +8,11 @@
                 "args": {
                     "url": "https://localhost/test_app/elements.html"
                 },
+                "next_step": "refresh"
+            },
+            "refresh": {
+                "type": "perform",
+                "action": "refresh",
                 "next_step": "properties_to_variables"
             },
             "properties_to_variables": {
