@@ -8,4 +8,3 @@ async def refresh(driver, args, results):
     except Exception as e:
         print(e)
         await set_error(driver, results, args["step"], "error: refresh failed, '{}'".format(e))
-        pass

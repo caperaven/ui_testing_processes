@@ -20,7 +20,7 @@ class PerformActions:
 
     @staticmethod
     async def refresh(step, context, process, item):
-        await refresh(context.dirver, step["args"], process["_results"])
+        await refresh(context.driver, step["args"], process["_results"])
 
     @staticmethod
     async def click(step, context, process, item):
