@@ -95,3 +95,11 @@ async def click_sequence(driver, args, results):
     sequence = args["sequence"]
     for query in sequence:
         await click(driver, {"query": query, "step": args["step"]}, results)
+
+async def click_and_wait_for_elements(driver, args, results):
+    # todo: AndreW
+    # get the query from the args that defines a collection of elements ('querySelectorAll')
+    # then loop through all those elements and click them
+    # the args also has a wait property that defines the element and condition to wait for
+    # after each click we wait for the element to be in the state defined by the condition
+    pass;
