@@ -102,4 +102,11 @@ async def click_and_wait_for_elements(driver, args, results):
     # then loop through all those elements and click them
     # the args also has a wait property that defines the element and condition to wait for
     # after each click we wait for the element to be in the state defined by the condition
+
+    # pseudo code
+    # query = args["query"]
+    # elements = get_elements(query)
+    # for element in elements:
+    #     element.click()
+    #     await wait_for_element(condition)
     pass;
