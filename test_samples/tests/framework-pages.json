@@ -1,0 +1,62 @@
+{
+    "id": "framework pages",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#welcome"
+                },
+                "next_step": "icons"
+            },
+            "icons": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#icons"
+                },
+                "next_step": "forms"
+            },
+            "forms": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#forms"
+                },
+                "next_step": "options_toolbar"
+            },
+            "options_toolbar": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#options-toolbar"
+                },
+                "next_step": "calendar"
+            },
+            "calendar": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#calendar"
+                },
+                "next_step": "context_menu"
+            },
+            "context_menu": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#context-menu"
+                },
+                "next_step": "buttons"
+            },
+            "buttons": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#buttons"
+                }
+            }
+        }
+    }
+}
