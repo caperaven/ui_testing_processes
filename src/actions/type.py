@@ -4,7 +4,7 @@ from src.elements import get_element
 from selenium.webdriver.common.keys import Keys
 from src.errors import set_error
 from src.utils import get_name
-
+from src.memory import get_memory
 
 async def type_text(driver, args, results):
     try:
@@ -19,7 +19,11 @@ async def type_text(driver, args, results):
         element.send_keys(Keys.BACK_SPACE)
         element.send_keys(value)
         element.send_keys(Keys.ENTER)
-        results[args["step"]] = "success"
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except StaleElementReferenceException:
         time.sleep(0.25)
         await type_text(driver, args, results)

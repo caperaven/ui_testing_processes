@@ -1,6 +1,7 @@
 from src.elements import get_element
 from selenium.webdriver.common.by import By
 from src.utils import has_shadow_root
+from src.memory import get_memory
 
 ignore_tag_names = ["style", "text", "svg", "label", "slot"]
 
@@ -19,7 +20,10 @@ class TestScraper:
         self.validate_element(element)
 
         if len(self.results) == 0:
-            results[args["step"]] = "success"
+            results[args["step"]] = {
+                "result": "success",
+                "memory": get_memory(driver)
+            }
         else:
             results[args["step"]] = self.results
 

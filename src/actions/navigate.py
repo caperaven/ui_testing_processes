@@ -46,7 +46,11 @@ async def close_window(driver, args, results):
         driver.switch_to.window(driver.window_handles[index])
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
-        results[args["step"]] = "success"
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except Exception as e:
         print(e)
         await set_error(driver, results, args["step"], "error: could not close window at ({}), '{}'".format(index, e))

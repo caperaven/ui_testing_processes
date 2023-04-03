@@ -61,7 +61,6 @@ class Api:
                 options.add_argument("--auto-open-devtools-for-tabs")
                 options.add_argument("--enable-precise-memory-info")
                 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-                #options.add_experimental_option('goog:chromeOptions', {'w3c': False})
 
             self.driver = webdriver.Chrome(options=options)
 

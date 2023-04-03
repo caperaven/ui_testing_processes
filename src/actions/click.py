@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _is_enabled_condition
-
+from src.memory import get_memory
 
 async def click(driver, args, results):
     element = get_element(driver, args, results)
@@ -37,7 +37,10 @@ async def click(driver, args, results):
         if action_key_up:
             action_key_up.perform()
 
-        results[args["step"]] = "success"
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except StaleElementReferenceException:
         time.sleep(0.25)
         await click(driver, args, results)
@@ -58,7 +61,11 @@ async def dbl_click(driver, args, results):
     try:
         action = ActionChains(driver).double_click(element)
         action.perform()
-        results[args["step"]] = "success"
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except StaleElementReferenceException:
         time.sleep(0.25)
         await dbl_click(driver, args, results)
@@ -79,7 +86,11 @@ async def context_click(driver, args, results):
     try:
         action = ActionChains(driver).context_click(element)
         action.perform()
-        results[args["step"]] = "success"
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except StaleElementReferenceException:
         time.sleep(0.25)
         await context_click(driver, args, results)
