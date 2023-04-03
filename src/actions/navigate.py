@@ -9,6 +9,9 @@ async def navigate(driver, args, results):
         url = args["url"]
         driver.get(url)
 
+        if args["refresh"]:
+            driver.refresh()
+
         await wait_for_css_property(driver, {
             "query": "body",
             "property": "visibility",
@@ -28,7 +31,7 @@ async def navigate(driver, args, results):
 
         results[args["step"]] = {
             "result": "success",
-            "memory": get_memory(driver)
+            "memory": get_memory(driver, 1)
         }
     except Exception as e:
         print(e)

@@ -1,6 +1,7 @@
 from src.data import state
 from src.errors import set_error
 from src.logger import Logger
+from src.memory import get_memory
 import traceback
 
 
@@ -38,6 +39,10 @@ class ProcessRunner:
             if success is not True:
                 await set_error(context.driver, process["_results"], "parameters_required", success)
 
+        process["_results"]["memory"] = {
+            "start": get_memory(context.driver, 1),
+        }
+
         start = process["steps"]["start"]
 
         if "data" not in process:
@@ -46,6 +51,8 @@ class ProcessRunner:
         try:
             process["current_step"] = "start"
             await self.run_step(start, context, process, item)
+
+            process["_results"]["memory"]["end"] = get_memory(context.driver, 1)
         except Exception as e:
             print(traceback.format_exc())
             message = "internal error: {}".format(e)
