@@ -9,7 +9,7 @@ async def navigate(driver, args, results):
         url = args["url"]
         driver.get(url)
 
-        if args["refresh"]:
+        if "refresh" in args and args["refresh"] is True:
             driver.refresh()
 
         await wait_for_css_property(driver, {
