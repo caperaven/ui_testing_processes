@@ -1,4 +1,4 @@
-from src.actions.navigate import navigate, close_window
+from src.actions.navigate import navigate, close_window, open_and_close_url
 from src.actions.refresh import refresh
 from src.actions.click import click, dbl_click, context_click, click_sequence
 from src.actions.press_key import press_key
@@ -13,6 +13,10 @@ class PerformActions:
     @staticmethod
     async def navigate(step, context, process, item):
         await navigate(context.driver, step["args"], process["_results"])
+
+    @staticmethod
+    async def open_and_close_url(step, context, process, item):
+        await open_and_close_url(context.driver, step["args"], process["_results"])
 
     @staticmethod
     async def close_window(step, context, process, item):

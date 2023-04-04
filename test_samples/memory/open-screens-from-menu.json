@@ -1,0 +1,26 @@
+{
+  "id": "open_screens_from_menu",
+
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "open_and_close_url",
+        "args": {
+          "open_url": "${state.server}#dashboard/WorkOrder",
+          "default_url": "${state.server}/#welcome"
+        },
+        "next_step": "open_assets"
+      },
+
+      "open_assets": {
+        "type": "perform",
+        "action": "open_and_close_url",
+        "args": {
+          "open_url": "${state.server}#dashboard/AssetTree",
+          "default_url": "${state.server}/#welcome"
+        }
+      }
+    }
+  }
+}

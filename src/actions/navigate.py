@@ -2,6 +2,7 @@ from src.data import data
 from src.wait.components import wait_for_css_property, wait_for_attribute
 from src.errors import set_error
 from src.memory import get_memory
+import time
 
 async def navigate(driver, args, results):
     try:
@@ -29,6 +30,13 @@ async def navigate(driver, args, results):
             "step": "navigate"
         }, results)
 
+        await wait_for_attribute(driver, {
+            "query": "view-container",
+            "attr": "status",
+            "value": "ready",
+            "step": "navigate"
+        }, results)
+
         results[args["step"]] = {
             "result": "success",
             "memory": get_memory(driver, 1)
@@ -38,6 +46,27 @@ async def navigate(driver, args, results):
         await set_error(driver, results, args["step"], "error: could not navigate to '{}', '{}'".format(url, e))
         pass
 
+async def open_and_close_url(driver, args, results):
+    try:
+        open_url = args["open_url"]
+        default_url = args["default_url"]
+
+        args["url"] = open_url
+        await navigate(driver, args, results)
+        time.sleep(2)
+
+        args["url"] = open_url
+        await navigate(driver, args, results)
+        time.sleep(1)
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver, 1)
+        }
+    except Exception as e:
+        print(e)
+        await set_error(driver, results, args["step"], "error: could not open {} and close url '{}', '{}'".format(open_url, default_url, e))
+        pass
 
 async def close_window(driver, args, results):
     try:
