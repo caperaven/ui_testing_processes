@@ -1,0 +1,13 @@
+{
+  "id": "open_screens_from_menu",
+
+  "main": {
+    "steps": {
+      "start": {
+        "type": "system",
+        "action": "show_all_screens",
+        "args": {}
+      }
+    }
+  }
+}
