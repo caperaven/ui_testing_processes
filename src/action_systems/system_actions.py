@@ -1,3 +1,5 @@
+from src.actions.navigate import open_and_close_url
+from src.data import state
 from src.elements import get_element
 import time
 import os
@@ -164,6 +166,18 @@ class SystemActions:
         content = file.read()
         context.driver.execute_script(content)
 
+    @staticmethod
+    async def show_all_screens(step, context, process, item):
+        menu_items = context.driver.execute_script("return document.querySelector('pr-menu')._flatList")
+
+        for item in menu_items:
+            if "screen" in item and item["screen"] != "" and item["screen"] is not None:
+                await open_and_close_url(context.driver, {
+                    "open_url": "".join([state["server"], item["screen"]]),
+                    "default_url": "${state.server}#welcome",
+                    "step": step["args"]["step"]
+                }, process["_results"])
+                print("")
 
 
 
