@@ -25,7 +25,7 @@ def save_results(results):
     json.dump(results, outfile, indent=4)
     outfile.close()
 
-    # save_chart(results)
+    save_chart(results)
 
     print("******* results saved *******")
     print(file)
@@ -42,8 +42,6 @@ def save_chart(results):
         if key == "summary":
             continue
 
-        results.update(**{"start", {"memory": first_item[1]["summary"]["start_memory"]}})
-        results.update({"end", {"memory": first_item[1]["summary"]["end_memory"]}})
         create_chart(first_item[1][key], os.path.join(state["folder"], key + ".png"))
 
 def create_chart(results, path):
@@ -71,6 +69,8 @@ def create_chart(results, path):
 
 def create_chart_from_array(data, path):
     df = pd.DataFrame({"values": data})
+    max = df["values"].max()
+    plt.ylim(0, max * 2)
     sns.lineplot(data=df, linewidth=2)
     plt.savefig(path)
 

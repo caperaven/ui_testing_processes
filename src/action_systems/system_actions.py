@@ -176,12 +176,7 @@ class SystemActions:
         memory = []
         memory.append(get_memory(context.driver, 1))
 
-        count = 0
         for item in menu_items:
-            count += 1
-            if (count > 5):
-                break
-
             if "screen" in item and item["screen"] != "" and item["screen"] is not None:
                 await open_and_close_url(context.driver, {
                     "open_url": "".join([state["server"], item["screen"]]),
