@@ -25,7 +25,7 @@ def save_results(results):
     json.dump(results, outfile, indent=4)
     outfile.close()
 
-    save_chart(results)
+    # save_chart(results)
 
     print("******* results saved *******")
     print(file)
@@ -68,3 +68,9 @@ def create_chart(results, path):
     plt.text(len(df) - 1, df['memory'].max(), str(df['memory'].max()))
 
     plt.savefig(path)
+
+def create_chart_from_array(data, path):
+    df = pd.DataFrame({"values": data})
+    sns.lineplot(data=df, linewidth=2)
+    plt.savefig(path)
+

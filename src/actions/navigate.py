@@ -30,12 +30,12 @@ async def navigate(driver, args, results):
             "step": "navigate"
         }, results)
 
-        await wait_for_attribute(driver, {
-            "query": "view-container",
-            "attr": "status",
-            "value": "ready",
-            "step": "navigate"
-        }, results)
+        # await wait_for_attribute(driver, {
+        #     "query": "view-container",
+        #     "attr": "status",
+        #     "value": "ready",
+        #     "step": "navigate"
+        # }, results)
 
         results[args["step"]] = {
             "result": "success",

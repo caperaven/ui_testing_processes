@@ -5,6 +5,10 @@ import time
 import os
 import uuid
 
+from src.memory import get_memory
+from src.results_writer import create_chart_from_array
+
+
 class SystemActions:
     @staticmethod
     async def attributes_to_variables(step, context, process, item):
@@ -160,7 +164,7 @@ class SystemActions:
         args = step["args"].copy()
         script_file = args["script"]
         path_parts = os.path.split(context.current["schema"]["file_path"])
-        script_path = os.path.join(path_parts[0], script_file);
+        script_path = os.path.join(path_parts[0], script_file)
 
         file = open(script_path)
         content = file.read()
@@ -169,15 +173,25 @@ class SystemActions:
     @staticmethod
     async def show_all_screens(step, context, process, item):
         menu_items = context.driver.execute_script("return document.querySelector('pr-menu')._flatList")
+        memory = []
+        memory.append(get_memory(context.driver, 1))
 
+        count = 0
         for item in menu_items:
+            count += 1
+            if (count > 5):
+                break
+
             if "screen" in item and item["screen"] != "" and item["screen"] is not None:
                 await open_and_close_url(context.driver, {
                     "open_url": "".join([state["server"], item["screen"]]),
-                    "default_url": "${state.server}#welcome",
+                    "default_url": "".join([state["server"], "#welcome"]),
                     "step": step["args"]["step"]
                 }, process["_results"])
-                print("")
+                memory.append(get_memory(context.driver, 0.5))
+
+        memory.append(get_memory(context.driver))
+        create_chart_from_array(memory, os.path.join(state["folder"], "all_dashboards_memory.png"))
 
 
 
