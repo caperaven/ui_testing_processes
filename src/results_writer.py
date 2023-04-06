@@ -2,7 +2,9 @@ from datetime import datetime
 from src.data import state
 import json
 import os
-
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def set_results_folder(folder):
     now = datetime.now()
@@ -23,5 +25,46 @@ def save_results(results):
     json.dump(results, outfile, indent=4)
     outfile.close()
 
+    save_chart(results)
+
     print("******* results saved *******")
     print(file)
+
+def save_chart(results):
+    #get the first item in the dictionary
+    first_item = next(iter(results.items()))
+
+    #get all the keys from the first item
+    keys = first_item[1].keys()
+
+    #loop through the keys
+    for key in keys:
+        if key == "summary":
+            continue
+
+        results.update(**{"start", {"memory": first_item[1]["summary"]["start_memory"]}})
+        results.update({"end", {"memory": first_item[1]["summary"]["end_memory"]}})
+        create_chart(first_item[1][key], os.path.join(state["folder"], key + ".png"))
+
+def create_chart(results, path):
+    del results['memory']
+
+    data = results
+    df = pd.DataFrame(data).transpose()
+    df = df[['memory']]
+
+    # Create the chart
+    sns.lineplot(x=df.index, y='memory', data=df, linewidth=2)
+    plt.xlabel('key')
+
+    # Set the y-axis label to 'memory'
+    max = df['memory'].max()
+    plt.ylabel('memory')
+    plt.ylim(0, max * 2)
+
+    # Rotate the x-axis labels for better readability
+    plt.xticks(rotation=25)
+
+    plt.text(len(df) - 1, df['memory'].max(), str(df['memory'].max()))
+
+    plt.savefig(path)
