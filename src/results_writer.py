@@ -69,8 +69,8 @@ def create_chart(results, path):
 
 def create_chart_from_array(data, path):
     df = pd.DataFrame({"values": data})
-    max = df["values"].max()
-    plt.ylim(0, max * 2)
+    # max = df["values"].max()
+    # plt.ylim(0, max * 2)
     sns.lineplot(data=df, linewidth=2)
     plt.savefig(path)
 
