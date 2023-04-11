@@ -1,7 +1,8 @@
 from selenium.webdriver.common.by import By
 
 from src.elements import get_element
-from src.utils import get_eval
+from src.utils import get_eval, rgba_to_hex, css_value_formatter
+import re
 
 
 def _element_condition(args, results):
@@ -85,6 +86,12 @@ def _css_condition(args, results):
         prop = args['property']
         value = element.value_of_css_property(prop)
         exp_value = args["value"]
+
+        # Check if value is in rgba format
+        if "rgba(" in value:
+            value = rgba_to_hex(value)
+            value = value.upper()
+
         return _eval(value, exp_value, args)
 
     return _predicate
@@ -96,6 +103,7 @@ def _css_conditions(args, results):
         styles = args["styles"]
         for key, value in styles.items():
             actual_value = element.value_of_css_property(key)
+            actual_value = css_value_formatter(actual_value)
             if not _eval(actual_value, value, args):
                 return False
         return True
@@ -117,13 +125,11 @@ def _property_conditions(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
         properties = args["properties"]
-        for prop in properties:
-            value = element.get_property(prop)
-            exp_value = properties[prop]
-            if not _eval(value, exp_value, args):
+        for key, value in properties.items():
+            actual_value = element.get_property(key)
+            if not _eval(actual_value, value, args):
                 return False
         return True
-
     return _predicate
 
 

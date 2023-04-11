@@ -8,6 +8,24 @@
         "args": {
           "url": "${state.server}"
         },
+        "next_step": "wait_for_element"
+      },
+      "wait_for_element": {
+        "type": "wait",
+        "action": "element",
+        "args": {
+          "query": "#edtFirstName"
+        },
+        "next_step": "wait_for_single_style"
+      },
+      "wait_for_single_style": {
+        "type": "wait",
+        "action": "style_property",
+        "args": {
+          "query": "#edtFirstName",
+          "property": "background-color",
+          "value": "#00FFFF"
+        },
         "next_step": "wait_for_styles"
       },
       "wait_for_styles": {
@@ -16,7 +34,7 @@
         "args": {
           "query": "#edtFirstName",
           "styles": {
-            "color": "black",
+            "color": "#000000",
             "font-style": "italic"
           }
         },
@@ -31,6 +49,43 @@
             "type": "text",
             "name": "first-name"
           }
+        },
+        "next_step": "test_styles"
+      },
+      "test_styles": {
+        "type": "wait",
+        "action": "style_properties",
+        "args": {
+          "query": "#aw-test",
+          "styles": {
+            "background-color": "#7CFC00",
+            "height": "200px"
+          }
+        },
+        "next_step": "test_paragraph"
+      },
+      "test_paragraph": {
+        "type": "wait",
+        "action": "style_properties",
+        "args": {
+          "query": "#para-test",
+          "styles": {
+            "background-color": "#FF69B4",
+            "color": "#F8F8FF",
+            "height": "100px",
+            "width": "200px",
+            "display": "flex"
+          }
+        },
+        "next_step": "wait_for_single_elem_property"
+      },
+      "wait_for_single_elem_property": {
+        "type": "wait",
+        "action": "element_property",
+        "args": {
+          "query": "#edtLastName",
+          "property": "type",
+          "value": "text"
         }
       }
     }

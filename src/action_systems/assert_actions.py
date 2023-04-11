@@ -26,7 +26,7 @@ class AssertActions:
 
     @staticmethod
     async def has_attribute(step, context, process, item):
-        await has_attr(context.driver, step["args"], process["_results"])
+        await assert_has_attr(context.driver, step["args"], process["_results"])
 
     @staticmethod
     async def has_not_attribute(step, context, process, item):

@@ -8,7 +8,7 @@ from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
     _window_count_condition, _idle_condition, _has_attribute_condition, _css_conditions, \
-    _property_conditions
+    _property_conditions, _not_class_condition
 
 
 async def wait_is_ready(driver, args, results):
@@ -169,6 +169,7 @@ async def wait_for_property(driver, args, results):
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for element property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
         pass
+
 
 async def wait_for_properties(driver,args,results):
     try:
