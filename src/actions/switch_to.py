@@ -44,6 +44,10 @@ async def switch_to_tab(driver, args, results):
         time.sleep(1)
         index = args["index"]
         driver.switch_to.window(driver.window_handles[index])
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
     except StaleElementReferenceException:
         time.sleep(0.25)
         await switch_to_tab(driver, args, results)

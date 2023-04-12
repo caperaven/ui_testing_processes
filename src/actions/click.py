@@ -120,4 +120,4 @@ async def click_and_wait_for_elements(driver, args, results):
     # for element in elements:
     #     element.click()
     #     await wait_for_element(condition)
-    pass;
+    pass
