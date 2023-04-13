@@ -1,0 +1,74 @@
+{
+    "id": "audit_asset_options",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#dashboard/AssetTree"
+                },
+                "next_step": "wait_for_idle_cpu"
+            },
+            "wait_for_idle_cpu": {
+                "type": "wait",
+                "action": "idle",
+                "next_step": "wait_for_asset_tree"
+            },
+            "wait_for_asset_tree": {
+                "type": "wait",
+                "action": "element",
+                "args": {
+                    "query": "asset-tree"
+                },
+                "next_step": "wait_for_idle_cpu_1"
+            },
+            "wait_for_idle_cpu_1": {
+                "type": "wait",
+                "action": "idle",
+                "next_step": "wait_for_tree_items"
+            },
+            "wait_for_tree_items": {
+                "type": "wait",
+                "action": "element_count",
+                "args": {
+                    "query": "asset-tree .tree-item",
+                    "count": 1,
+                    "eval": "gt"
+                },
+                "next_step": "action_open_properties_panel"
+            },
+            "action_open_properties_panel": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "id": "ibtn-PropertiesPanel"
+                },
+                "next_step": "wait_for_properties_panel"
+            },
+            "wait_for_properties_panel": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "properties-panel.asset-tree.visible pragma-pager",
+                    "attr": "status",
+                    "value": "ready"
+                },
+                "next_step": "wait_for_idle_cpu_2"
+            },
+            "wait_for_idle_cpu_2": {
+                "type": "wait",
+                "action": "idle",
+                "next_step": "audit"
+            },
+            "audit": {
+                "type": "system",
+                "action": "audit",
+                "args": {
+                    "query": "asset-tree-display-options"
+                }
+            }
+        }
+    }
+}

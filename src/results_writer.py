@@ -74,3 +74,11 @@ def create_chart_from_array(data, path):
     sns.lineplot(data=df, linewidth=2)
     plt.savefig(path)
 
+def save_json_to_file(data, path):
+    json_str = json.dumps(data, indent=4)
+
+    with open(path, 'w') as file:
+        file.write(json_str)
+
+    file.close()
+

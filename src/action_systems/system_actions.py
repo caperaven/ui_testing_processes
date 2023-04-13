@@ -6,7 +6,7 @@ import os
 import uuid
 
 from src.memory import get_memory
-from src.results_writer import create_chart_from_array
+from src.results_writer import create_chart_from_array, save_json_to_file
 
 
 class SystemActions:
@@ -174,19 +174,46 @@ class SystemActions:
     async def show_all_screens(step, context, process, item):
         menu_items = context.driver.execute_script("return document.querySelector('pr-menu')._flatList")
         memory = []
-        memory.append(get_memory(context.driver, 1))
+        log = []
+        logId = 0
 
-        for item in menu_items:
+        mem = get_memory(context.driver, 1)
+        memory.append(mem)
+        log.append({
+            "id": logId,
+            "screen": "start_text",
+            "memory": mem
+        })
+
+        subset = menu_items  #menu_items[:5]
+
+        for item in subset:
             if "screen" in item and item["screen"] != "" and item["screen"] is not None:
+                logId += 1
                 await open_and_close_url(context.driver, {
                     "open_url": "".join([state["server"], item["screen"]]),
                     "default_url": "".join([state["server"], "#welcome"]),
                     "step": step["args"]["step"]
                 }, process["_results"])
-                memory.append(get_memory(context.driver, 0.5))
 
-        memory.append(get_memory(context.driver))
+                mem = get_memory(context.driver, 0.5)
+                memory.append(mem)
+                log.append({
+                    "id": logId,
+                    "screen": item["screen"],
+                    "memory": mem
+                })
+
+        mem = get_memory(context.driver)
+        memory.append(mem)
+        log.append({
+            "id": logId + 1,
+            "screen": "end_text",
+            "memory": mem
+        })
+
         create_chart_from_array(memory, os.path.join(state["folder"], "all_dashboards_memory.png"))
+        save_json_to_file(log, os.path.join(state["folder"], "all_dashboards_memory.json"))
 
 
 

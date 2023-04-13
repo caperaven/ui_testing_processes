@@ -1,0 +1,70 @@
+{
+    "id": "audit_profiles",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#dashboard/WorkOrder"
+                },
+                "next_step": "wait_for_idle_cpu"
+            },
+            "wait_for_idle_cpu": {
+                "type": "wait",
+                "action": "idle",
+                "next_step": "wait_for_dashboard_grid_to_be_ready"
+            },
+
+            "wait_for_dashboard_grid_to_be_ready": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "id": "dashboard-grid",
+                    "attr": "status",
+                    "value": "ready",
+                    "timeout": 30
+                },
+                "next_step": "click_on_profiles_button"
+            },
+
+            "click_on_profiles_button": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "id": "profiles"
+                },
+                "next_step": "for_open_animation"
+            },
+
+            "for_open_animation": {
+                "type": "wait",
+                "action": "time",
+                "args": {
+                    "timeout": 0.5
+                },
+                "next_step": "wait_profiles_is_ready"
+            },
+
+            "wait_profiles_is_ready": {
+                "type": "wait",
+                "action": "attribute",
+                "args": {
+                    "query": "pr-profiles",
+                    "attr": "status",
+                    "value": "ready"
+                },
+                "next_step": "audit_pr_profiles"
+            },
+
+            "audit_pr_profiles": {
+                "type": "system",
+                "action": "audit",
+                "args": {
+                    "query": "pr-profiles"
+                }
+            }
+        }
+    }
+}
