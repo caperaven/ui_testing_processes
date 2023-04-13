@@ -172,6 +172,8 @@ class SystemActions:
 
     @staticmethod
     async def show_all_screens(step, context, process, item):
+        context.driver.execute_script("console.clear()")
+
         menu_items = context.driver.execute_script("return document.querySelector('pr-menu')._flatList")
         memory = []
         log = []
@@ -179,13 +181,10 @@ class SystemActions:
 
         mem = get_memory(context.driver, 1)
         memory.append(mem)
-        log.append({
-            "id": logId,
-            "screen": "start_text",
-            "memory": mem
-        })
 
-        subset = menu_items  #menu_items[:5]
+        add_to_log(context, log, memory, logId, "start_test")
+
+        subset = menu_items         #menu_items[:5]
 
         for item in subset:
             if "screen" in item and item["screen"] != "" and item["screen"] is not None:
@@ -196,25 +195,29 @@ class SystemActions:
                     "step": step["args"]["step"]
                 }, process["_results"])
 
-                mem = get_memory(context.driver, 0.5)
-                memory.append(mem)
-                log.append({
-                    "id": logId,
-                    "screen": item["screen"],
-                    "memory": mem
-                })
+                add_to_log(context, log, memory, logId, item["screen"])
 
-        mem = get_memory(context.driver)
-        memory.append(mem)
-        log.append({
-            "id": logId + 1,
-            "screen": "end_text",
-            "memory": mem
-        })
+        add_to_log(context, log, memory, logId + 1, "end_text")
 
         create_chart_from_array(memory, os.path.join(state["folder"], "all_dashboards_memory.png"))
         save_json_to_file(log, os.path.join(state["folder"], "all_dashboards_memory.json"))
 
+def add_to_log(context, log, memory, id, screen):
+    mem = get_memory(context.driver, 0.5)
 
+    logItem = {
+        "id": id,
+        "screen": screen,
+        "memory": mem
+    }
+
+    log_entries = context.driver.get_log("browser")
+    if (log_entries is not None and len(log_entries) > 0):
+        logItem["console"] = log_entries
+
+    context.driver.execute_script("console.clear()")
+
+    log.append(logItem)
+    memory.append(mem)
 
 
