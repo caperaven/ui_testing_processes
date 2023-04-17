@@ -1,0 +1,23 @@
+{
+    "id": "framework pages",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#welcome"
+                },
+                "next_step": "icons"
+            },
+            "icons": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}/#icons"
+                },
+                "next_step": "forms"
+            }
+        }
+    }
+}
