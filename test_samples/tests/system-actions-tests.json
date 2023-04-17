@@ -6,17 +6,71 @@
                 "type": "perform",
                 "action": "navigate",
                 "args": {
-                    "url": "${state.server}/#welcome"
+                    "url": "${state.server}"
                 },
-                "next_step": "icons"
+                "next_step": "firstname_to_var"
             },
-            "icons": {
-                "type": "perform",
-                "action": "navigate",
+            "firstname_to_var": {
+                "type": "system",
+                "action": "properties_to_variables",
                 "args": {
-                    "url": "${state.server}/#icons"
+                    "#edtFirstName":{
+                        "value": "$data.firstName"
+                    }
                 },
-                "next_step": "forms"
+                "next_step": "check_firstname_var_value"
+            },
+            "check_firstname_var_value": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "#paragraph",
+                    "value": "$data.firstName"
+                },
+                "next_step": "wait_for_firstName_text"
+            },
+            "wait_for_firstName_text": {
+                "type": "wait",
+                "action": "time",
+                "args": {
+                    "timeout": 5
+                },
+                "next_step": "type_lastname"
+            },
+            "type_lastname": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "#edtLastName",
+                    "value": "Williams"
+                },
+                "next_step": "lastName_to_var"
+            },
+            "lastName_to_var": {
+                "type": "system",
+                "action": "properties_to_variables",
+                "args": {
+                    "#edtLastName": {
+                        "value": "$data.lastName"
+                    }
+                },
+                "next_step": "check_lastname_var_value"
+            },
+            "check_lastname_var_value": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "#paragraph",
+                    "value": "$data.lastName"
+                },
+                "next_step": "wait_lastname_text"
+            },
+            "wait_lastname_text": {
+                "type": "wait",
+                "action": "time",
+                "args": {
+                    "timeout": 5
+                }
             }
         }
     }

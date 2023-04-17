@@ -17,9 +17,12 @@
 </head>
 <body>
     <label for="edtFirstName">First Name</label>
-    <input id="edtFirstName" type="text" value.bind="user.firstName" /> </br>
+    <input id="edtFirstName" type="text" value.bind="user.firstName" value="John"/> <br>
     <label for="edtLastName">Last Name</label>
-    <input id="edtLastName" type="text" value.bind="user.lastName" /> </br>
+    <input id="edtLastName" type="text" value.bind="user.lastName" /> <br>
+    <label for="paragraph">My Text Container</label>
+    <input id="paragraph" type="text" /> <br>
+
 
     <div role="toolbar">
         <button id="btnDialogClose" click.call="closeDialog">Close</button>
