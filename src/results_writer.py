@@ -46,6 +46,7 @@ def save_chart(results):
 
 def create_chart(results, path):
     del results['memory']
+    del results['output']
 
     if (len(results) == 0):
         return

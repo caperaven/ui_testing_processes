@@ -69,8 +69,8 @@ class ProcessRunner:
         step_args["step"] = process["current_step"]
         result = await context.call(step_type, step_action, step_args, context, process, item)
 
-        # if result is not None:
-        #     set_target(step_action["target"], context, process)
+        if result is not None and "target" in step_args:
+            set_target(step_args["target"], context, process, result)
 
         if "next_step" in step:
             next_step_name = step["next_step"]
@@ -206,18 +206,13 @@ def parse_args(args, context, process, item):
     keys = args.keys()
 
     for key in keys:
-        if key == "id" or key == "query":
+        if key == "id" or key == "query" or key == "target":
             continue
 
         value = context.get_value(args[key], context, process, item)
         args[key] = value
 
 def set_target(target, context, process, value):
-    return # work in progress leave alone for now
-
-    if target is None:
-        return
-
     if "$context." in target:
         parts = target.split(".")
         prop = parts[1]
@@ -239,5 +234,9 @@ def set_target(target, context, process, value):
     if "$result." in target:
         parts = target.split(".")
         prop = parts[1]
-        process["_results"][prop] = value
+
+        if 'output' not in process["_results"]:
+            process["_results"]["output"] = {}
+
+        process["_results"]["output"][prop] = value
         return

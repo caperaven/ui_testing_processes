@@ -8,8 +8,8 @@ class CRSActions:
         action = args["action"]
         args = args["args"]
 
-        javascript = f"return crs.call(arguments[0], arguments[1], arguments[2])"
-        result = driver.execute_async_script(javascript, type, action, args)
+        # javascript = f"return crs.call(arguments[0], arguments[1], arguments[2])"
+        # result = driver.execute_async_script(javascript, type, action, args)
 
-        return result
+        return "hello world"
 

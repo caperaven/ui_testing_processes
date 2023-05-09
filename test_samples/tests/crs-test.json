@@ -12,7 +12,7 @@
                         "min": 0,
                         "max": 100
                     },
-                    "target": "$data.randomInt"
+                    "target": "$result.randomInt"
                 }
             }
         }
