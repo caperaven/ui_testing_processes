@@ -3,6 +3,7 @@ from src.action_systems.assert_actions import AssertActions
 from src.action_systems.wait_actions import WaitActions
 from src.action_systems.perform_actions import PerformActions
 from src.action_systems.system_actions import SystemActions
+from src.action_systems.crs_actions import CRSActions
 from src.schema_registry import SchemaRegistry
 from src.process_runner import ProcessRunner
 from src.data import state
@@ -35,7 +36,8 @@ class Api:
             "assert": AssertActions,
             "wait": WaitActions,
             "perform": PerformActions,
-            "system": SystemActions
+            "system": SystemActions,
+            "crs": CRSActions
         }
 
         self.current = {

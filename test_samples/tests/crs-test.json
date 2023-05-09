@@ -1,0 +1,19 @@
+{
+    "id": "crs-test",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "crs",
+                "action": "call",
+                "args": {
+                    "type": "random",
+                    "action": "integer",
+                    "args": {
+                        "min": 0,
+                        "max": 100
+                    }
+                }
+            }
+        }
+    }
+}

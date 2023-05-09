@@ -47,6 +47,9 @@ def save_chart(results):
 def create_chart(results, path):
     del results['memory']
 
+    if (len(results) == 0):
+        return
+
     data = results
     df = pd.DataFrame(data).transpose()
     df = df[['memory']]
