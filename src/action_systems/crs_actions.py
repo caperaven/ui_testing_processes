@@ -3,5 +3,13 @@ class CRSActions:
     async def call(step, context, process, item):
         driver = context.driver
         args = step["args"]
-        results = process["_results"]
-        print("I was called")
+
+        type = args["type"]
+        action = args["action"]
+        args = args["args"]
+
+        javascript = f"return crs.call(arguments[0], arguments[1], arguments[2])"
+        result = driver.execute_async_script(javascript, type, action, args)
+
+        return result
+
