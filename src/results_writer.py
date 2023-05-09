@@ -45,8 +45,11 @@ def save_chart(results):
         create_chart(first_item[1][key], os.path.join(state["folder"], key + ".png"))
 
 def create_chart(results, path):
-    del results['memory']
-    del results['output']
+    if 'memory' in results:
+        del results['memory']
+
+    if 'output' in results:
+        del results['output']
 
     if (len(results) == 0):
         return

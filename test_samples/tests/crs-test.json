@@ -3,16 +3,24 @@
     "main": {
         "steps": {
             "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "${state.server}"
+                },
+                "next_step": "random_int"
+            },
+
+            "random_int": {
                 "type": "crs",
                 "action": "call",
                 "args": {
-                    "type": "random",
-                    "action": "integer",
+                    "type": "colors",
+                    "action": "hex_to_rgb",
                     "args": {
-                        "min": 0,
-                        "max": 100
+                        "hex": "#ff0000"
                     },
-                    "target": "$result.randomInt"
+                    "target": "$result.color"
                 }
             }
         }
