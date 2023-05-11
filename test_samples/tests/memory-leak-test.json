@@ -8,16 +8,19 @@
                 "args": {
                     "url": "${state.server}"
                 },
-                "next_step": "set_uuid_variables"
+                "next_step": "start_memory_recorder"
             },
-
-            "set_uuid_variables": {
-                "type": "system",
-                "action": "set_uuid_variables",
+            "start_memory_recorder": {
+                "type": "crs",
+                "action": "call",
                 "args": {
-                    "variables": ["$data.firstName", "$data.lastName"]
-                },
-                "next_step": "type_value"
+                    "type": "colors",
+                    "action": "hex_to_rgb",
+                    "args": {
+                        "hex": "#ff0000"
+                    },
+                    "target": "$result.color"
+                }
             }
         }
     }
