@@ -6,8 +6,10 @@ from src.errors import set_error_sync
 def _get_query(args):
     if "id" in args:
         return "#{}".format(args["id"])
-    else:
+    elif "query" in args:
         return args["query"]
+    else:
+        return
 
 
 def _get_element(driver, query):

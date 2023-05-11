@@ -8,8 +8,7 @@ class CRSActions:
         action = args["action"]
         args = args["args"]
 
-        javascript = "return await crs.call('{}', '{}', arguments[0])".format(type, action)
+        javascript = "return await globalThis.crs.call('{}', '{}', arguments[0])".format(type, action)
         result = driver.execute_script(javascript, args)
 
         return result
-

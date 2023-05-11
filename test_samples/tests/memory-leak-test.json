@@ -8,18 +8,80 @@
                 "args": {
                     "url": "${state.server}"
                 },
+                "next_step": "wait_for_process"
+            },
+
+            "wait_for_process": {
+                "type": "wait",
+                "action": "crs_loaded",
+                "args": {},
                 "next_step": "start_memory_recorder"
             },
+
             "start_memory_recorder": {
                 "type": "crs",
                 "action": "call",
                 "args": {
-                    "type": "colors",
-                    "action": "hex_to_rgb",
+                    "type": "debug",
+                    "action": "start_monitor_events",
                     "args": {
-                        "hex": "#ff0000"
+
                     },
-                    "target": "$result.color"
+                    "target": "$result.leaks"
+                },
+                "next_step": "step_1"
+            },
+            "step_1": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "#btn-menu"
+                },
+                "next_step": "step_2"
+            },
+            "step_2": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "pr-menu input",
+                    "value": "work orders"
+                },
+                "next_step": "step_3"
+            },
+            "step_3": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "[data-id='Work Orders']"
+                },
+                "next_step": "step_4"
+            },
+            "step_4": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "#btn-menu"
+                },
+                "next_step": "step_5"
+            },
+            "step_5": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "[data-id='1']"
+                },
+                "next_step": "stop_memory_recorder"
+            },
+            "stop_memory_recorder": {
+                "type": "crs",
+                "action": "call",
+                "args": {
+                    "type": "debug",
+                    "action": "stop_monitor_events",
+                    "args": {
+
+                    },
+                    "target": "$result.leak"
                 }
             }
         }

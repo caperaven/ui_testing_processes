@@ -110,6 +110,7 @@ def _class_condition(args, results):
 
     return _predicate
 
+
 def _not_class_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)
@@ -119,6 +120,7 @@ def _not_class_condition(args, results):
 
     return _predicate
 
+
 def _count_condition(args, results):
     def _predicate(driver):
         query = args["query"]
@@ -127,6 +129,7 @@ def _count_condition(args, results):
 
         count_value = len(all_children_by_css)
         return _eval(count_value, count, args)
+
     return _predicate
 
 
@@ -167,5 +170,16 @@ def _idle_condition(args, results):
         element = get_element(driver, {"query": "body"}, results)
         value = element.get_attribute("idle")
         return value == "true"
+
     return _predicate
 
+
+def _crs_condition(args, results):
+    def _predicate(driver):
+        try:
+            result = driver.execute_script("return globalThis.crs != null")
+            return result
+        except Exception as e:
+            return False
+
+    return _predicate
