@@ -330,5 +330,5 @@ async def wait_for_crs(driver, args, results):
         WebDriverWait(driver, timeout).until(_crs_condition(args, results))
     except Exception as e:
         print("wait_for_crs failed, {}".format(e.__class__.__name__))
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for idle")
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for crs")
         pass

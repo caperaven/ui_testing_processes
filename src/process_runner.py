@@ -3,6 +3,9 @@ from src.errors import set_error
 from src.logger import Logger
 from src.memory import get_memory
 import traceback
+from src.crs_calls.crs_debug import crs_start_event_monitor, crs_stop_event_monitor
+from src.action_systems.wait_actions import wait_for_crs
+from src.action_systems.wait_actions import WaitActions
 
 
 class ProcessRunner:
@@ -62,9 +65,25 @@ class ProcessRunner:
         step_type = step["type"]
         step_action = step["action"]
         step_args = step["args"].copy() if "args" in step else {}
+        # nav_count = 0
 
         parse_id(step_args, context, process, item)
         parse_args(step_args, context, process, item)
+
+        # if step_action == "navigate" and "url" in step_args and "#welcome" in step_args["url"]:
+        #     print("welcome screen")
+        #     # await wait_for_crs(context.driver, step_args, process["_results"])
+        #     if nav_count == 0:
+        #         # await crs_start_event_monitor(context.driver, process["_results"])
+        #         print("start event monitor")
+        #         nav_count += 1
+        #
+        #     if nav_count == 1:
+        #         # await crs_stop_event_monitor(context.driver, process["_results"])
+        #         print("stop event monitor")
+        #         nav_count += 1
+
+
 
         step_args["step"] = process["current_step"]
         result = await context.call(step_type, step_action, step_args, context, process, item)

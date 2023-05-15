@@ -1,0 +1,54 @@
+{
+  "id": "assert-elements",
+  "main": {
+    "steps": {
+      "start": {
+        "type": "wait",
+        "action": "crs_loaded",
+        "args": {
+        },
+        "next_step": "step_1"
+      },
+      "step_1": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "#btn-menu"
+        },
+        "next_step": "step_2"
+      },
+      "step_2": {
+        "type": "perform",
+        "action": "type_text",
+        "args": {
+          "query": "pr-menu input",
+          "value": "work orders"
+        },
+        "next_step": "step_3"
+      },
+      "step_3": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[data-id='Work Orders']"
+        },
+        "next_step": "step_4"
+      },
+      "step_4": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "#btn-menu"
+        },
+        "next_step": "step_5"
+      },
+      "step_5": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[data-id='1']"
+        }
+      }
+    }
+  }
+}

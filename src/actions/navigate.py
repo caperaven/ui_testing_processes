@@ -6,6 +6,8 @@ from src.wait.components import wait_for_css_property, wait_for_attribute, wait_
 from src.errors import set_error
 from src.memory import get_memory
 import time
+from src.crs_calls.crs_debug import crs_start_event_monitor, crs_stop_event_monitor
+from src.action_systems.wait_actions import wait_for_crs
 
 
 async def navigate(driver, args, results):
@@ -13,6 +15,23 @@ async def navigate(driver, args, results):
         driver.execute_script(data["scripts"]["idle-false"])
         url = args["url"]
         driver.get(url)
+        nav_count = 0
+
+       #Do check to see if the page is loaded before continuing
+        await wait_for_crs(driver, {"timeout": 30}, results)
+
+        #Check to see if string "#welcome" is in the url
+        if "#welcome" in url and nav_count == 0:
+            nav_count += 1
+            print("Starting Monitor")
+            print("url: ", url)
+            await crs_start_event_monitor(driver, results)
+
+        if "#welcome" in url and nav_count == 1:
+            nav_count += 1
+            print("Stopping Monitor")
+            print("url: ", url)
+            await crs_stop_event_monitor(driver, results)
 
         if "refresh" in args and args["refresh"] is True:
             driver.refresh()
@@ -45,6 +64,7 @@ async def navigate(driver, args, results):
             "result": "success",
             "memory": get_memory(driver, 1)
         }
+
     except Exception as e:
         print(e)
         await set_error(driver, results, args["step"], "error: could not navigate to '{}', '{}'".format(url, e))
