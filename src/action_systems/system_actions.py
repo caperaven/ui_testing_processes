@@ -89,9 +89,15 @@ class SystemActions:
     async def set_uuid_variables(step, context, process, item):
         args = step["args"].copy()
         variables = args["variables"]
+        no_dashes = args["no_dashes"]
 
         for variable in variables:
             value = uuid.uuid4()
+
+            # replace dashes and add a char at the beginning
+            if no_dashes:
+                value = "a{}".format(value.hex.replace("-", ""))
+
             context.set_value(variable, str(value), context, process, item)
 
         process["_results"][args["step"]] = "success"
