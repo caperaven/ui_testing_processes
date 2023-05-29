@@ -6,7 +6,7 @@
                 "type": "perform",
                 "action": "navigate",
                 "args": {
-                    "url": "${state.server}"
+                    "url": "${state.server}#welcome"
                 },
                 "next_step": "open_actions"
             },
@@ -17,7 +17,8 @@
                 "args": {
                     "menu": "actions",
                     "wait_for": "#model_createResource_field-input"
-                }
+                },
+                "next_step": "check_crud_screens"
             },
 
             "check_crud_screens": {

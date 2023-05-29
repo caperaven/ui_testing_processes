@@ -1,6 +1,9 @@
 from selenium.common import StaleElementReferenceException
 
+from src.action_systems.utils.get_crud_screens import get_crud_screens
+from src.action_systems.utils.check_crud_screen_dictionary import get_intent
 from src.actions.navigate import open_and_close_url
+from src.actions.click import click
 from src.data import state
 from src.elements import get_element
 import time
@@ -223,30 +226,62 @@ class SystemActions:
             button = get_element(driver, {
                 "step": "open_side_menu",
                 "query": "pr-side-menu #{}".format(menu),
+                "timeout": 360
             }, results)
 
             is_open = button.get_attribute("data-expanded") == "true"
 
             if not is_open:
-                button.click()
-                await wait_for_element(driver, {
-                    "step": "wait_for",
-                    "query": wait_for
+                await click(driver, {
+                    "step": "open_side_menu",
+                    "query": "pr-side-menu #{}".format(menu),
                 }, results)
 
-            results["open_side_menu"] = {
+                await wait_for_element(driver, {
+                    "step": "wait_for",
+                    "query": wait_for,
+                    "timeout": 30
+                }, results)
+
+            results[args["step"]] = {
                 "result": "success",
                 "memory": get_memory(driver)
             }
         except Exception as e:
             print(e)
-            await set_error(driver, results, "Open Side Menu - {} had error - {}".format(menu, e))
+            await set_error(driver, results, args["step"], "Open Side Menu - {} had error - {}".format(menu, e))
             pass
 
     @staticmethod
     async def check_crud_screens(step, context, process, item):
-        print("checking crud screens")
-        pass
+        args = step["args"].copy()
+        results = process["_results"]
+        driver = context.driver
+
+        screens = get_crud_screens()
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver),
+            "screens": []
+        }
+
+        result = results[args["step"]]
+
+        try:
+            for screen in screens:
+                intents = get_intent(screen)
+                result["screens"].append(
+                    {
+                        "result": "success",
+                        "memory": get_memory(driver)
+                    }
+                )
+                print(intents)
+        except Exception as e:
+            result["result"] = "error"
+            result["error"] = e
+            pass
 
 def add_to_log(context, log, memory, id, screen):
     mem = get_memory(context.driver, 0.5)
@@ -265,5 +300,3 @@ def add_to_log(context, log, memory, id, screen):
 
     log.append(logItem)
     memory.append(mem)
-
-
