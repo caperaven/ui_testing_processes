@@ -1,0 +1,38 @@
+{
+  "folder": "./test_samples/crud",
+  "login": "./test_samples/login.json",
+  "auto-open": true,
+  "server": "https://onkeydev.pragmaproducts.com/contoso/daily/",
+  "crud-dictionary": {
+    "Default": [
+      {
+        "tabs": ["Detail"],
+        "element": "[field='model.code']",
+        "value": "$uuid"
+      },
+      {
+        "tabs": ["Detail"],
+        "element": "[field='model.description']",
+        "value": "$uuid - test description"
+      },
+      {
+        "tabs": ["Detail"],
+        "element": "[field='model.permissionTreeCode']",
+        "value": "test"
+      }
+    ],
+
+    "Work Order": [
+       {
+        "tabs": ["tab1", "tab2"],
+        "element": "textarea#lbl-workRequired",
+        "value": "Work Order 1"
+      },
+      {
+        "tabs": ["tab1"],
+        "element": "input#lbl-startOnDate",
+        "value": "$now"
+      }
+    ]
+  }
+}

@@ -11,6 +11,10 @@ class SchemaRegistry:
         self.templates = {}
         self.schemas = []
 
+        if "--settings" in sys.argv:
+            settingsPath = sys.argv[sys.argv.index("--settings") + 1]
+            self.load_settings(settingsPath)
+
         if "--login" in sys.argv:
             index = sys.argv.index("--login")
             self.schemas.append(get_file_path(sys.argv[index + 1]))
@@ -31,6 +35,29 @@ class SchemaRegistry:
             index = sys.argv.index("--server")
             state["server"] = sys.argv[index + 1]
 
+    def load_settings(self, settingsPath):
+        file = open(settingsPath)
+        data = json.load(file)
+        file.close()
+
+        if "login" in data:
+            self.schemas.append(get_file_path(data["login"]))
+
+        if "file" in data:
+            self.schemas.append(get_file_path(data["file"]))
+
+        if "folder" in data:
+            self.load_folder(get_file_path(data["folder"]))
+
+        if "templates" in data:
+            self.load_templates(get_file_path(data["templates"]))
+
+        if "server" in data:
+            state["server"] = data["server"]
+
+        if "crud-dictionary" in data:
+            state["crud-dictionary"] = data["crud-dictionary"]
+        pass
 
     def add(self, schema):
         schema_id = schema["id"]

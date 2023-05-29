@@ -1,3 +1,5 @@
+from selenium.common import StaleElementReferenceException
+
 from src.actions.navigate import open_and_close_url
 from src.data import state
 from src.elements import get_element
@@ -5,8 +7,10 @@ import time
 import os
 import uuid
 
+from src.errors import set_error
 from src.memory import get_memory
 from src.results_writer import create_chart_from_array, save_json_to_file
+from src.wait.components import wait_for_attribute, wait_for_element
 
 
 class SystemActions:
@@ -201,6 +205,48 @@ class SystemActions:
 
         create_chart_from_array(memory, os.path.join(state["folder"], "all_dashboards_memory.png"))
         save_json_to_file(log, os.path.join(state["folder"], "all_dashboards_memory.json"))
+
+    @staticmethod
+    async def open_side_menu(step, context, process, item):
+        args = step["args"].copy()
+
+        # what is the button on the side menu to click
+        menu = args["menu"]
+
+        # once you have clicked on the button, what element should you wait for
+        wait_for = args["wait_for"]
+
+        results = process["_results"]
+        driver = context.driver
+
+        try:
+            button = get_element(driver, {
+                "step": "open_side_menu",
+                "query": "pr-side-menu #{}".format(menu),
+            }, results)
+
+            is_open = button.get_attribute("data-expanded") == "true"
+
+            if not is_open:
+                button.click()
+                await wait_for_element(driver, {
+                    "step": "wait_for",
+                    "query": wait_for
+                }, results)
+
+            results["open_side_menu"] = {
+                "result": "success",
+                "memory": get_memory(driver)
+            }
+        except Exception as e:
+            print(e)
+            await set_error(driver, results, "Open Side Menu - {} had error - {}".format(menu, e))
+            pass
+
+    @staticmethod
+    async def check_crud_screens(step, context, process, item):
+        print("checking crud screens")
+        pass
 
 def add_to_log(context, log, memory, id, screen):
     mem = get_memory(context.driver, 0.5)
