@@ -275,21 +275,22 @@ class SystemActions:
                 create_intents = get_intent(screen)
                 uuid_value = str(uuid.uuid4())
 
-                result = {
+                screenResult = {
                     "screen": screen,
                     "action": "create",
                     "result": "success",
                 }
 
                 try:
-                    await create_record(driver, screen, uuid_value, create_intents, result)
+                    await create_record(driver, screen, uuid_value, create_intents, screenResult)
                 except Exception as e:
-                    result["result"] = "error"
-                    result["error"] = str(e)
+                    screenResult["result"] = "error"
+                    screenResult["error"] = str(e)
+                    print(e)
                     pass
 
                 result["memory"] = get_memory(driver)
-                result["screens"].append(result)
+                result["screens"].append(screenResult)
         except Exception as e:
             result["result"] = "error"
             result["error"] = e

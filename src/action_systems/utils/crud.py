@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from src.wait.components import wait_for_element, wait_for_attribute, wait_for_element_gone
 from src.actions.click import click
@@ -57,6 +58,8 @@ async def open_screen(driver, element_id, screen, results):
 async def create_record(driver, screen, uuid, intents, results):
     await open_screen(driver, ScreenType.CREATE, screen, results)
 
+    time.sleep(1)
+
     try:
         for intent in intents:
             tabs = intent["tabs"]
@@ -99,6 +102,8 @@ async def create_record(driver, screen, uuid, intents, results):
         print(e)
         return False
         pass
+
+
 def parse_value(value, uuid):
     # 1. value is not a string so return the value
     if not isinstance(value, str):
