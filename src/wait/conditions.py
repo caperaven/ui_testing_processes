@@ -69,6 +69,15 @@ def _text_condition(args, results):
     return _predicate
 
 
+def _text_not_empty_condition(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        value = len(element.text)
+        return value > 0
+
+    return _predicate
+
+
 def _attribute_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)

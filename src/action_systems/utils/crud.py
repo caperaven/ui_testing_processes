@@ -52,6 +52,8 @@ async def open_screen(driver, element_id, screen, results):
         print(e)
         return False
         pass
+
+
 async def create_record(driver, screen, uuid, intents, results):
     await open_screen(driver, ScreenType.CREATE, screen, results)
 

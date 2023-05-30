@@ -18,7 +18,7 @@
       {
         "tabs": ["[data-id='overview']"],
         "element": "[data-field='model.permissionTreeCode'] input",
-        "value": "test"
+        "value": "Test"
       }
     ],
 

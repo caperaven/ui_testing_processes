@@ -7,7 +7,8 @@ from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
-    _window_count_condition, _idle_condition, _has_attribute_condition, _element_gone_condition
+    _window_count_condition, _idle_condition, _has_attribute_condition, _element_gone_condition, \
+    _text_not_empty_condition
 from src.memory import get_memory
 
 async def wait_is_ready(driver, args, results):
@@ -165,6 +166,20 @@ async def wait_for_text(driver, args, results):
         }
     except Exception as e:
         print("wait_for_text failed, {}".format(e.__class__.__name__))
+        name = get_name(args)
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name, e.__class__.__name__))
+        pass
+
+async def wait_for_text_not_empty(driver, args, results):
+    try:
+        timeout = args["timeout"] if "timeout" in args else 30
+        WebDriverWait(driver, timeout).until(_text_not_empty_condition(args, results))
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
+    except Exception as e:
+        print("wait_for_text_not_empty failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name, e.__class__.__name__))
         pass
