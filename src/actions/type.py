@@ -15,10 +15,7 @@ async def type_text(driver, args, results):
             return
 
         element.clear()
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(value)
-        element.send_keys(Keys.ENTER)
 
         results[args["step"]] = {
             "result": "success",
