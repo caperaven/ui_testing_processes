@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from src.elements import get_element
@@ -26,6 +28,7 @@ def _element_condition(args, results):
 def _element_gone_condition(args, results):
     def _predicate(driver):
         try:
+            time.sleep(0.1)
             element = get_element(driver, args, results)
 
             if element is None:

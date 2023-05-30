@@ -9,17 +9,17 @@ class ScreenType:
     CREATE = {
         "input": "#model_createResource_field-input",
         "button": "pragma-group[title='Create'] button",
-        "dialog_query": "pragma-action-dialog dynamic-create"
+        "dialog_query": "dynamic-create"
     }
     EDIT = {
         "input": "#model_editResource_field-input",
         "button": "pragma-group[title='Edit'] button",
-        "dialog_query": "pragma-action-dialog dynamic-update"
+        "dialog_query": "dynamic-update"
     }
     PREVIEW = {
         "input": "#model_previewResource_field-input",
         "button": "pragma-group[title='Preview'] button",
-        "dialog_query": "pragma-action-dialog dynamic-peek"
+        "dialog_query": "dynamic-peek"
     }
 async def open_screen(driver, element_id, screen, results):
     try:
@@ -39,11 +39,9 @@ async def open_screen(driver, element_id, screen, results):
             "query": element_id["button"]
         }, results)
 
-        await wait_for_attribute(driver, {
+        await wait_for_element(driver, {
             "step": "wait for screen to open",
-            "query": element_id["dialog_query"],
-            "attr": "data-ready",
-            "value": "true"
+            "query": element_id["dialog_query"]
         }, results)
 
         return True

@@ -25,7 +25,7 @@
     "Alarm": [
       {
         "tabs": ["[data-id='overview']"],
-        "element": "[data-field='model.alarmTypeCode']",
+        "element": "[data-field='model.alarmTypeCode'] input",
         "value": "UNKNOWN"
       }
     ]
