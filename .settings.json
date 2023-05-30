@@ -1,0 +1,33 @@
+{
+  "folder": "./test_samples/crud",
+  "login": "./test_samples/login.json",
+  "auto-open": true,
+  "server": "https://onkeydev.pragmaproducts.com/contoso/daily/",
+  "crud-dictionary": {
+    "default": [
+      {
+        "tabs": ["[data-id='overview']"],
+        "element": "[data-field='model.code'] input",
+        "value": "$uuid"
+      },
+      {
+        "tabs": ["[data-id='overview']"],
+        "element": "[data-field='model.description'] textarea",
+        "value": "$uuid - test description"
+      },
+      {
+        "tabs": ["[data-id='overview']"],
+        "element": "[data-field='model.permissionTreeCode'] input",
+        "value": "Test"
+      }
+    ],
+
+    "Alarm": [
+      {
+        "tabs": ["[data-id='overview']"],
+        "element": "[data-field='model.alarmTypeCode'] input",
+        "value": "UNKNOWN"
+      }
+    ]
+  }
+}

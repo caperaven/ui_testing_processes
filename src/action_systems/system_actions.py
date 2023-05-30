@@ -1,12 +1,20 @@
+from selenium.common import StaleElementReferenceException
+
+from src.action_systems.utils.get_crud_screens import get_crud_screens
+from src.action_systems.utils.check_crud_screen_dictionary import get_intent
 from src.actions.navigate import open_and_close_url
+from src.actions.click import click
 from src.data import state
 from src.elements import get_element
+from src.action_systems.utils.crud import create_record, edit_record, preview_record
 import time
 import os
 import uuid
 
+from src.errors import set_error
 from src.memory import get_memory
 from src.results_writer import create_chart_from_array, save_json_to_file
+from src.wait.components import wait_for_attribute, wait_for_element
 
 
 class SystemActions:
@@ -202,6 +210,92 @@ class SystemActions:
         create_chart_from_array(memory, os.path.join(state["folder"], "all_dashboards_memory.png"))
         save_json_to_file(log, os.path.join(state["folder"], "all_dashboards_memory.json"))
 
+    @staticmethod
+    async def open_side_menu(step, context, process, item):
+        args = step["args"].copy()
+
+        # what is the button on the side menu to click
+        menu = args["menu"]
+
+        # once you have clicked on the button, what element should you wait for
+        wait_for = args["wait_for"]
+
+        results = process["_results"]
+        driver = context.driver
+
+        try:
+            button = get_element(driver, {
+                "step": "open_side_menu",
+                "query": "pr-side-menu #{}".format(menu),
+                "timeout": 360
+            }, results)
+
+            is_open = button.get_attribute("data-expanded") == "true"
+
+            if not is_open:
+                await click(driver, {
+                    "step": "open_side_menu",
+                    "query": "pr-side-menu #{}".format(menu),
+                }, results)
+
+                await wait_for_element(driver, {
+                    "step": "wait_for",
+                    "query": wait_for,
+                    "timeout": 30
+                }, results)
+
+            results[args["step"]] = {
+                "result": "success",
+                "memory": get_memory(driver)
+            }
+        except Exception as e:
+            print(e)
+            await set_error(driver, results, args["step"], "Open Side Menu - {} had error - {}".format(menu, e))
+            pass
+
+    @staticmethod
+    async def check_crud_screens(step, context, process, item):
+        args = step["args"].copy()
+        results = process["_results"]
+        driver = context.driver
+
+        screens = get_crud_screens()
+
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver),
+            "screens": []
+        }
+
+        result = results[args["step"]]
+
+        try:
+            for screen in screens:
+                driver.execute_script("console.clear()")
+                create_intents = get_intent(screen)
+                uuid_value = str(uuid.uuid4())
+
+                screenResult = {
+                    "screen": screen,
+                    "action": "create",
+                    "result": "success",
+                }
+
+                try:
+                    await create_record(driver, screen, uuid_value, create_intents, screenResult)
+                except Exception as e:
+                    screenResult["result"] = "error"
+                    screenResult["error"] = str(e)
+                    print(e)
+                    pass
+
+                result["memory"] = get_memory(driver)
+                result["screens"].append(screenResult)
+        except Exception as e:
+            result["result"] = "error"
+            result["error"] = e
+            pass
+
 def add_to_log(context, log, memory, id, screen):
     mem = get_memory(context.driver, 0.5)
 
@@ -219,5 +313,3 @@ def add_to_log(context, log, memory, id, screen):
 
     log.append(logItem)
     memory.append(mem)
-
-

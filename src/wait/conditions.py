@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from src.elements import get_element
@@ -19,6 +21,22 @@ def _element_condition(args, results):
                 return True
         except Exception as e:
             return False
+
+    return _predicate
+
+
+def _element_gone_condition(args, results):
+    def _predicate(driver):
+        try:
+            time.sleep(0.1)
+            element = get_element(driver, args, results)
+
+            if element is None:
+                return True
+
+            return False
+        except Exception as e:
+            return True
 
     return _predicate
 
@@ -50,6 +68,15 @@ def _text_condition(args, results):
         value = element.text
         exp_value = args["value"]
         return _eval(value, exp_value, args)
+
+    return _predicate
+
+
+def _text_not_empty_condition(args, results):
+    def _predicate(driver):
+        element = get_element(driver, args, results)
+        value = len(element.text)
+        return value > 0
 
     return _predicate
 

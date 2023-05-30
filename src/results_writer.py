@@ -42,7 +42,11 @@ def save_chart(results):
         if key == "summary":
             continue
 
-        create_chart(first_item[1][key], os.path.join(state["folder"], key + ".png"))
+        try:
+            create_chart(first_item[1][key], os.path.join(state["folder"], key + ".png"))
+        except Exception as e:
+            print(e)
+            pass
 
 def create_chart(results, path):
     if 'memory' in results:
