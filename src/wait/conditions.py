@@ -23,6 +23,21 @@ def _element_condition(args, results):
     return _predicate
 
 
+def _element_gone_condition(args, results):
+    def _predicate(driver):
+        try:
+            element = get_element(driver, args, results)
+
+            if element is None:
+                return True
+
+            return False
+        except Exception as e:
+            return True
+
+    return _predicate
+
+
 def _is_ready_condition(args, results):
     def _predicate(driver):
         element = get_element(driver, args, results)

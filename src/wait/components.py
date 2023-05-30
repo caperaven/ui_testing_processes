@@ -7,7 +7,7 @@ from src.errors import set_error
 from src.utils import get_name
 from src.wait.conditions import _class_condition, _is_ready_condition, _attribute_condition, _css_condition, \
     _text_condition, _property_condition, _count_condition, _selected_condition, _element_condition, \
-    _window_count_condition, _idle_condition, _has_attribute_condition
+    _window_count_condition, _idle_condition, _has_attribute_condition, _element_gone_condition
 from src.memory import get_memory
 
 async def wait_is_ready(driver, args, results):
@@ -46,6 +46,22 @@ async def wait_for_element(driver, args, results):
         return True
     except Exception as e:
         print("wait_for_element failed, {}".format(e.__class__.__name__))
+        name = get_name(args)
+        await set_error(driver, results, args["step"], "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
+        return False
+        pass
+
+async def wait_for_element_gone(driver, args, results):
+    try:
+        timeout = args["timeout"] if "timeout" in args else 30
+        WebDriverWait(driver, timeout).until(_element_gone_condition(args, results))
+        results[args["step"]] = {
+            "result": "success",
+            "memory": get_memory(driver)
+        }
+        return True
+    except Exception as e:
+        print("wait_for_element_gone failed, {}".format(e.__class__.__name__))
         name = get_name(args)
         await set_error(driver, results, args["step"], "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
         return False

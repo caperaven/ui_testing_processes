@@ -7,17 +7,17 @@
     "default": [
       {
         "tabs": ["[data-id='overview']"],
-        "element": "[field='model.code']",
+        "element": "[data-field='model.code'] input",
         "value": "$uuid"
       },
       {
         "tabs": ["[data-id='overview']"],
-        "element": "[field='model.description']",
+        "element": "[data-field='model.description'] textarea",
         "value": "$uuid - test description"
       },
       {
         "tabs": ["[data-id='overview']"],
-        "element": "[field='model.permissionTreeCode']",
+        "element": "[data-field='model.permissionTreeCode'] input",
         "value": "test"
       }
     ],

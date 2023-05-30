@@ -6,6 +6,7 @@ from src.actions.navigate import open_and_close_url
 from src.actions.click import click
 from src.data import state
 from src.elements import get_element
+from src.action_systems.utils.crud import create_record, edit_record, preview_record
 import time
 import os
 import uuid
@@ -270,14 +271,25 @@ class SystemActions:
 
         try:
             for screen in screens:
-                intents = get_intent(screen)
-                result["screens"].append(
-                    {
-                        "result": "success",
-                        "memory": get_memory(driver)
-                    }
-                )
-                print(intents)
+                driver.execute_script("console.clear()")
+                create_intents = get_intent(screen)
+                uuid_value = str(uuid.uuid4())
+
+                result = {
+                    "screen": screen,
+                    "action": "create",
+                    "result": "success",
+                }
+
+                try:
+                    await create_record(driver, screen, uuid_value, create_intents, result)
+                except Exception as e:
+                    result["result"] = "error"
+                    result["error"] = str(e)
+                    pass
+
+                result["memory"] = get_memory(driver)
+                result["screens"].append(result)
         except Exception as e:
             result["result"] = "error"
             result["error"] = e
