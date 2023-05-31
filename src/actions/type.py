@@ -1,7 +1,5 @@
 import time
 from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver import Keys
-
 from src.elements import get_element
 from src.errors import set_error
 from src.utils import get_name
@@ -19,9 +17,6 @@ async def type_text(driver, args, results):
 
         element.clear()
         element.send_keys(value)
-        time.sleep(0.1)
-        element.send_keys(Keys.ENTER)
-        time.sleep(0.25)
 
         args["attr"] = "disabled"
 
