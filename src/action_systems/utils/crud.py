@@ -56,8 +56,6 @@ async def open_screen(driver, element_id, screen, results):
 async def create_record(driver, screen, uuid, intents, results):
     await open_screen(driver, ScreenType.CREATE, screen, results)
 
-    time.sleep(1)
-
     try:
         for intent in intents:
             tabs = intent["tabs"]

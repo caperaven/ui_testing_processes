@@ -240,8 +240,7 @@ class SystemActions:
 
                 await wait_for_element(driver, {
                     "step": "wait_for",
-                    "query": wait_for,
-                    "timeout": 30
+                    "query": wait_for
                 }, results)
 
             results[args["step"]] = {
