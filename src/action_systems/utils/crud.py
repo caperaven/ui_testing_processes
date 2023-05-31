@@ -1,5 +1,8 @@
 import time
 from datetime import datetime
+
+from selenium.webdriver.common.by import By
+
 from src.wait.components import wait_for_element, wait_for_attribute, wait_for_element_gone
 from src.actions.click import click
 from src.actions.type import type_text
@@ -71,7 +74,7 @@ async def create_record(driver, screen, uuid, intents, results):
 
             try:
                 # see if the element exists and if it does not continue
-                _get_element(driver, element)
+                driver.find_element(By.CSS_SELECTOR, element)
             except Exception as e:
                 continue
                 pass
