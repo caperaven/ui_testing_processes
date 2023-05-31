@@ -28,8 +28,7 @@ def _element_condition(args, results):
 def _element_gone_condition(args, results):
     def _predicate(driver):
         try:
-            time.sleep(0.1)
-            element = get_element(driver, args, results)
+            element = driver.find_element(By.CSS_SELECTOR, args["query"])
 
             if element is None:
                 return True
