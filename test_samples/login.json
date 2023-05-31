@@ -1,15 +1,17 @@
 {
     "id": "login",
+
     "main": {
         "steps": {
             "start": {
                 "type": "perform",
                 "action": "navigate",
                 "args": {
-                    "url": "${state.server}/"
+                    "url": "${state.server}"
                 },
                 "next_step": "click_development_azure_account_button"
             },
+
             "click_development_azure_account_button": {
                 "type": "perform",
                 "action": "click",
@@ -18,6 +20,7 @@
                 },
                 "next_step": "wait_for_login_tab_to_open_two_items"
             },
+
             "wait_for_login_tab_to_open_two_items": {
                 "type": "wait",
                 "action": "window_count",
@@ -26,6 +29,7 @@
                 },
                 "next_step": "swap_to_new_tab"
             },
+
             "swap_to_new_tab": {
                 "type": "perform",
                 "action": "switch_to_tab",
@@ -34,6 +38,7 @@
                 },
                 "next_step": "fill_in_user_name"
             },
+
             "fill_in_user_name": {
                 "type": "perform",
                 "action": "type_text",
@@ -41,67 +46,52 @@
                     "query": "input[name='loginfmt']",
                     "value": "test@pragmadeveloper.onmicrosoft.com"
                 },
-                "next_step": "press_enter_user_name"
+                "next_step": "for_password_element"
             },
-            "press_enter_user_name": {
-                "type": "perform",
-                "action": "press_key",
-                "args": {
-                    "query": "input[name='loginfmt']",
-                    "key": "RETURN"
-                },
-                "next_step": "wait_for_password"
-            },
-            "wait_for_password": {
+
+            "for_password_element": {
                 "type": "wait",
-                "action": "time",
+                "action": "element",
                 "args": {
-                    "timeout": 1
+                    "query": "input[name='passwd']"
                 },
                 "next_step": "fill_in_password"
             },
+
             "fill_in_password": {
                 "type": "perform",
                 "action": "type_text",
                 "args": {
-                    "query": "input#i0118",
+                    "query": "input[name='passwd']",
                     "value": "NtHe7t2EFLqFbM"
                 },
-                "next_step": "press_enter_password"
+                "next_step": "switch_to_default"
             },
-            "press_enter_password": {
+
+            "switch_to_default": {
                 "type": "perform",
-                "action": "press_key",
-                "args": {
-                    "query": "input#i0118",
-                    "key": "RETURN"
-                },
-                "next_step": "wait_for_remember_me"
+                "action": "switch_to_default",
+                "next_step": "click_on_login_button"
             },
-            "wait_for_remember_me": {
-                "type": "wait",
-                "action": "time",
-                "args": {
-                    "timeout": 2
-                },
-                "next_step": "click_on_remember_me"
-            },
-            "click_on_remember_me": {
+
+            "click_on_login_button": {
                 "type": "perform",
                 "action": "click",
                 "args": {
-                    "query": "#idSIButton9"
+                    "query": "input[type='submit']"
                 },
-                "next_step": "wait_for_one_window"
+                "next_step": "click_on_remember_yes_button"
             },
-            "wait_for_one_window": {
-                "type": "wait",
-                "action": "window_count",
+
+            "click_on_remember_yes_button": {
+                "type": "perform",
+                "action": "click",
                 "args": {
-                    "count": 1
+                    "id": "idSIButton9"
                 },
                 "next_step": "switch_to_default_view_again"
             },
+
             "switch_to_default_view_again": {
                 "type": "perform",
                 "action": "switch_to_tab",
@@ -110,15 +100,18 @@
                 },
                 "next_step": "wait_for_main_view"
             },
+
             "wait_for_main_view": {
                 "type": "wait",
                 "action": "element",
                 "args": {
-                    "id": "main-view"
+                    "id": "main-view",
+                    "timeout": 60
                 },
-                "next_step": "wait_for_idle_cpu"
+                "next_step": "for_idle_cpu"
             },
-            "wait_for_idle_cpu": {
+
+            "for_idle_cpu": {
                 "type": "wait",
                 "action": "idle"
             }
