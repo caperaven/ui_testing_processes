@@ -16,15 +16,17 @@ class ScreenType:
     }
     EDIT = {
         "input": "#model_editResource_field-input",
+        "code_input": "pr-side-menu [data-field='model.editCode'] input",
         "button": "pragma-group[title='Edit'] button",
         "dialog_query": "dynamic-update"
     }
     PREVIEW = {
         "input": "#model_previewResource_field-input",
+        "code_input": "pr-side-menu [data-field='model.previewCode'] input",
         "button": "pragma-group[title='Preview'] button",
         "dialog_query": "dynamic-peek"
     }
-async def open_screen(driver, element_id, screen, results):
+async def open_screen(driver, element_id, screen, code, results):
     try:
         await wait_for_element(driver, {
             "step": "wait for input",
@@ -36,6 +38,13 @@ async def open_screen(driver, element_id, screen, results):
             "query": element_id["input"],
             "value": screen
         }, results)
+
+        if "code_input" in element_id:
+            await type_text(driver, {
+                "step": "type search code text",
+                "query": element_id["code_input"],
+                "value": code
+            }, results)
 
         await click(driver, {
             "step": "click button to open screen",
@@ -55,9 +64,8 @@ async def open_screen(driver, element_id, screen, results):
         return False
         pass
 
-
 async def create_record(driver, screen, uuid, intents, results):
-    await open_screen(driver, ScreenType.CREATE, screen, results)
+    await open_screen(driver, ScreenType.CREATE, screen, "", results)
 
     try:
         for intent in intents:
@@ -118,8 +126,25 @@ def parse_value(value, uuid):
 
     return value
 
+
 async def edit_record(driver, screen, uuid, results):
+    await open_screen(driver, ScreenType.EDIT, screen, uuid, results)
+
+    # JHR: for Andre, this really should be using a better identifier
+    await click(driver, {
+        "step": "click on cancel button",
+        "query": "pragma-action-dialog pragma-icon-button[icon-name='close']"
+    }, results)
     pass
 
+
 async def preview_record(driver, screen, uuid, results):
+    await open_screen(driver, ScreenType.PREVIEW, screen, uuid, results)
+
+    # JHR: for Andre, this really should be using a better identifier
+    await click(driver, {
+        "step": "click on cancel button",
+        "query": "pragma-action-dialog pragma-icon-button[icon-name='close']"
+    }, results)
+
     pass
