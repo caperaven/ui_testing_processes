@@ -128,6 +128,9 @@ def parse_value(value, uuid):
 
 
 async def edit_record(driver, screen, uuid, results):
+    # clear console
+    # perform work
+    # log console to results1
     await open_screen(driver, ScreenType.EDIT, screen, uuid, results)
 
     # JHR: for Andre, this really should be using a better identifier

@@ -306,6 +306,7 @@ def add_to_log(context, log, memory, id, screen):
         "memory": mem
     }
 
+    # get the console log messages and add to test results.
     log_entries = context.driver.get_log("browser")
     if (log_entries is not None and len(log_entries) > 0):
         logItem["console"] = log_entries
@@ -314,3 +315,7 @@ def add_to_log(context, log, memory, id, screen):
 
     log.append(logItem)
     memory.append(mem)
+
+
+# new FN
+# FN to check console, if any console messages, it should fail the test
