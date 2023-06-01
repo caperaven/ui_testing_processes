@@ -282,6 +282,8 @@ class SystemActions:
 
                 try:
                     await create_record(driver, screen, uuid_value, create_intents, screenResult)
+                    await edit_record(driver, screen, uuid_value, screenResult)
+                    await preview_record(driver, screen, uuid_value, screenResult)
                 except Exception as e:
                     screenResult["result"] = "error"
                     screenResult["error"] = str(e)
