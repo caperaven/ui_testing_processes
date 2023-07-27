@@ -19,6 +19,11 @@ async def type_text(driver, args, results):
 
         element.clear()
         element.send_keys(value)
+
+#         # Use JavaScript to set the color value and trigger the change event
+#         script = f"arguments[0].value = '{value}'; arguments[0].dispatchEvent(new Event('input'));"
+#         driver.execute_script(script, element)
+
         time.sleep(0.1)
         element.send_keys(Keys.ENTER)
         time.sleep(0.25)

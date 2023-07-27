@@ -168,15 +168,19 @@ class SystemActions:
             results[key] = child_process["_results"][key]
 
     @staticmethod
-    async def run_script(step, context, process, item):
+    async def run_script(step, context, process, item, script_content):
         args = step["args"].copy()
-        script_file = args["script"]
-        path_parts = os.path.split(context.current["schema"]["file_path"])
-        script_path = os.path.join(path_parts[0], script_file)
+        script_content = args["script"]
+        context.driver.execute_script(script_content)
 
-        file = open(script_path)
-        content = file.read()
-        context.driver.execute_script(content)
+        #         args = step["args"].copy()
+        #         script_file = args["script"]
+        #         path_parts = os.path.split(context.current["schema"]["file_path"])
+        #         script_path = os.path.join(path_parts[0], script_file)
+        #
+        #         file = open(script_path)
+        #         content = file.read()
+        #         context.driver.execute_script(content)
 
     @staticmethod
     async def show_all_screens(step, context, process, item):

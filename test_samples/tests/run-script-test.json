@@ -1,0 +1,261 @@
+{
+  "id": "run-scripts-test",
+  "main": {
+    "steps": {
+      "start": {
+        "type": "perform",
+        "action": "navigate",
+        "args": {
+          "url": "${state.server}/#dashboard/StockItem"
+        },
+        "next_step": "step_1"
+      },
+      "step_1": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='propertiesPanel']"
+        },
+        "next_step": "step_2"
+      },
+      "step_2": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='pb-1_available']"
+        },
+        "next_step": "step_3"
+      },
+      "step_3": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "pragma-icon-button[data-id='id']"
+        },
+        "next_step": "step_4"
+      },
+      "step_4": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.property-header-top select"
+        },
+        "next_step": "step_5"
+      },
+      "step_5": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.property-header-top select option[value='1']"
+        },
+        "next_step": "step_6"
+      },
+      "step_6": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] pragma-icon-button[data-call='addColumnFormatter']"
+        },
+        "next_step": "step_7"
+      },
+      "step_7": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.column-template select"
+        },
+        "next_step": "step_8"
+      },
+      "step_8": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "pragma-label-composite select option[value='id']"
+        },
+        "next_step": "step_9"
+      },
+      "step_9": {
+        "type": "perform",
+        "action": "type_text",
+        "args": {
+          "query": "input[name='expressionInput']",
+          "value": "id = 5000001059"
+        },
+        "next_step": "step_10"
+      },
+      "step_10": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] [id='color']"
+        },
+        "next_step": "step_11"
+      },
+      "step_11": {
+        "type": "system",
+        "action": "run_script",
+        "args": {
+          "script": "document.querySelector('[id='column'] [id='color']').value = '#fafafa';"
+        },
+        "next_step": "step_12"
+      },
+      "step_12": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] pr-text-properties2 div:nth-of-type(2)"
+        },
+        "next_step": "step_13"
+      },
+      "step_13": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] [id='background']"
+        },
+        "next_step": "step_14"
+      },
+      "step_14": {
+        "type": "system",
+        "action": "run_script",
+        "args": {
+          "script": "document.querySelector('[id='column'] [id='background']').value = '#0fcff5';"
+        },
+        "next_step": "step_15"
+      },
+      "step_15": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column']"
+        },
+        "next_step": "step_16"
+      },
+      "step_16": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] div.font-style pragma-icon-button[aria-label='Italics']"
+        },
+        "next_step": "step_17"
+      },
+      "step_17": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='column'] div.alignment pragma-icon-button[aria-label='Align center']"
+        },
+        "next_step": "step_18"
+      },
+      "step_18": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "pragma-form div div.properties-dialog-footer button.primary[data-call='applyFormatters']"
+        },
+        "next_step": "step_19"
+      },
+      "step_19": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.properties-panel-header pragma-icon-button.close"
+        },
+        "next_step": "wait_1"
+      },
+      "wait_1": {
+        "type": "wait",
+        "action": "time",
+        "args": {
+          "timeout": 3
+        },
+        "next_step": "step_20"
+      },
+      "step_20": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "[id='propertiesPanel']"
+        },
+        "next_step": "wait_2"
+      },
+      "wait_2": {
+        "type": "wait",
+        "action": "time",
+        "args": {
+          "timeout": 3
+        },
+        "next_step": "step_21"
+      },
+      "step_21": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.property-header-top select"
+        },
+        "next_step": "step_22"
+      },
+      "step_22": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.property-header-top select option[value='1']"
+        },
+        "next_step": "step_23"
+      },
+      "step_23": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.column-template ul pragma-icon-button[data-id='id']"
+        },
+        "next_step": "step_24"
+      },
+      "step_24": {
+        "type": "assert",
+        "action": "value_eq",
+        "args": {
+          "query": "[id='column'] [id='color']",
+          "value": "#fafafa"
+        },
+        "next_step": "step_25"
+      },
+      "step_25": {
+        "type": "assert",
+        "action": "value_eq",
+        "args": {
+          "query": "[id='column'] [id='background']",
+          "value": "#eb0000"
+        },
+        "next_step": "step_26"
+      },
+      "step_26": {
+        "type": "assert",
+        "action": "attribute_eq",
+        "args": {
+          "query": "[id='column'] div.font-style pragma-icon-button[aria-label='Italics']",
+          "attr": "class",
+          "value": "active"
+        },
+        "next_step": "step_27"
+      },
+      "step_27": {
+        "type": "assert",
+        "action": "attribute_eq",
+        "args": {
+          "query": "[id='column'] div.alignment pragma-icon-button[aria-label='Align center']",
+          "attr": "class",
+          "value": "active"
+        },
+        "next_step": "step_28"
+      },
+      "step_28": {
+        "type": "perform",
+        "action": "click",
+        "args": {
+          "query": "div.properties-panel-header pragma-icon-button.close"
+        }
+      }
+    }
+  }
+}
