@@ -4,26 +4,28 @@ from selenium.webdriver.common.by import By
 
 from src.elements import get_element
 from src.utils import get_eval
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def _element_condition(args, results):
     def _predicate(driver):
         try:
-            element = get_element(driver, args, results)
-
-            if element is None:
-                return False
+            element = driver.find_element(By.CSS_SELECTOR, args["query"])
 
             size = element.size
             if size["width"] == 0 or size["height"] == 0:
                 return False
-            else:
-                return True
+
+            return True
         except Exception as e:
             return False
 
     return _predicate
 
+
+def element_condition(args, results):
+    return _element_condition(args, results)
 
 def _element_gone_condition(args, results):
     def _predicate(driver):
