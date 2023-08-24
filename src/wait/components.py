@@ -38,7 +38,7 @@ async def wait_is_ready(driver, args, results):
 
 async def wait_for_element(driver, args, results):
     try:
-        timeout = args["timeout"] if "timeout" in args else 30
+        timeout = args["timeout"] if "timeout" in args else 300
         WebDriverWait(driver, timeout).until(_element_condition(args, results))
         results[args["step"]] = {
             "result": "success",
