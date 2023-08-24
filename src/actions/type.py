@@ -1,7 +1,6 @@
 import time
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
 
 from src.elements import get_element
 from src.errors import set_error
@@ -13,7 +12,7 @@ from src.wait.components import wait_until_attribute_gone
 async def type_text(driver, args, results):
     try:
         value = args["value"]
-        element = driver.find_element(By.CSS_SELECTOR, args["query"])
+        element = get_element(driver, args, results)
 
         if element is None:
             return
