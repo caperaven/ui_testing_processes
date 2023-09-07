@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from src.errors import set_error_sync
 
 
@@ -10,26 +12,6 @@ def _get_query(args):
         return args["query"]
 
 
-def _get_element(driver, query):
-    if ":shadow:" in query:
-        parts = query.split(":")
-        parent = driver.find_element(By.CSS_SELECTOR, parts[0])
-        return parent.shadow_root.find_element(By.CSS_SELECTOR, parts[2])
-    else:
-        WebDriverWait(driver, 10).until(_element_condition(query))
-        return driver.find_element(By.CSS_SELECTOR, query)
-
-
-def _element_condition(query):
-    def _predicate(driver):
-        try:
-            element = driver.find_element(By.CSS_SELECTOR, query)
-            return False if element is None else True
-        except Exception as e:
-            return False
-    return _predicate
-
-
 def _idle_condition():
     async def _predicate(driver):
         element = driver.find_element(By.CSS_SELECTOR, "body")
@@ -38,12 +20,51 @@ def _idle_condition():
     return _predicate
 
 
+def wait_for_element(driver, context, query, results, step):
+    wait = WebDriverWait(context, 10, poll_frequency=0.1)
+
+    try:
+        # wait for the element to be intractable
+        result = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
+        # return the result
+        return result
+    except TimeoutException:
+        set_error_sync(driver, results, step, "error: element '{}' not found".format(query))
+        return None
+
+
 def get_element(driver, args, results):
     query = _get_query(args)
 
-    try:
-        return _get_element(driver, query)
-    except Exception as e:
-        print(e)
-        set_error_sync(driver, results, args["step"], "error: element '{}' not found".format(query))
-        return None
+    # the query is a path so find each element one at a time and return the end result
+    if ' ' in query:
+        return get_element_on_path(driver, args, results)
+
+    # the query is a single element so wait for it to be intractable and return it
+    return wait_for_element(driver, driver, query, results, args["step"])
+
+
+def get_element_on_path(driver, args, results):
+    query = _get_query(args)
+    queries = query.split(" ")
+    context = driver
+
+    for query in queries:
+        element = wait_for_element(driver, context, query, results, args["step"])
+
+        if element is None:
+            return None
+
+        context = element
+
+        # check if the element has a shadow root
+        # if it does, we need to use that as the context for the next query
+        shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
+
+        if shadow_root is not None:
+            context = element.shadow_root
+
+    # the last element is the result and since we are setting the context to the element
+    # we can just return the context
+    return context
+

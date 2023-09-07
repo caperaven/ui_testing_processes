@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from src.wait.components import wait_for_element, wait_for_attribute, wait_for_element_gone
 from src.actions.click import click
 from src.actions.type import type_text
-from src.elements import _get_element
+
 
 class ScreenType:
     CREATE = {
@@ -26,6 +26,8 @@ class ScreenType:
         "button": "pragma-group[title='Preview'] button",
         "dialog_query": "dynamic-peek"
     }
+
+
 async def open_screen(driver, element_id, screen, code, results):
     try:
         await wait_for_element(driver, {
@@ -63,6 +65,7 @@ async def open_screen(driver, element_id, screen, code, results):
         print(e)
         return False
         pass
+
 
 async def create_record(driver, screen, uuid, intents, results):
     await open_screen(driver, ScreenType.CREATE, screen, "", results)
