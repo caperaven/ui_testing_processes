@@ -22,7 +22,8 @@ async def wait_is_ready(driver, args, results):
     is_ready = element.get_property("isReady")
 
     if is_ready is not True:
-        driver.execute_script(data["scripts"]["is_ready"].format(args["query"]))
+        script = data["scripts"]["is_ready"].format(args["query"])
+        driver.execute_script(script)
         try:
             timeout = args["timeout"] if "timeout" in args else 30
             WebDriverWait(driver, timeout).until(_is_ready_condition(args, results))

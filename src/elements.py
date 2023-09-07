@@ -21,7 +21,7 @@ def _idle_condition():
 
 
 def wait_for_element(driver, context, query, results, step):
-    wait = WebDriverWait(context, 10, poll_frequency=0.1)
+    wait = WebDriverWait(context, 240, poll_frequency=0.1)
 
     try:
         # wait for the element to be intractable
