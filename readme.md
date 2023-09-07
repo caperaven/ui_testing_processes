@@ -14,3 +14,5 @@ https://googlechromelabs.github.io/chrome-for-testing/#stable
 Make sure you download both as win64 for "Version: 116.0.5845.96 (r1160321)"
 
 The ui_testing_process/chrome folder should now contain the chrome exe and supporting files along with the chromedriver exe.
+You can download a newer version if you wish, but you should make sure that you download both the chrome and driver for the same version 
+and extract them into the chrome folder.
