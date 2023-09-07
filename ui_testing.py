@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
 from src.action_systems.assert_actions import AssertActions
 from src.action_systems.wait_actions import WaitActions
 from src.action_systems.perform_actions import PerformActions
@@ -12,11 +13,17 @@ import asyncio
 import sys
 import tempfile
 import subprocess
+import os
 
 from src.test_scraper import TestScraper
 
 folder = tempfile.gettempdir()
 set_results_folder(folder)
+current_directory = os.getcwd()
+chrome_path = "chrome/chromedriver.exe"
+full_chrome_path = os.path.join(current_directory, chrome_path)
+full_chrome_path = os.path.normpath(full_chrome_path)
+
 
 class Api:
     @property
@@ -64,7 +71,15 @@ class Api:
                 options.add_argument("--enable-precise-memory-info")
                 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-            self.driver = webdriver.Chrome(options=options)
+            try:
+                chrome_service = ChromeService(full_chrome_path)
+                self.driver = webdriver.Chrome(service=chrome_service, options=options)
+                self.driver.get("about:blank")
+                print("driver has started")
+            except Exception as e:
+                print("driver failed to start")
+                print(e)
+                self.driver.quit()
 
     async def call(self, system, fn, args, context, process, item):
         system = self.intent[system]
@@ -114,6 +129,7 @@ class Api:
         save_results(self.results)
         self.driver.close()
 
+
 def calculate_success(results):
     error_count = count_errors(0, results)
     results["summary"]["error_count"] = error_count
@@ -121,6 +137,7 @@ def calculate_success(results):
     if error_count > 0:
         results["summary"]["success"] = False
     pass
+
 
 def count_errors(count, obj):
     keys = obj.keys()
@@ -138,15 +155,19 @@ def count_errors(count, obj):
     return result
     pass
 
+
+crs = None
+
 try:
     crs = Api()
     asyncio.run(crs.run_all())
 except Exception as e:
     print(e)
 finally:
-    crs.close()
+    if crs is not None:
+        crs.close()
 
-    if "--auto-open" in sys.argv:
-        path = state["folder"]
-        subprocess.Popen(r'explorer /open,"{}"'.format(path))
-        pass
+        if "--auto-open" in sys.argv:
+            path = state["folder"]
+            subprocess.Popen(r'explorer /open,"{}"'.format(path))
+            pass

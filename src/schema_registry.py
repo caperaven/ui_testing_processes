@@ -80,7 +80,7 @@ class SchemaRegistry:
                 if not file.__contains__("skip.") and file != self.login:
                     self.schemas.append(file)
 
-    def  load_templates(self, folder):
+    def load_templates(self, folder):
         for root, dirnames, filenames in os.walk(folder):
             folder = os.path.realpath(root)
             for filename in filenames:
