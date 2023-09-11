@@ -6,9 +6,11 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def set_results_folder(folder):
     now = datetime.now()
-    date_folder = "test_results_{}_{}_{}_{}_{}_{}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
+    date_folder = "test_results_{}_{}_{}_{}_{}_{}".format(now.year, now.month, now.day, now.hour, now.minute,
+                                                          now.second)
     path = os.path.join(folder, date_folder)
     state["folder"] = path
 
@@ -30,14 +32,15 @@ def save_results(results):
     print("******* results saved *******")
     print(file)
 
+
 def save_chart(results):
-    #get the first item in the dictionary
+    # get the first item in the dictionary
     first_item = next(iter(results.items()))
 
-    #get all the keys from the first item
+    # get all the keys from the first item
     keys = first_item[1].keys()
 
-    #loop through the keys
+    # loop through the keys
     for key in keys:
         if key == "summary":
             continue
@@ -47,6 +50,7 @@ def save_chart(results):
         except Exception as e:
             print(e)
             pass
+
 
 def create_chart(results, path):
     if 'memory' in results:
@@ -78,12 +82,14 @@ def create_chart(results, path):
 
     plt.savefig(path)
 
+
 def create_chart_from_array(data, path):
     df = pd.DataFrame({"values": data})
     # max = df["values"].max()
     # plt.ylim(0, max * 2)
     sns.lineplot(data=df, linewidth=2)
     plt.savefig(path)
+
 
 def save_json_to_file(data, path):
     json_str = json.dumps(data, indent=4)
@@ -92,4 +98,3 @@ def save_json_to_file(data, path):
         file.write(json_str)
 
     file.close()
-

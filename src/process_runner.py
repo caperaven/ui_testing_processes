@@ -39,6 +39,9 @@ class ProcessRunner:
             if success is not True:
                 await set_error(context.driver, process["_results"], "parameters_required", success)
 
+        if "_results" not in process:
+            process["_results"] = {}
+
         process["_results"]["memory"] = {
             "start": get_memory(context.driver, 1),
         }
