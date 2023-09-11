@@ -99,6 +99,10 @@ class SchemaRegistry:
         self.current_index += 1
         return schema.copy()
 
+    def set_template(self, schema):
+        schema_id = schema["id"]
+        self.templates[schema_id] = schema
+
     def get_template(self, schema):
         return self.templates[schema]
 
