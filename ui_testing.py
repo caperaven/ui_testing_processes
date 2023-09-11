@@ -1,5 +1,3 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
 from src.action_systems.assert_actions import AssertActions
 from src.action_systems.wait_actions import WaitActions
 from src.action_systems.perform_actions import PerformActions
@@ -9,6 +7,7 @@ from src.schema_registry import SchemaRegistry
 from src.process_runner import ProcessRunner
 from src.data import state
 from src.results_writer import save_results, set_results_folder
+from src.selenium.driver import Driver
 import asyncio
 import sys
 import tempfile
@@ -35,6 +34,7 @@ class Api:
         return self.process.set_value
 
     def __init__(self):
+        self.driver = None
         self.process_schema_registry = SchemaRegistry()
         self.process = ProcessRunner()
         self.scraper = TestScraper()
@@ -58,28 +58,21 @@ class Api:
 
         self.previous_result = None
 
-        if sys.platform == "darwin":
-            self.driver = webdriver.Safari()
-        else:
-            options = webdriver.ChromeOptions()
-            options.add_argument("start-maximized")
-            options.add_argument("ignore-certificate-errors")
+    async def init_driver(self):
+        browser = "chrome"
+        if sys.argv.__contains__("--firefox"):
+            browser = "firefox"
+        if sys.argv.__contains__("--edge"):
+            browser = "edge"
+        if sys.argv.__contains__("--safari"):
+            browser = "safari"
 
-            if sys.argv.__contains__("--debug"):
-                options.add_argument("-disable-extensions")
-                options.add_argument("--auto-open-devtools-for-tabs")
-                options.add_argument("--enable-precise-memory-info")
-                options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        options = {}
 
-            try:
-                chrome_service = ChromeService(full_chrome_path)
-                self.driver = webdriver.Chrome(service=chrome_service, options=options)
-                self.driver.get("about:blank")
-                print("driver has started")
-            except Exception as e:
-                print("driver failed to start")
-                print(e)
-                self.driver.quit()
+        if browser == "chrome":
+            options["driver_path"] = full_chrome_path
+
+        self.driver = await Driver.init(browser, options)
 
     async def call(self, system, fn, args, context, process, item):
         system = self.intent[system]
@@ -160,6 +153,7 @@ crs = None
 
 try:
     crs = Api()
+    asyncio.run(crs.init_driver())
     asyncio.run(crs.run_all())
 except Exception as e:
     print(e)
