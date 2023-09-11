@@ -65,11 +65,16 @@ class ProcessRunner:
         step_type = step["type"]
         step_action = step["action"]
         step_args = step["args"].copy() if "args" in step else {}
+        step_wait = step["wait"] if "wait" in step else None
 
         parse_id(step_args, context, process, item)
         parse_args(step_args, context, process, item)
 
         step_args["step"] = process["current_step"]
+
+        if step_wait is not None:
+            step_args["wait"] = step_wait
+
         result = await context.call(step_type, step_action, step_args, context, process, item)
 
         if result is not None and "target" in step_args:
