@@ -1,8 +1,10 @@
 from src.elements import get_element
 from src.errors import set_error
 from src.memory import get_memory
+
+
 async def assert_value_eq(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -20,7 +22,7 @@ async def assert_value_eq(driver, args, results):
 
 
 async def assert_value_neq(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -38,4 +40,3 @@ async def assert_value_neq(driver, args, results):
             "result": "success",
             "memory": get_memory(driver)
         }
-

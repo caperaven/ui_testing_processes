@@ -8,7 +8,7 @@ from src.utils import get_name
 
 
 async def switch_to_frame(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return

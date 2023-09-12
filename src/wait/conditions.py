@@ -1,15 +1,13 @@
-import time
-
 from selenium.webdriver.common.by import By
-
 from src.elements import get_element
 from src.utils import get_eval
+import asyncio
 
 
 def _element_condition(args, results):
     def _predicate(driver):
         try:
-            element = get_element(driver, args, results)
+            element = asyncio.run(get_element(driver, args, results))
 
             if element is None:
                 return False
@@ -42,7 +40,7 @@ def _element_gone_condition(args, results):
 
 def _is_ready_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = element.get_attribute("data-ready")
         if value is None:
             return False
@@ -54,7 +52,7 @@ def _is_ready_condition(args, results):
 
 def _is_enabled_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = element.get_attribute("disabled")
         return value is None
 
@@ -63,7 +61,7 @@ def _is_enabled_condition(args, results):
 
 def _text_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = element.text
         exp_value = args["value"]
         return _eval(value, exp_value, args)
@@ -73,7 +71,7 @@ def _text_condition(args, results):
 
 def _text_not_empty_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = len(element.text)
         return value > 0
 
@@ -82,7 +80,7 @@ def _text_not_empty_condition(args, results):
 
 def _attribute_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = element.get_attribute(args["attr"])
         exp_value = args["value"]
         return _eval(value, exp_value, args)
@@ -92,7 +90,7 @@ def _attribute_condition(args, results):
 
 def _has_attribute_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         result = False
         try:
             attr_value = element.get_attribute(args["attr"])
@@ -107,7 +105,7 @@ def _has_attribute_condition(args, results):
 
 def _css_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         prop = args['property']
         value = element.value_of_css_property(prop)
         exp_value = args["value"]
@@ -118,7 +116,7 @@ def _css_condition(args, results):
 
 def _property_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         prop = args["property"]
         value = element.get_property(prop)
         exp_value = args["value"]
@@ -129,21 +127,23 @@ def _property_condition(args, results):
 
 def _class_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         cls = element.get_attribute("class")
         sub = args["class"]
         return sub in cls
 
     return _predicate
 
+
 def _not_class_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         cls = element.get_attribute("class")
         sub = args["class"]
         return sub not in cls
 
     return _predicate
+
 
 def _count_condition(args, results):
     def _predicate(driver):
@@ -153,12 +153,13 @@ def _count_condition(args, results):
 
         count_value = len(all_children_by_css)
         return _eval(count_value, count, args)
+
     return _predicate
 
 
 def _selected_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, args, results)
+        element = asyncio.run(get_element(driver, args, results))
         value = args["value"] or False
         return element.is_selected() == value
 
@@ -190,8 +191,8 @@ def _eval(value1, value2, args):
 
 def _idle_condition(args, results):
     def _predicate(driver):
-        element = get_element(driver, {"query": "body"}, results)
+        element = asyncio.run(get_element(driver, {"query": "body"}, results))
         value = element.get_attribute("idle")
         return value == "true"
-    return _predicate
 
+    return _predicate

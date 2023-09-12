@@ -26,7 +26,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
+            element = await get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 element_def = args[query]
                 attributes = element_def.keys()
@@ -46,7 +46,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
+            element = await get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 element_def = args[query]
                 properties = element_def.keys()
@@ -66,7 +66,7 @@ class SystemActions:
 
         for query in queries:
             if query == "step": continue
-            element = get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
+            element = await get_element(context.driver, {"query": query, "step": args["step"]}, process["_results"])
             if element is not None:
                 location = element.location
                 size = element.size
@@ -224,7 +224,7 @@ class SystemActions:
         driver = context.driver
 
         try:
-            button = get_element(driver, {
+            button = await get_element(driver, {
                 "step": "open_side_menu",
                 "query": "pr-side-menu #{}".format(menu),
                 "timeout": 360

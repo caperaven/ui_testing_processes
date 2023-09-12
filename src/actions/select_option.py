@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 
 async def select_option(driver, args, results):
     try:
-        element = get_element(driver, args, results)
+        element = await get_element(driver, args, results)
 
         if element is None:
             return

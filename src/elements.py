@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from src.selenium.get import get_element
+from src.selenium.get import get_element as get_selenium_element
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -21,14 +21,14 @@ def _idle_condition():
     return _predicate
 
 
-def get_element(driver, args, results):
+async def get_element(driver, args, results):
     query = _get_query(args)
     step = args["step"]
     timeout = args.get("timeout", 10)
     driver = args.get("context", driver)
 
     try:
-        element = get_element(driver, query, timeout)
+        element = await get_selenium_element(driver, query, timeout)
         return element
     except TimeoutException:
         set_error_sync(driver, results, step, "error: element '{}' not found".format(query))

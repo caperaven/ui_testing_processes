@@ -16,7 +16,7 @@ class TestScraper:
         start = args["query"]
         self.path = [start]
         self.results = []
-        element = get_element(driver, args, results)
+        element = await get_element(driver, args, results)
         self.validate_element(element)
 
         if len(self.results) == 0:

@@ -11,14 +11,10 @@ from src.utils import get_name
 from src.wait.conditions import _is_enabled_condition
 from src.memory import get_memory
 
+
 async def click(driver, args, results):
-    element = get_element(driver, args, results)
-
-    if element is None:
-        return
-
     try:
-        WebDriverWait(driver, 10).until(_is_enabled_condition(args, results))
+        element = await get_element(driver, args, results)
 
         action_key_down = None
         action_key_up = None
@@ -53,7 +49,7 @@ async def click(driver, args, results):
 
 
 async def dbl_click(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -78,7 +74,7 @@ async def dbl_click(driver, args, results):
 
 
 async def context_click(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -98,7 +94,8 @@ async def context_click(driver, args, results):
     except Exception as e:
         print(e)
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: element '{}' not context clickable, '{}'".format(name, e))
+        await set_error(driver, results, args["step"],
+                        "error: element '{}' not context clickable, '{}'".format(name, e))
         pass
 
 
@@ -106,6 +103,7 @@ async def click_sequence(driver, args, results):
     sequence = args["sequence"]
     for query in sequence:
         await click(driver, {"query": query, "step": args["step"]}, results)
+
 
 async def click_and_wait_for_elements(driver, args, results):
     # todo: AndreW

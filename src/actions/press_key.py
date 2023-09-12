@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 
 async def press_key(driver, args, results):
     try:
-        element = get_element(driver, args, results)
+        element = await get_element(driver, args, results)
 
         if element is None:
             return

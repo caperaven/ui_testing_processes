@@ -12,7 +12,7 @@ from src.wait.components import wait_until_attribute_gone
 async def type_text(driver, args, results):
     try:
         value = args["value"]
-        element = get_element(driver, args, results)
+        element = await get_element(driver, args, results)
 
         if element is None:
             return

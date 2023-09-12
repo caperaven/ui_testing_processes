@@ -4,7 +4,7 @@ from src.utils import get_name
 from src.memory import get_memory
 
 async def assert_style_eq(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -24,7 +24,7 @@ async def assert_style_eq(driver, args, results):
 
 
 async def assert_style_neq(driver, args, results):
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return

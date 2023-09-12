@@ -128,7 +128,7 @@ class AssertActions:
     @staticmethod
     async def has_class(step, context, process, item):
         args = step["args"].copy()
-        element = get_element(context.driver, args, process["_results"])
+        element = await get_element(context.driver, args, process["_results"])
         cls = element.get_attribute("class")
         sub = args["class"]
         if sub in cls:
@@ -140,7 +140,7 @@ class AssertActions:
     @staticmethod
     async def has_not_class(step, context, process, item):
         args = step["args"].copy()
-        element = get_element(context.driver, args, process["_results"])
+        element = await get_element(context.driver, args, process["_results"])
         cls = element.get_attribute("class")
         sub = args["class"]
         if sub not in cls:

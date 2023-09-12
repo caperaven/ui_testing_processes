@@ -11,10 +11,11 @@ from src.wait.conditions import _class_condition, _is_ready_condition, _attribut
     _text_not_empty_condition
 from src.memory import get_memory
 
+
 async def wait_is_ready(driver, args, results):
     args["property"] = "isReady"
 
-    element = get_element(driver, args, results)
+    element = await get_element(driver, args, results)
 
     if element is None:
         return
@@ -33,7 +34,9 @@ async def wait_is_ready(driver, args, results):
             }
         except Exception as e:
             print("wait_is_ready failed, {}".format(e.__class__.__name__))
-            await set_error(driver, results, args["step"], "error: timeout() - waiting for isReady on '{}', {}".format(args["query"], e.__class__.__name__))
+            await set_error(driver, results, args["step"],
+                            "error: timeout() - waiting for isReady on '{}', {}".format(args["query"],
+                                                                                        e.__class__.__name__))
             pass
 
 
@@ -49,9 +52,11 @@ async def wait_for_element(driver, args, results):
     except Exception as e:
         print("wait_for_element failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
         return False
         pass
+
 
 async def wait_for_element_gone(driver, args, results):
     try:
@@ -64,7 +69,8 @@ async def wait_for_element_gone(driver, args, results):
         return True
     except Exception as e:
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for element {}".format(name, e.__class__.__name__))
         return True
         pass
 
@@ -79,11 +85,13 @@ async def wait_for_attribute(driver, args, results):
             "memory": get_memory(driver)
         }
     except Exception as e:
-        element = get_element(driver, args, results)
+        element = await get_element(driver, args, results)
         value = element.get_attribute(args["attr"])
         print("wait_for_attribute failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be '{}' on '{}', {} - value was '{}'".format(args["attr"], args["value"], name, e.__class__.__name__, value))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for attribute '{}' to be '{}' on '{}', {} - value was '{}'".format(
+                            args["attr"], args["value"], name, e.__class__.__name__, value))
         pass
 
 
@@ -99,7 +107,10 @@ async def wait_until_attribute(driver, args, results):
     except Exception as e:
         print("wait_until_attribute failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to be there on '{}', {}".format(args["attr"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for attribute '{}' to be there on '{}', {}".format(args["attr"],
+                                                                                                       name,
+                                                                                                       e.__class__.__name__))
         pass
 
 
@@ -115,7 +126,10 @@ async def wait_until_attribute_gone(driver, args, results):
     except Exception as e:
         print("wait_until_attribute_gone failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute '{}' to not be there on '{}', {}".format(args["attr"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for attribute '{}' to not be there on '{}', {}".format(args["attr"],
+                                                                                                           name,
+                                                                                                           e.__class__.__name__))
         pass
 
 
@@ -137,7 +151,8 @@ async def wait_for_attributes(driver, args, results):
     except Exception as e:
         print("wait_for_attributes failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for attribute on '{}', {}".format(name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for attribute on '{}', {}".format(name, e.__class__.__name__))
         pass
 
 
@@ -152,7 +167,9 @@ async def wait_for_css_property(driver, args, results):
     except Exception as e:
         print("wait_for_css_property failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for css property '{}' to be '{}' on '{}', {}".format(
+                            args['property'], args['value'], name, e.__class__.__name__))
         pass
 
 
@@ -167,8 +184,11 @@ async def wait_for_text(driver, args, results):
     except Exception as e:
         print("wait_for_text failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name,
+                                                                                      e.__class__.__name__))
         pass
+
 
 async def wait_for_text_not_empty(driver, args, results):
     try:
@@ -181,7 +201,9 @@ async def wait_for_text_not_empty(driver, args, results):
     except Exception as e:
         print("wait_for_text_not_empty failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for text '{}' on '{}', {}".format(args["value"], name,
+                                                                                      e.__class__.__name__))
         pass
 
 
@@ -197,7 +219,9 @@ async def wait_for_value(driver, args, results):
     except Exception as e:
         print("wait_for_value failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for value '{}' on '{}', {}".format(args["value"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for value '{}' on '{}', {}".format(args["value"], name,
+                                                                                       e.__class__.__name__))
         pass
 
 
@@ -212,7 +236,9 @@ async def wait_for_property(driver, args, results):
     except Exception as e:
         print("wait_for_property failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for element property '{}' to be '{}' on '{}', {}".format(args['property'], args['value'], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for element property '{}' to be '{}' on '{}', {}".format(
+                            args['property'], args['value'], name, e.__class__.__name__))
         pass
 
 
@@ -227,7 +253,9 @@ async def wait_for_css_class(driver, args, results):
     except Exception as e:
         print("wait_for_css_class failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for css class '{}' on '{}', {}".format(args["class"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for css class '{}' on '{}', {}".format(args["class"], name,
+                                                                                           e.__class__.__name__))
         pass
 
 
@@ -244,7 +272,9 @@ async def wait_for_children(driver, args, results):
     except Exception as e:
         print("wait_for_children failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for child count '{}' on '{}', {}".format(args["count"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for child count '{}' on '{}', {}".format(args["count"], name,
+                                                                                             e.__class__.__name__))
         pass
 
 
@@ -259,7 +289,9 @@ async def wait_for_count(driver, args, results):
     except Exception as e:
         print("wait_for_count failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for element count '{}' on '{}', {}".format(args["count"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for element count '{}' on '{}', {}".format(args["count"], name,
+                                                                                               e.__class__.__name__))
         pass
 
 
@@ -274,7 +306,8 @@ async def wait_for_time(driver, args, results):
     except Exception as e:
         print("wait_for_time failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for time '{}', {}".format(name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for time '{}', {}".format(name, e.__class__.__name__))
         pass
 
 
@@ -289,7 +322,8 @@ async def wait_for_selected(driver, args, results):
     except Exception as e:
         print("wait_for_selected failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for selected on '{}', {}".format(name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for selected on '{}', {}".format(name, e.__class__.__name__))
         pass
 
 
@@ -304,7 +338,9 @@ async def wait_for_windows(driver, args, results):
     except Exception as e:
         print("wait_for_selected failed, {}".format(e.__class__.__name__))
         name = get_name(args)
-        await set_error(driver, results, args["step"], "error: timeout() - waiting for window count '{}' on '{}', {}".format(args["count"], name, e.__class__.__name__))
+        await set_error(driver, results, args["step"],
+                        "error: timeout() - waiting for window count '{}' on '{}', {}".format(args["count"], name,
+                                                                                              e.__class__.__name__))
         pass
 
 
