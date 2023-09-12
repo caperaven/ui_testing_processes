@@ -55,6 +55,8 @@ class Driver:
 
         driver = webdriver.Firefox(options=opts)
         driver.maximize_window()
+        driver.get("about:blank")
+
         return driver
 
     @staticmethod
@@ -63,4 +65,7 @@ class Driver:
 
     @staticmethod
     async def safari(options):
-        pass
+        driver = webdriver.Safari()
+        driver.maximize_window()
+        driver.get("about:blank")
+        return driver
