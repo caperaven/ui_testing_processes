@@ -1,0 +1,28 @@
+{
+	"id": "widgets",
+	
+	"open": {
+		"steps": {
+			"start": {
+				"type": "perform",
+				"action": "click",
+				"args": {
+					"query": "welcome-view::host designer-greater::host designer-canvas::host [data-type='add-widget']"
+				},
+				"wait": "crs-dialog[data-id='designer-repo'][data-ready='true']"
+			}
+		}
+	},
+
+	"close": {
+		"steps": {
+			"start": {
+				"type": "perform",
+				"action": "click",
+				"args": {
+					"query": "crs-dialog[data-id='designer-repo']::host #btnClose"
+				}
+			}
+		}
+	}
+}

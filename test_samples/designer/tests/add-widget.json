@@ -1,0 +1,35 @@
+{
+	"id": "add-widget",
+	"description": "This test opens the widgets dialog and just adds a simple widget",
+	
+	"main": {
+		"steps": {
+			"start": {
+				"type": "perform",
+				"action": "navigate",
+				"args": {
+					"url": "https://localhost/welcome"
+				},
+				"wait": "welcome-view[data-ready='true']",
+				"next_step": "open-widgets"
+			},
+			"open-widgets": {
+				"type": "system",
+				"action": "template",
+				"args": {
+					"schema": "widgets",
+					"process": "open"
+				},
+				"next_step": "close-widgets"
+			},
+			"close-widgets": {
+				"type": "system",
+				"action": "template",
+				"args": {
+					"schema": "widgets",
+					"process": "close"
+				}
+			}
+		}
+	}
+}

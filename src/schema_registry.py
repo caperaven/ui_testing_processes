@@ -9,7 +9,7 @@ class SchemaRegistry:
         self.current_index = 0
         self.login = None
         self.templates = {}
-        self.schemas = {}
+        self.schemas = []
 
         if "--settings" in sys.argv:
             settingsPath = sys.argv[sys.argv.index("--settings") + 1]
