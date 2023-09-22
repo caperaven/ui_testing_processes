@@ -24,5 +24,25 @@
 				}
 			}
 		}
+	},
+
+	"add": {
+		"parameters_def": {
+			"group": {
+				"required": true
+			},
+			"widget": {
+				"required": true
+			}
+		},
+		"steps": {
+			"start": {
+				"type": "perform",
+				"action": "click",
+				"args": {
+					"query": "designer-repo::host [data-id='$p{parameter.group}']"
+				}
+			}
+		}
 	}
 }

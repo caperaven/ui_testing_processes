@@ -242,7 +242,7 @@ async def wait_for_property(driver, args, results):
         pass
 
 
-async def wait_for_css_class(driver, args, results):
+async def fwait_for_css_class(driver, args, results):
     try:
         timeout = args["timeout"] if "timeout" in args else 30
         WebDriverWait(driver, timeout).until(_class_condition(args, results))

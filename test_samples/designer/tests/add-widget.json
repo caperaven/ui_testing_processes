@@ -13,6 +13,7 @@
 				"wait": "welcome-view[data-ready='true']",
 				"next_step": "open-widgets"
 			},
+
 			"open-widgets": {
 				"type": "system",
 				"action": "template",
@@ -22,6 +23,7 @@
 				},
 				"next_step": "close-widgets"
 			},
+
 			"close-widgets": {
 				"type": "system",
 				"action": "template",
